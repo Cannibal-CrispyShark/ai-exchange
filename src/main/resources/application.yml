@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: ai-exchange
+
+
+langchain4j:
+  community:
+    dashscope:
+      chat-model:
+        model-name: qwen-max
+        api-key: sk-07438bc6327b4c85a246883ed16b3117
