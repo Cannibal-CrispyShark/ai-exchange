@@ -9,3 +9,8 @@ langchain4j:
       chat-model:
         model-name: qwen-max
         api-key: sk-07438bc6327b4c85a246883ed16b3117
+
+
+alphavantage:
+  api:
+    key: IHIRE7VGBBR8EPVQ

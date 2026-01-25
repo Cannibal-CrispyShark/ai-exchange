@@ -1,4 +1,4 @@
-package com.huge.aiexchange.aiservice.inter;
+package com.huge.aiexchange.service.inter;
 
 import dev.langchain4j.service.MemoryId;
 import dev.langchain4j.service.SystemMessage;

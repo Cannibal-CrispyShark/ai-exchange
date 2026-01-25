@@ -1,8 +1,6 @@
-package com.huge.aiexchange.aiservice.tools;
+package com.huge.aiexchange.service.tools;
 
 import dev.langchain4j.agent.tool.Tool;
-import lombok.extern.apachecommons.CommonsLog;
-import org.springframework.stereotype.Component;
 
 public class MathTools {
 

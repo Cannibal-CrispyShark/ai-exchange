@@ -1,6 +1,6 @@
-package com.huge.aiexchange.aiservice;
+package com.huge.aiexchange.service;
 
-import com.huge.aiexchange.aiservice.inter.AssistantInter;
+import com.huge.aiexchange.service.inter.AssistantInter;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

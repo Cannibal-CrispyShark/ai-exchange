@@ -1,8 +1,8 @@
-package com.huge.aiexchange.aiservice;
+package com.huge.aiexchange.configuration;
 
 
-import com.huge.aiexchange.aiservice.inter.AssistantInter;
-import com.huge.aiexchange.aiservice.tools.MathTools;
+import com.huge.aiexchange.service.inter.AssistantInter;
+import com.huge.aiexchange.service.tools.MathTools;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.service.AiServices;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class AssistantRepository {
+public class AssistantConfiguration {
 
     @Resource
     private ChatModel qwenChatModel;
