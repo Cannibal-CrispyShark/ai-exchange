@@ -48,11 +48,11 @@ public class AlphaVantageService {
             Collections.reverse(stockBases);
             
             // 从stock_future表中获取future数据
-            stockFuture = stockFutureMapper.selectByStockCodeAndDate(stockCode, LocalDate.now().minusDays(10));
+            stockFuture = stockFutureMapper.selectByStockCodeAndDate(stockCode, SystemConstants.TODAY_MINUS_5);
             
             // 如果DB中没有future数据，则计算并保存
             if (stockFuture == null) {
-                stockFuture = StockFeatureCalculator.calculateFeaturesForDate(stockBases, LocalDate.now().minusDays(10));
+                stockFuture = StockFeatureCalculator.calculateFeaturesForDate(stockBases, SystemConstants.TODAY_MINUS_5);
                 if (stockFuture != null) {
                     stockFuture.setStockCode(stockCode);
                     stockFutureMapper.insert(stockFuture);

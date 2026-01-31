@@ -3,10 +3,7 @@ package com.huge.aiexchange.controller;
 import com.huge.aiexchange.entity.pojo.Response;
 import com.huge.aiexchange.service.AiInvestmentService;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * AI投资决策Controller
@@ -24,14 +21,15 @@ public class InvestmentDecisionController {
      * @param modelId AI模型ID
      * @return 投资决策结果
      */
-    @PostMapping("/{modelId}/decide")
+    @GetMapping("/{modelId}/decide")
     public Response makeInvestmentDecision(@PathVariable Integer modelId) {
-        try {
-            AiInvestmentService.InvestmentDecisionResult result = 
-                    aiInvestmentService.makeInvestmentDecision(modelId);
-            return Response.success(result);
-        } catch (Exception e) {
-            return Response.fail(e.getMessage());
+        AiInvestmentService.InvestmentDecisionResult result = 
+                aiInvestmentService.makeInvestmentDecision(modelId);
+        
+        if (result.isSuccess()) {
+            return Response.success(result.getDecisionData());
+        } else {
+            return Response.fail(result.getMessage());
         }
     }
 
