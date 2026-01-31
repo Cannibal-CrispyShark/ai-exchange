@@ -12,4 +12,6 @@ public interface AssistantInter {
     @SystemMessage("use the method of add to resolve the problem")
     public String getAnswer(@MemoryId Integer id ,@UserMessage String userMessage);
 
+    public String getModelId();
+
 }

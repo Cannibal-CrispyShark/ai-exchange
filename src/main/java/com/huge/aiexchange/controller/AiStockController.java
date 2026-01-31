@@ -20,10 +20,10 @@ public class AiStockController {
     AiStockService aiStockService;
 
 
-    @GetMapping("/{moduleId}/{aiCode}/position")
-    public Response getPositionInfo(@PathVariable("moduleId") Integer moduleId, @PathVariable("aiCode") String aiCode){
+    @GetMapping("/{moduleId}/position")
+    public Response getPositionInfo(@PathVariable("moduleId") Integer moduleId){
         try{
-            return Response.success(aiStockService.getPositionInfo(moduleId, aiCode));
+            return Response.success(aiStockService.getPositionInfo(moduleId));
         }catch (Exception e){
             return Response.fail(e.getMessage());
         }

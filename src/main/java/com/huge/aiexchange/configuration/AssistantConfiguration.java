@@ -1,8 +1,9 @@
 package com.huge.aiexchange.configuration;
 
 
+import com.huge.aiexchange.service.inter.AiTradeAssistant;
 import com.huge.aiexchange.service.inter.AssistantInter;
-import com.huge.aiexchange.service.tools.MathTools;
+import com.huge.aiexchange.tool.AiTradeTool;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.service.AiServices;
@@ -16,12 +17,24 @@ public class AssistantConfiguration {
     @Resource
     private ChatModel qwenChatModel;
 
+    @Resource
+    private AiTradeTool aiTradeTool;
+
     @Bean
     public AssistantInter getAssistant() {
         return AiServices.builder(AssistantInter.class)
                 .chatModel(qwenChatModel)
-                .tools(new MathTools())
                 .chatMemoryProvider(id -> MessageWindowChatMemory.withMaxMessages(10))
                 .build();
     }
+
+    @Bean
+    public AiTradeAssistant getAiTradeAssistant() {
+        return AiServices.builder(AiTradeAssistant.class)
+                .chatModel(qwenChatModel)
+                .tools(aiTradeTool)
+                .chatMemoryProvider(id -> MessageWindowChatMemory.withMaxMessages(10))
+                .build();
+    }
+
 }

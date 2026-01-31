@@ -2,8 +2,8 @@ package com.huge.aiexchange.entity.vo;
 
 
 import com.crazzyghost.alphavantage.timeseries.response.MetaData;
-import com.huge.aiexchange.Utility.StockFeatureCalculator.StockFuture;
 import com.huge.aiexchange.entity.pojo.StockBase;
+import com.huge.aiexchange.entity.pojo.StockFuture;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

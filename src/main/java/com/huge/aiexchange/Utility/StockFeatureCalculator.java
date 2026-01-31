@@ -1,7 +1,9 @@
 package com.huge.aiexchange.Utility;
 
 import com.huge.aiexchange.entity.pojo.StockBase;
+import com.huge.aiexchange.entity.pojo.StockFuture;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,11 +21,11 @@ public class StockFeatureCalculator {
     }
 
     /**
-     * 计算指定日期的特征指标，返回StockData对象
+     * 计算指定日期的特征指标，返回StockFuture对象
      *
      * @param stockBases 按日期升序排列的完整历史数据列表
      * @param targetDate 需要计算特征的交易日
-     * @return 包含该日期所有特征的StockData对象。如果数据不足或日期不存在，返回null。
+     * @return 包含该日期所有特征的StockFuture对象。如果数据不足或日期不存在，返回null。
      */
     public static StockFuture calculateFeaturesForDate(List<StockBase> stockBases, LocalDate targetDate) {
         // 1. 找到目标日期在列表中的索引
@@ -38,18 +40,18 @@ public class StockFeatureCalculator {
             }
         }
 
-        // 如果目标日期不存在，返回空的结果对象
+        // 如果目标日期不存在，返回null
         if (targetIndex == -1) {
             System.out.println("Warning: 目标日期不在数据集中。");
-            return new StockFuture();
+            return null;
         }
 
         // 2. 创建结果对象，并设置基础信息
         StockFuture result = new StockFuture();
         StockBase targetDayData = stockBases.get(targetIndex);
-        result.date = targetDayData.getTime();
-        result.close = targetDayData.getClose().doubleValue();
-        double currentClose = result.close;
+        result.setDate(targetDayData.getTime());
+        result.setClose(targetDayData.getClose());
+        double currentClose = result.getClose().doubleValue();
 
         // 3. 计算移动平均线 (MA)
         // 3.1 计算20日MA (需要目标日前至少19天数据)
@@ -58,7 +60,7 @@ public class StockFeatureCalculator {
             for (int j = targetIndex - 19; j <= targetIndex; j++) {
                 sum20 += closes.get(j);
             }
-            result.ma20d = sum20 / 20.0;
+            result.setMa20d(BigDecimal.valueOf(sum20 / 20.0));
         }
 
         // 3.2 计算60日MA (需要目标日前至少59天数据)
@@ -67,11 +69,11 @@ public class StockFeatureCalculator {
             for (int j = targetIndex - 59; j <= targetIndex; j++) {
                 sum60 += closes.get(j);
             }
-            result.ma60d = sum60 / 60.0;
+            result.setMa60d(BigDecimal.valueOf(sum60 / 60.0));
 
             // 计算趋势位置: 收盘价 / 60日MA
-            if (result.ma60d != 0) {
-                result.trendPosition = currentClose / result.ma60d;
+            if (result.getMa60d() != null && result.getMa60d().doubleValue() != 0) {
+                result.setTrendPosition(BigDecimal.valueOf(currentClose / result.getMa60d().doubleValue()));
             }
         }
 
@@ -80,7 +82,7 @@ public class StockFeatureCalculator {
         if (targetIndex >= 5) {
             double price5DaysAgo = closes.get(targetIndex - 5);
             if (price5DaysAgo != 0) {
-                result.return5d = (currentClose - price5DaysAgo) / price5DaysAgo;
+                result.setReturn5d(BigDecimal.valueOf((currentClose - price5DaysAgo) / price5DaysAgo));
             }
         }
 
@@ -88,7 +90,7 @@ public class StockFeatureCalculator {
         if (targetIndex >= 20) {
             double price20DaysAgo = closes.get(targetIndex - 20);
             if (price20DaysAgo != 0) {
-                result.return20d = (currentClose - price20DaysAgo) / price20DaysAgo;
+                result.setReturn20d(BigDecimal.valueOf((currentClose - price20DaysAgo) / price20DaysAgo));
             }
         }
 
@@ -103,7 +105,7 @@ public class StockFeatureCalculator {
                 }
             }
             if (!dailyReturns.isEmpty()) {
-                result.volatility20d = calculateStdDev(dailyReturns);
+                result.setVolatility20d(BigDecimal.valueOf(calculateStdDev(dailyReturns)));
             }
         }
 
@@ -118,7 +120,7 @@ public class StockFeatureCalculator {
                     lowerCount++;
                 }
             }
-            result.pricePercentile250d = (double) lowerCount / 250;
+            result.setPricePercentile250d(BigDecimal.valueOf((double) lowerCount / 250));
         }
 
 
@@ -133,7 +135,7 @@ public class StockFeatureCalculator {
                     lowerCount++;
                 }
             }
-            result.pricePercentile100d = (double) lowerCount / 100;
+            result.setPricePercentile100d(BigDecimal.valueOf((double) lowerCount / 100));
         }
 
         // 7. 生成20日突破信号 (判断是否创20日新高)
@@ -145,7 +147,7 @@ public class StockFeatureCalculator {
                     max20d = closes.get(j);
                 }
             }
-            result.highest20d = max20d;
+            result.setHighest20d(BigDecimal.valueOf(max20d));
 
             // 判断当前收盘价是否高于前一日计算的20日最高价
             if (targetIndex > 20) {
@@ -155,7 +157,7 @@ public class StockFeatureCalculator {
                         prevMax20d = closes.get(j);
                     }
                 }
-                result.isNew20dHigh = currentClose > prevMax20d;
+                result.setIsNew20dHigh(currentClose > prevMax20d);
             }
         }
 
@@ -173,46 +175,4 @@ public class StockFeatureCalculator {
         return Math.sqrt(variance);
     }
 
-
-    // 股票数据点类（保持原有字段）
-    public static class StockFuture {
-        public LocalDate date;
-        public double close;
-        public Double ma20d;             // 20日移动平均线
-        public Double ma60d;             // 60日移动平均线
-        public Double trendPosition;     // 趋势位置（收盘价/60日MA）
-        public Double return5d;          // 5日收益率
-        public Double return20d;         // 20日收益率
-        public Double volatility20d;     // 20日波动率
-        public Double pricePercentile250d; // 250日价格分位数
-        public Double pricePercentile100d; // 250日价格分位数
-        public Double highest20d;        // 20日内最高价
-        public Boolean isNew20dHigh;     // 是否创20日新高
-
-        // 为了方便使用，添加一个构造方法
-        public StockFuture() {
-        }
-
-        public StockFuture(LocalDate date, double close) {
-            this.date = date;
-            this.close = close;
-        }
-
-        // 可以添加toString方法方便查看
-        @Override
-        public String toString() {
-            return String.format(
-                    "StockData{date=%s, close=%.2f, ma20d=%.2f, ma60d=%.2f, trendPos=%.3f, " +
-                            "return20d=%.3f, vol20d=%.3f, percentile250d=%.3f, isNewHigh=%s}",
-                    date, close,
-                    ma20d != null ? ma20d : 0.0,
-                    ma60d != null ? ma60d : 0.0,
-                    trendPosition != null ? trendPosition : 0.0,
-                    return20d != null ? return20d : 0.0,
-                    volatility20d != null ? volatility20d : 0.0,
-                    pricePercentile250d != null ? pricePercentile250d : 0.0,
-                    isNew20dHigh != null ? isNew20dHigh : false
-            );
-        }
-    }
 }

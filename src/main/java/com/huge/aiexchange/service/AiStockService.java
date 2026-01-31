@@ -24,19 +24,19 @@ public class AiStockService {
 
     /**
      * 获取AI持仓信息
-     * @param aiCode AI代码
+     * @param moduleId 模型ID
      * @return AI持仓信息
      */
-    public AiIncomeVO getPositionInfo(Integer moduleId, String aiCode){
+    public AiIncomeVO getPositionInfo(Integer moduleId){
         // 创建AI持仓信息对象
         AiIncomeVO aiIncomeVO = new AiIncomeVO();
 
         // 查询ai_position表中的最新更新日期
-        LocalDate latestUpdateDate = getLatestUpdateDateFromAiPosition(aiCode);
+        LocalDate latestUpdateDate = getLatestUpdateDateFromAiPosition(moduleId);
 
         // 如果最近5天内有更新，直接读取ai_position表
         if (latestUpdateDate != null && !latestUpdateDate.isBefore(SystemConstants.TODAY_MINUS_5)) {
-            return getPositionInfoFromDb(aiCode);
+            return getPositionInfoFromDb(moduleId);
         }
 
         // 需要重新计算：从上一次更新日期到today-5的交易收益
@@ -44,20 +44,20 @@ public class AiStockService {
         LocalDate endDate = SystemConstants.TODAY_MINUS_5;
 
         // 从transaction_detail表统计收益
-        recalculateAndUpdatePosition(moduleId, aiCode, startDate, endDate);
+        recalculateAndUpdatePosition(moduleId, startDate, endDate);
 
         // 重新从ai_position表读取
-        return getPositionInfoFromDb(aiCode);
+        return getPositionInfoFromDb(moduleId);
     }
 
     /**
      * 从ai_position表获取最新更新日期
-     * @param aiCode AI代码
+     * @param moduleId 模型ID
      * @return 最新更新日期
      */
-    private LocalDate getLatestUpdateDateFromAiPosition(String aiCode) {
+    private LocalDate getLatestUpdateDateFromAiPosition(Integer moduleId) {
         // 查询该AI模型的所有持仓记录，获取最新的update_time
-        List<AiPosition> positions = aiPositionMapper.selectByAiCode(aiCode);
+        List<AiPosition> positions = aiPositionMapper.selectByModelId(moduleId);
         if (positions == null || positions.isEmpty()) {
             return null;
         }
@@ -70,17 +70,17 @@ public class AiStockService {
 
     /**
      * 从ai_position表直接获取持仓信息
-     * @param aiCode AI代码
+     * @param moduleId 模型ID
      * @return AI持仓信息
      */
-    private AiIncomeVO getPositionInfoFromDb(String aiCode) {
+    private AiIncomeVO getPositionInfoFromDb(Integer moduleId) {
         AiIncomeVO aiIncomeVO = new AiIncomeVO();
 
         // 从数据库中获取数据
-        Integer positionCount = aiPositionMapper.selectPositionCountByAiCode(aiCode);
-        Integer profitCount = aiPositionMapper.selectProfitCountByAiCode(aiCode);
-        BigDecimal totalProfit = aiPositionMapper.selectTotalProfitByAiCode(aiCode);
-        List<AiPosition> positions = aiPositionMapper.selectByAiCode(aiCode);
+        Integer positionCount = aiPositionMapper.selectPositionCountByModelId(moduleId);
+        Integer profitCount = aiPositionMapper.selectProfitCountByModelId(moduleId);
+        BigDecimal totalProfit = aiPositionMapper.selectTotalProfitByModelId(moduleId);
+        List<AiPosition> positions = aiPositionMapper.selectByModelId(moduleId);
 
         // 设置数据
         aiIncomeVO.setIncome(totalProfit != null ? totalProfit.intValue() : 0); // 总收益
@@ -115,11 +115,10 @@ public class AiStockService {
     /**
      * 重新计算并更新持仓信息
      * @param moduleId 模型ID
-     * @param aiCode AI代码
      * @param startDate 开始日期
      * @param endDate 结束日期
      */
-    private void recalculateAndUpdatePosition(Integer moduleId, String aiCode, LocalDate startDate, LocalDate endDate) {
+    private void recalculateAndUpdatePosition(Integer moduleId, LocalDate startDate, LocalDate endDate) {
         // 从transaction_detail表统计每支股票的收益
         List<TransactionDetailMapper.StockProfitVO> stockProfits = 
                 transactionDetailMapper.selectStockProfitByModuleIdAndDateRange(moduleId, startDate, endDate);
@@ -136,7 +135,7 @@ public class AiStockService {
             Integer tradeCount = stockProfit.getTradeCount();
 
             // 查询是否已有持仓记录
-            AiPosition existingPosition = aiPositionMapper.selectByAiCodeAndStockCode(aiCode, stockCode);
+            AiPosition existingPosition = aiPositionMapper.selectByModelIdAndStockCode(moduleId, stockCode);
 
             if (existingPosition != null) {
                 // 更新已有持仓
@@ -153,7 +152,7 @@ public class AiStockService {
             } else {
                 // 创建新持仓
                 AiPosition newPosition = new AiPosition();
-                newPosition.setAiCode(aiCode);
+                newPosition.setModelId(moduleId);
                 newPosition.setStockCode(stockCode);
                 newPosition.setStockName(stockName);
                 newPosition.setPosition(tradeCount);

@@ -9,11 +9,14 @@ import com.huge.aiexchange.Utility.StockFeatureCalculator;
 import com.huge.aiexchange.constant.SystemConstants;
 import com.huge.aiexchange.entity.pojo.Response;
 import com.huge.aiexchange.entity.pojo.StockBase;
+import com.huge.aiexchange.entity.pojo.StockFuture;
 import com.huge.aiexchange.entity.vo.StockInfoVO;
 import com.huge.aiexchange.mapper.StockBaseMapper;
+import com.huge.aiexchange.mapper.StockFutureMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -28,19 +31,34 @@ public class AlphaVantageService {
     @Resource
     private StockBaseMapper stockBaseMapper;
 
+    @Resource
+    private StockFutureMapper stockFutureMapper;
+
     public Response<StockInfoVO> getBaseByAlpha(String stockCode) {
 
         List<StockBase> stockBases;
-        StockFeatureCalculator.StockFuture stockFuture;
+        StockFuture stockFuture;
         
         // 先从DB获取最近5天的数据，用于判断是否有最新数据
         List<StockBase> recentData = stockBaseMapper.selectByStockCodeAndDateAfter(stockCode, SystemConstants.TODAY_MINUS_5);
         
-        // 如果DB中有最近5天的数据，拉取该股票的所有历史数据
+        // 如果DB中有最近5天的数据，拉取该股票的所有历史数据和future数据
         if (recentData != null && !recentData.isEmpty()) {
             stockBases = stockBaseMapper.selectAllByStockCode(stockCode);
             Collections.reverse(stockBases);
-            stockFuture = StockFeatureCalculator.calculateFeaturesForDate(stockBases, LocalDate.now().minusDays(10));
+            
+            // 从stock_future表中获取future数据
+            stockFuture = stockFutureMapper.selectByStockCodeAndDate(stockCode, LocalDate.now().minusDays(10));
+            
+            // 如果DB中没有future数据，则计算并保存
+            if (stockFuture == null) {
+                stockFuture = StockFeatureCalculator.calculateFeaturesForDate(stockBases, LocalDate.now().minusDays(10));
+                if (stockFuture != null) {
+                    stockFuture.setStockCode(stockCode);
+                    stockFutureMapper.insert(stockFuture);
+                }
+            }
+            
             return Response.success(new StockInfoVO(stockBases, stockFuture, null));
         }
 
@@ -60,8 +78,15 @@ public class AlphaVantageService {
         Collections.reverse(stockBases);
         stockFuture = StockFeatureCalculator.calculateFeaturesForDate(stockBases, LocalDate.now().minusDays(10));
 
-        // 保存数据到DB
+
+        // 保存base到DB
         saveStockBasesToDb(stockBases);
+        
+        // 保存future到DB
+        if (stockFuture != null) {
+            stockFuture.setStockCode(stockCode);
+            stockFutureMapper.insert(stockFuture);
+        }
 
         return Response.success(new StockInfoVO(stockBases, stockFuture, response.getMetaData()));
 
