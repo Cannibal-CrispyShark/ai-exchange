@@ -6,9 +6,12 @@ import com.crazzyghost.alphavantage.parameters.OutputSize;
 import com.crazzyghost.alphavantage.timeseries.response.StockUnit;
 import com.crazzyghost.alphavantage.timeseries.response.TimeSeriesResponse;
 import com.huge.aiexchange.Utility.StockFeatureCalculator;
+import com.huge.aiexchange.constant.SystemConstants;
 import com.huge.aiexchange.entity.pojo.Response;
 import com.huge.aiexchange.entity.pojo.StockBase;
 import com.huge.aiexchange.entity.vo.StockInfoVO;
+import com.huge.aiexchange.mapper.StockBaseMapper;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -22,13 +25,26 @@ import static java.lang.Thread.sleep;
 @Service
 public class AlphaVantageService {
 
+    @Resource
+    private StockBaseMapper stockBaseMapper;
+
     public Response<StockInfoVO> getBaseByAlpha(String stockCode) {
 
         List<StockBase> stockBases;
         StockFeatureCalculator.StockFuture stockFuture;
+        
+        // 先从DB获取最近5天的数据，用于判断是否有最新数据
+        List<StockBase> recentData = stockBaseMapper.selectByStockCodeAndDateAfter(stockCode, SystemConstants.TODAY_MINUS_5);
+        
+        // 如果DB中有最近5天的数据，拉取该股票的所有历史数据
+        if (recentData != null && !recentData.isEmpty()) {
+            stockBases = stockBaseMapper.selectAllByStockCode(stockCode);
+            Collections.reverse(stockBases);
+            stockFuture = StockFeatureCalculator.calculateFeaturesForDate(stockBases, LocalDate.now().minusDays(10));
+            return Response.success(new StockInfoVO(stockBases, stockFuture, null));
+        }
 
-        //todo 先从db获取，如果没有再从api获取
-        //从api获取
+        // DB中没有最近5天的数据，从API获取
         TimeSeriesResponse response = AlphaVantage.api()
                 .timeSeries()
                 .daily()
@@ -40,48 +56,49 @@ public class AlphaVantageService {
             return Response.fail(response.getErrorMessage());
         }
 
-        stockBases = StockUnits2StockBase(response.getStockUnits());
+        stockBases = StockUnits2StockBase(response.getStockUnits(), stockCode);
         Collections.reverse(stockBases);
         stockFuture = StockFeatureCalculator.calculateFeaturesForDate(stockBases, LocalDate.now().minusDays(10));
 
-        //todo 存base进db，feature进redis
+        // 保存数据到DB
+        saveStockBasesToDb(stockBases);
 
-
-        return Response.success(new StockInfoVO(stockBases,stockFuture,response.getMetaData()));
+        return Response.success(new StockInfoVO(stockBases, stockFuture, response.getMetaData()));
 
     }
 
-    public List<StockBase> StockUnits2StockBase(List<StockUnit> stockUnits) {
+    /**
+     * 保存股票数据到数据库
+     * @param stockBases 股票数据列表
+     */
+    private void saveStockBasesToDb(List<StockBase> stockBases) {
+        if (stockBases == null || stockBases.isEmpty()) {
+            return;
+        }
+        
+        // 批量插入数据，忽略重复（使用一个SQL语句）
+        try {
+            stockBaseMapper.batchInsert(stockBases);
+        } catch (Exception e) {
+            // 记录日志，但不影响主流程
+            System.err.println("保存股票数据到DB失败: " + e.getMessage());
+        }
+    }
+
+    public List<StockBase> StockUnits2StockBase(List<StockUnit> stockUnits, String stockCode) {
         List<StockBase> stockBases = new ArrayList<>();
         for (StockUnit stockUnit : stockUnits) {
             StockBase stockBase = new StockBase();
-            stockBase.setDate(LocalDate.parse(stockUnit.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            stockBase.setClose(stockUnit.getClose());
+            stockBase.setStockCode(stockCode);
+            stockBase.setTime(LocalDate.parse(stockUnit.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            stockBase.setClose(new java.math.BigDecimal(stockUnit.getClose()));
+            stockBase.setOpen(new java.math.BigDecimal(stockUnit.getOpen()));
+            stockBase.setHigh(new java.math.BigDecimal(stockUnit.getHigh()));
+            stockBase.setLow(new java.math.BigDecimal(stockUnit.getLow()));
+            stockBase.setVolume(stockUnit.getVolume());
             stockBases.add(stockBase);
         }
         return stockBases;
     }
 
-    public static void handleSuccess(TimeSeriesResponse response) {
-        // 修复：更正变量名并添加简单的打印逻辑替代plotGraph
-        List<StockUnit> stockUnits = response.getStockUnits();
-        System.out.println("Retrieved " + stockUnits.size() + " stock units");
-        // 如果需要绘图功能，请添加相应的绘图库依赖和实现
-        for (StockUnit stockUnit : stockUnits) {
-            System.out.println("Date: " + stockUnit.getDate());
-            System.out.println("Open: " + stockUnit.getOpen());
-            System.out.println("High: " + stockUnit.getHigh());
-            System.out.println("Low: " + stockUnit.getLow());
-            System.out.println("Close: " + stockUnit.getClose());
-            System.out.println("Adj Close: " + stockUnit.getAdjustedClose());
-            System.out.println("Volume: " + stockUnit.getVolume());
-            System.out.println("Dividend Amount: " + stockUnit.getDividendAmount());
-            System.out.println("Split Coefficient: " + stockUnit.getSplitCoefficient());
-            System.out.println();
-        }
-    }
-
-    public static void handleFailure(AlphaVantageException error) {
-        System.out.println("API request failed: " + error.getMessage());
-    }
 }

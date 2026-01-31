@@ -11,15 +11,11 @@ import java.util.stream.Collectors;
 public class StockFeatureCalculator {
 
     private static Boolean isStockBaseValid(List<StockBase> stockBases, int index) {
-
-        for (int i = index - 59; i <= index; i++) {
-            if (i<0 || stockBases.get(i) == null ||
-                    stockBases.get(i).close == null ||
-                    stockBases.get(i).date == null) {
-                return false;
-            }
+        if (index < 0 || index >= stockBases.size()) {
+            return false;
         }
-        return true;
+        StockBase stockBase = stockBases.get(index);
+        return stockBase != null && stockBase.getClose() != null && stockBase.getTime() != null;
     }
 
     /**
@@ -32,8 +28,8 @@ public class StockFeatureCalculator {
     public static StockFuture calculateFeaturesForDate(List<StockBase> stockBases, LocalDate targetDate) {
         // 1. 找到目标日期在列表中的索引
         int targetIndex = -1;
-        List<LocalDate> dates = stockBases.stream().map(d -> d.date).collect(Collectors.toList());
-        List<Double> closes = stockBases.stream().map(d -> d.close).collect(Collectors.toList());
+        List<LocalDate> dates = stockBases.stream().map(d -> d.getTime()).collect(Collectors.toList());
+        List<Double> closes = stockBases.stream().map(d -> d.getClose().doubleValue()).collect(Collectors.toList());
 
         for (int i = 0; i < dates.size(); i++) {
             if (dates.get(i).equals(targetDate)) {
@@ -42,21 +38,17 @@ public class StockFeatureCalculator {
             }
         }
 
-        // 检查数据是否完整
-        if (!isStockBaseValid(stockBases, targetIndex)){
-            throw new IllegalArgumentException("数据不完整");
-        }
-
+        // 如果目标日期不存在，返回空的结果对象
         if (targetIndex == -1) {
             System.out.println("Warning: 目标日期不在数据集中。");
-            return null;
+            return new StockFuture();
         }
 
         // 2. 创建结果对象，并设置基础信息
         StockFuture result = new StockFuture();
         StockBase targetDayData = stockBases.get(targetIndex);
-        result.date = targetDayData.date;
-        result.close = targetDayData.close;
+        result.date = targetDayData.getTime();
+        result.close = targetDayData.getClose().doubleValue();
         double currentClose = result.close;
 
         // 3. 计算移动平均线 (MA)
@@ -121,11 +113,27 @@ public class StockFeatureCalculator {
             int lowerCount = 0;
             // 遍历目标日前250个交易日
             for (int j = targetIndex - 249; j <= targetIndex; j++) {
-                if (!closes.get(j).isNaN() && closes.get(j) < currentPrice) {
+                double price = closes.get(j);
+                if (!Double.isNaN(price) && price < currentPrice) {
                     lowerCount++;
                 }
             }
             result.pricePercentile250d = (double) lowerCount / 250;
+        }
+
+
+        // 6. 计算100日价格分位数
+        if (targetIndex >= 100) {
+            double currentPrice = currentClose;
+            int lowerCount = 0;
+            // 遍历目标日前100个交易日
+            for (int j = targetIndex - 99; j <= targetIndex; j++) {
+                double price = closes.get(j);
+                if (!Double.isNaN(price) && price < currentPrice) {
+                    lowerCount++;
+                }
+            }
+            result.pricePercentile100d = (double) lowerCount / 100;
         }
 
         // 7. 生成20日突破信号 (判断是否创20日新高)
@@ -177,6 +185,7 @@ public class StockFeatureCalculator {
         public Double return20d;         // 20日收益率
         public Double volatility20d;     // 20日波动率
         public Double pricePercentile250d; // 250日价格分位数
+        public Double pricePercentile100d; // 250日价格分位数
         public Double highest20d;        // 20日内最高价
         public Boolean isNew20dHigh;     // 是否创20日新高
 

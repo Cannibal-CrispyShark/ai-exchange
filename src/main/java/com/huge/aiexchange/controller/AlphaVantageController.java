@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/stocks")
+@org.springframework.web.bind.annotation.CrossOrigin(origins = "*")
 public class AlphaVantageController {
 
     @Resource

@@ -1,6 +1,17 @@
 spring:
   application:
     name: ai-exchange
+  datasource:
+    url: jdbc:mysql://localhost:3306/ai_exchange?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 
 langchain4j:
@@ -14,3 +25,4 @@ langchain4j:
 alphavantage:
   api:
     key: IHIRE7VGBBR8EPVQ
+
