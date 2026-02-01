@@ -19,12 +19,15 @@ public class InvestmentDecisionController {
     /**
      * 执行AI投资决策
      * @param modelId AI模型ID
+     * @param riskPreference 风险偏好 (conservative/moderate/aggressive)
      * @return 投资决策结果
      */
     @GetMapping("/{modelId}/decide")
-    public Response makeInvestmentDecision(@PathVariable Integer modelId) {
+    public Response makeInvestmentDecision(
+            @PathVariable Integer modelId,
+            @RequestParam(defaultValue = "moderate") String riskPreference) {
         AiInvestmentService.InvestmentDecisionResult result = 
-                aiInvestmentService.makeInvestmentDecision(modelId);
+                aiInvestmentService.makeInvestmentDecision(modelId, riskPreference);
         
         if (result.isSuccess()) {
             return Response.success(result.getDecisionData());

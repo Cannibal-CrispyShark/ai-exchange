@@ -40,6 +40,7 @@
             <artifactId>spring-boot-starter-webmvc-test</artifactId>
             <scope>test</scope>
         </dependency>
+
         <!--通义千问-->
         <dependency>
             <groupId>dev.langchain4j</groupId>
@@ -71,10 +72,26 @@
         </dependency>
 
         <dependency>
-            <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j</artifactId>
+            <groupId>dev.langchain4j</groupId>
             <version>1.8.0</version>
         </dependency>
+
+
+<!--        &lt;!&ndash;千帆&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>dev.langchain4j</groupId>-->
+<!--            <artifactId>langchain4j-community-qianfan-spring-boot-starter</artifactId>-->
+<!--            <version>1.6.0-beta12</version>-->
+<!--        </dependency>-->
+
+
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-community-qianfan</artifactId>
+            <version>1.9.1-beta17</version>
+        </dependency>
+
 
         <dependency>
             <groupId>org.jsoup</groupId>

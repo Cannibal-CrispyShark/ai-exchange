@@ -73,6 +73,19 @@ public class AiModelController {
     }
 
     /**
+     * 获取所有AI模型列表
+     * @return 模型列表
+     */
+    @GetMapping("/list")
+    public Response getAllAiModels() {
+        try {
+            return Response.success(aiModelInfoMapper.selectList(null));
+        } catch (Exception e) {
+            return Response.fail(e.getMessage());
+        }
+    }
+
+    /**
      * AI交易对话
      * @param modelId 模型ID
      * @param message 用户消息

@@ -1,30 +1,71 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import StockChart from '@/components/StockChart';
 import AIPositionPanel from '@/components/AIPositionPanel';
 import ChatInterface from '@/components/ChatInterface';
 import AIDecisionPanel from '@/components/AIDecisionPanel';
 import { useStockData } from '@/hooks/useStockData';
-import { Search, RefreshCw, Loader2 } from 'lucide-react';
+import { Search, RefreshCw, Loader2, ChevronDown } from 'lucide-react';
+
+// AI模型类型
+interface AiModel {
+  id: number;
+  modelName: string;
+  deposit: number;
+  temperature: number;
+}
 
 export default function Home() {
   const [stockCode, setStockCode] = useState('AAPL'); // 默认股票代码
   const [aiCode, setAiCode] = useState('AI001'); // 默认AI模型代码
+  const [selectedModelId, setSelectedModelId] = useState<number>(1); // 选中的模型ID
   const [inputStockCode, setInputStockCode] = useState('AAPL');
-  const [inputAiCode, setInputAiCode] = useState('AI001');
+  const [aiModels, setAiModels] = useState<AiModel[]>([]); // AI模型列表
+  const [modelsLoading, setModelsLoading] = useState(false);
 
   const { stockInfo, aiIncome, positions, loading, error, refetch } = useStockData(
     stockCode,
     aiCode
   );
 
+  // 获取AI模型列表
+  useEffect(() => {
+    fetchAiModels();
+  }, []);
+
+  const fetchAiModels = async () => {
+    setModelsLoading(true);
+    try {
+      const response = await fetch('/api/ai-model/list');
+      const result = await response.json();
+      if (result.body) {
+        setAiModels(result.body);
+        // 如果有模型，默认选中第一个
+        if (result.body.length > 0 && !selectedModelId) {
+          setSelectedModelId(result.body[0].id);
+          setAiCode(result.body[0].modelName);
+        }
+      }
+    } catch (err) {
+      console.error('获取AI模型列表失败:', err);
+    } finally {
+      setModelsLoading(false);
+    }
+  };
+
   const handleSearch = () => {
     if (inputStockCode.trim()) {
       setStockCode(inputStockCode.trim().toUpperCase());
     }
-    if (inputAiCode.trim()) {
-      setAiCode(inputAiCode.trim());
+  };
+
+  const handleModelChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const modelId = parseInt(e.target.value);
+    setSelectedModelId(modelId);
+    const selectedModel = aiModels.find(m => m.id === modelId);
+    if (selectedModel) {
+      setAiCode(selectedModel.modelName);
     }
   };
 
@@ -61,17 +102,24 @@ export default function Home() {
                   className="px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white text-sm"
                 />
               </div>
-              {/* AI模型代码输入 */}
+              {/* AI模型选择下拉框 */}
               <div className="flex items-center gap-2">
                 <label className="text-sm text-gray-600 dark:text-gray-400">AI模型:</label>
-                <input
-                  type="text"
-                  value={inputAiCode}
-                  onChange={(e) => setInputAiCode(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="如: AI001"
-                  className="px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white text-sm"
-                />
+                <div className="relative">
+                  <select
+                    value={selectedModelId}
+                    onChange={handleModelChange}
+                    disabled={modelsLoading}
+                    className="px-3 py-1.5 pr-8 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white text-sm appearance-none cursor-pointer min-w-[120px]"
+                  >
+                    {aiModels.map((model) => (
+                      <option key={model.id} value={model.id}>
+                        {model.modelName} (${model.deposit.toFixed(2)})
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
+                </div>
               </div>
               <button
                 onClick={handleSearch}
@@ -145,7 +193,7 @@ export default function Home() {
         <div className="mb-6">
           <AIDecisionPanel
             aiCode={aiCode}
-            modelId={1} // TODO: 从aiCode解析出实际的modelId
+            modelId={selectedModelId}
           />
         </div>
 

@@ -38,11 +38,11 @@ public class AiTradeService {
      * @return 操作结果
      */
     @Transactional
-    public boolean buyStock(Integer moduleId, String modelName, String stockName, String stockCode, int amount) {
+    public String buyStock(Integer moduleId, String modelName, String stockName, String stockCode, int amount) {
         // 从stock_base表获取TODAY_MINUS_5日期的close价格
         BigDecimal price = stockBaseMapper.selectClosePriceByStockCodeAndDate(stockCode, SystemConstants.TODAY_MINUS_5);
         if (price == null) {
-            throw new RuntimeException("无法获取股票" + stockCode + "在" + SystemConstants.TODAY_MINUS_5 + "的收盘价");
+            return "无法获取股票" + stockCode + "在" + SystemConstants.TODAY_MINUS_5 + "的收盘价";
         }
 
         // 计算买入金额（负数表示买入）
@@ -51,13 +51,13 @@ public class AiTradeService {
         // 检查余额是否充足（买入需要扣款，所以检查余额 >= 买入金额）
         BigDecimal currentBalance = aiModelInfoMapper.selectBalanceById(moduleId);
         if (currentBalance == null || currentBalance.compareTo(price.multiply(new BigDecimal(amount))) < 0) {
-            throw new RuntimeException("余额不足，无法买入股票");
+            return "余额不足，无法买入股票";
         }
 
         // 扣款操作
         int deductResult = aiModelInfoMapper.deductBalance(moduleId, price.multiply(new BigDecimal(amount)));
         if (deductResult <= 0) {
-            throw new RuntimeException("扣款失败，余额不足或模型不存在");
+            return "扣款失败,服务端故障";
         }
 
         // 创建交易记录
@@ -70,7 +70,7 @@ public class AiTradeService {
         transactionDetail.setPrice(price);
         transactionDetail.setDate(SystemConstants.TODAY_MINUS_5);
 
-        return transactionDetailMapper.insert(transactionDetail) > 0;
+        return transactionDetailMapper.insert(transactionDetail) > 0? "买入成功" : "买入失败";
     }
 
     /**
@@ -83,7 +83,7 @@ public class AiTradeService {
      * @return 操作结果
      */
     @Transactional
-    public boolean sellStock(Integer moduleId, String modelName, String stockName, String stockCode, int amount) {
+    public String sellStock(Integer moduleId, String modelName, String stockName, String stockCode, int amount) {
         // 从stock_base表获取TODAY_MINUS_5日期的close价格
         BigDecimal price = stockBaseMapper.selectClosePriceByStockCodeAndDate(stockCode, SystemConstants.TODAY_MINUS_5);
         if (price == null) {
@@ -109,7 +109,7 @@ public class AiTradeService {
             throw new RuntimeException("增加余额失败");
         }
 
-        return transactionDetailMapper.insert(transactionDetail) > 0;
+        return transactionDetailMapper.insert(transactionDetail) > 0? "卖出成功" : "卖出失败";
     }
 
 }

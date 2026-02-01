@@ -9,7 +9,8 @@ import lombok.Getter;
 @Getter
 public enum StockCodeEnum {
 
-    APPLE("AAPL", "Apple Inc.");
+    APPLE("AAPL", "Apple Inc."),
+    BTC("BTC", "Bitcoin");
 
 
     /**

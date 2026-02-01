@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Brain, Loader2, TrendingUp, TrendingDown, Shield, Target, AlertTriangle } from 'lucide-react';
+import { Brain, Loader2, TrendingUp, TrendingDown, Shield, Target, AlertTriangle, ChevronDown } from 'lucide-react';
 import type { AiDecisionVO } from '@/types';
 
 interface AIDecisionPanelProps {
@@ -9,10 +9,18 @@ interface AIDecisionPanelProps {
   modelId?: number;
 }
 
+// 风险偏好选项
+const riskPreferences = [
+  { code: 'conservative', name: '保守型', description: '注重本金安全' },
+  { code: 'moderate', name: '稳健型', description: '平衡风险收益' },
+  { code: 'aggressive', name: '激进型', description: '追求高收益' },
+];
+
 export default function AIDecisionPanel({ aiCode, modelId }: AIDecisionPanelProps) {
   const [decision, setDecision] = useState<AiDecisionVO | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [riskPreference, setRiskPreference] = useState('moderate'); // 默认稳健型
 
   const handleMakeDecision = async () => {
     if (!modelId) {
@@ -24,7 +32,7 @@ export default function AIDecisionPanel({ aiCode, modelId }: AIDecisionPanelProp
     setError(null);
 
     try {
-      const response = await fetch(`/api/investment/${modelId}/decide`, {
+      const response = await fetch(`/api/investment/${modelId}/decide?riskPreference=${riskPreference}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -88,6 +96,10 @@ export default function AIDecisionPanel({ aiCode, modelId }: AIDecisionPanelProp
     }
   };
 
+  const getRiskPreferenceName = (code: string) => {
+    return riskPreferences.find(r => r.code === code)?.name || code;
+  };
+
   return (
     <div className="w-full bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6">
       {/* 标题栏 */}
@@ -105,23 +117,45 @@ export default function AIDecisionPanel({ aiCode, modelId }: AIDecisionPanelProp
             )}
           </div>
         </div>
-        <button
-          onClick={handleMakeDecision}
-          disabled={loading || !modelId}
-          className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {loading ? (
-            <>
-              <Loader2 className="w-4 h-4 animate-spin" />
-              决策中...
-            </>
-          ) : (
-            <>
-              <Brain className="w-4 h-4" />
-              生成决策
-            </>
-          )}
-        </button>
+        
+        {/* 风险偏好选择和生成决策按钮 */}
+        <div className="flex items-center gap-3">
+          {/* 风险偏好下拉框 */}
+          <div className="relative">
+            <select
+              value={riskPreference}
+              onChange={(e) => setRiskPreference(e.target.value)}
+              disabled={loading}
+              className="px-3 py-2 pr-8 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-800 dark:text-white text-sm appearance-none cursor-pointer"
+            >
+              {riskPreferences.map((risk) => (
+                <option key={risk.code} value={risk.code}>
+                  {risk.name} - {risk.description}
+                </option>
+              ))}
+            </select>
+            <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
+          </div>
+          
+          {/* 生成决策按钮 */}
+          <button
+            onClick={handleMakeDecision}
+            disabled={loading || !modelId}
+            className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                决策中...
+              </>
+            ) : (
+              <>
+                <Brain className="w-4 h-4" />
+                生成决策
+              </>
+            )}
+          </button>
+        </div>
       </div>
 
       {/* 错误提示 */}
@@ -139,9 +173,14 @@ export default function AIDecisionPanel({ aiCode, modelId }: AIDecisionPanelProp
         <div className="space-y-6">
           {/* 决策总结 */}
           <div className="p-4 bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-900/20 dark:to-indigo-900/20 rounded-lg">
-            <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-              决策总结
-            </h3>
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                决策总结
+              </h3>
+              <span className="px-2 py-1 text-xs rounded-full bg-purple-100 dark:bg-purple-800 text-purple-700 dark:text-purple-300">
+                {getRiskPreferenceName(riskPreference)}
+              </span>
+            </div>
             <p className="text-gray-900 dark:text-white">{decision.summary}</p>
           </div>
 
@@ -280,7 +319,8 @@ export default function AIDecisionPanel({ aiCode, modelId }: AIDecisionPanelProp
       {!decision && !loading && !error && (
         <div className="text-center py-12 text-gray-500 dark:text-gray-400">
           <Brain className="w-16 h-16 mx-auto mb-4 opacity-50" />
-          <p>点击"生成决策"按钮，让AI为您分析并做出投资决策</p>
+          <p className="mb-2">选择风险偏好并点击"生成决策"按钮</p>
+          <p className="text-sm">让AI根据您的风险偏好分析并做出投资决策</p>
         </div>
       )}
     </div>
