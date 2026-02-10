@@ -3,21 +3,26 @@ package com.huge.aiexchange.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.huge.aiexchange.constant.SystemConstants;
 import com.huge.aiexchange.entity.pojo.AiModelInfo;
+import com.huge.aiexchange.entity.pojo.AiPosition;
 import com.huge.aiexchange.entity.pojo.StockFuture;
 import com.huge.aiexchange.entity.vo.AiDecisionVO;
 import com.huge.aiexchange.enums.RiskPreferenceEnum;
 import com.huge.aiexchange.enums.StockCodeEnum;
 import com.huge.aiexchange.mapper.AiModelInfoMapper;
+import com.huge.aiexchange.mapper.AiPositionMapper;
 import com.huge.aiexchange.mapper.StockFutureMapper;
 import com.huge.aiexchange.service.inter.AiTradeAssistant;
 import com.huge.aiexchange.service.inter.AssistantInter;
 import com.huge.aiexchange.tool.AiTradeTool;
 import dev.langchain4j.model.chat.ChatModel;
-import dev.langchain4j.service.AiServices;
 import jakarta.annotation.Resource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StreamUtils;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +38,9 @@ public class AiInvestmentService {
 
     @Resource
     private StockFutureMapper stockFutureMapper;
+
+    @Resource
+    private AiPositionMapper aiPositionMapper;
 
     @Resource
     private ChatModel qwenChatModel;
@@ -53,6 +61,9 @@ public class AiInvestmentService {
     private AiTradeAssistant qianfanAssistant;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
+
+    // Prompt模板缓存
+    private String promptTemplate;
 
     /**
      * AI投资决策结果
@@ -96,16 +107,19 @@ public class AiInvestmentService {
             // 3. 获取经典股票特征数据
             List<StockFeatureInfo> stockFeatures = getStockFeatures();
 
-            // 4. 构建Prompt（根据风险偏好）
-            String prompt = buildStructuredPrompt(aiModel, stockFeatures, riskPref);
+            // 4. 获取当前持仓数据
+            List<AiPosition> positions = aiPositionMapper.selectByModelId(modelId);
 
-            // 5. 调用AI进行决策
+            // 5. 构建Prompt（根据风险偏好和持仓数据）
+            String prompt = buildStructuredPrompt(aiModel, stockFeatures, riskPref, positions);
+
+            // 6. 调用AI进行决策
             String aiResponse = getAssistant(aiModel.getModelName()).getAnswer(modelId, prompt);
 
-            // 6. 解析AI的JSON响应
+            // 7. 解析AI的JSON响应
             AiDecisionVO decisionVO = parseAiResponse(aiResponse);
 
-            // 7. 执行交易决策
+            // 8. 执行交易决策
             if (decisionVO.getTradeDecisions() != null) {
                 executeTradeDecisions(modelId, aiModel.getModelName(), decisionVO.getTradeDecisions());
             }
@@ -177,13 +191,13 @@ public class AiInvestmentService {
                 String message = "";
 
                 if ("BUY".equalsIgnoreCase(decision.getAction())) {
-                    result = aiTradeTool.buyStock(modelId, modelName, decision.getStockName(), 
+                    message = aiTradeTool.buyStock(modelId, modelName, decision.getStockName(), 
                             decision.getStockCode(), decision.getAmount());
-                    message = result ? "买入成功" : "买入失败";
+                    result = message.contains("成功");
                 } else if ("SELL".equalsIgnoreCase(decision.getAction())) {
-                    result = aiTradeTool.sellStock(modelId, modelName, decision.getStockName(), 
+                    message = aiTradeTool.sellStock(modelId, modelName, decision.getStockName(), 
                             decision.getStockCode(), decision.getAmount());
-                    message = result ? "卖出成功" : "卖出失败";
+                    result = message.contains("成功");
                 } else if ("HOLD".equalsIgnoreCase(decision.getAction())) {
                     result = true;
                     message = "保持持仓";
@@ -223,123 +237,164 @@ public class AiInvestmentService {
     }
 
     /**
-     * 构建结构化Prompt（根据风险偏好）
-     * @param aiModel AI模型信息
-     * @param stockFeatures 股票特征列表
-     * @param riskPreference 风险偏好
-     * @return Prompt字符串
+     * 构建持仓数据字符串
+     * @param positions 持仓列表
+     * @return 格式化后的持仓数据字符串
      */
-    private String buildStructuredPrompt(AiModelInfo aiModel, List<StockFeatureInfo> stockFeatures, RiskPreferenceEnum riskPreference) {
-        StringBuilder prompt = new StringBuilder();
-
-        prompt.append("你是一个专业的股票投资决策专家。请根据以下信息做出投资决策。\n\n");
-
-        // AI账户信息
-        prompt.append("【你的账户信息】\n");
-        prompt.append("- 模型名称: ").append(aiModel.getModelName()).append("\n");
-        prompt.append("- 当前余额: $").append(aiModel.getDeposit()).append("\n");
-        prompt.append("- 投资风格: ").append(riskPreference.getDisplayName()).append("\n");
-        prompt.append("- 风险偏好描述: ").append(riskPreference.getDescription()).append("\n\n");
-
-        // 根据风险偏好添加特定的投资指导
-        prompt.append("【投资指导】\n");
-        switch (riskPreference) {
-            case CONSERVATIVE:
-                prompt.append("作为保守型投资者，你应该：\n");
-                prompt.append("- 优先保护本金，避免大额亏损\n");
-                prompt.append("- 选择波动性低、基本面稳健的股票\n");
-                prompt.append("- 避免追高，等待回调后再买入\n");
-                prompt.append("- 设置严格的止损点（如-5%）\n");
-                prompt.append("- 保持较高的现金比例（30%-50%）\n");
-                prompt.append("- 优先考虑分红稳定的蓝筹股\n\n");
-                break;
-            case MODERATE:
-                prompt.append("作为稳健型投资者，你应该：\n");
-                prompt.append("- 平衡风险与收益，适度承担风险\n");
-                prompt.append("- 关注成长性和价值性的平衡\n");
-                prompt.append("- 分散投资，不把所有资金投入单一股票\n");
-                prompt.append("- 设置合理的止损点（如-10%）\n");
-                prompt.append("- 保持适度的现金比例（20%-30%）\n");
-                prompt.append("- 结合技术分析和基本面分析做决策\n\n");
-                break;
-            case AGGRESSIVE:
-                prompt.append("作为激进型投资者，你应该：\n");
-                prompt.append("- 追求高收益，愿意承担较高风险\n");
-                prompt.append("- 关注高成长性股票，如科技股\n");
-                prompt.append("- 敢于在趋势确立时追涨\n");
-                prompt.append("- 设置较宽松的止损点（如-15%）\n");
-                prompt.append("- 保持较低的现金比例（10%-20%）\n");
-                prompt.append("- 积极参与市场热点，把握波段机会\n\n");
-                break;
+    private String buildPositionData(List<AiPosition> positions) {
+        if (positions == null || positions.isEmpty()) {
+            return "当前无持仓\n";
         }
 
-        // 股票特征数据
-        prompt.append("【可选股票及其特征数据】\n");
+        StringBuilder sb = new StringBuilder();
+        sb.append("股票代码 | 股票名称 | 持仓数量 | 平均成本 | 已实现收益\n");
+        sb.append("---------|----------|----------|----------|----------\n");
+        
+        for (AiPosition position : positions) {
+            sb.append(String.format("%-8s | %-8s | %8d | %8s | %10s\n",
+                position.getStockCode(),
+                position.getStockName(),
+                position.getPosition(),
+                position.getAverageCost() != null ? "$" + position.getAverageCost() : "$0.00",
+                position.getProfit() != null ? "$" + position.getProfit() : "$0.00"
+            ));
+        }
+        
+        return sb.toString();
+    }
+
+    /**
+     * 构建股票特征数据字符串
+     * @param stockFeatures 股票特征列表
+     * @return 格式化后的股票特征数据字符串
+     */
+    private String buildStockFeaturesData(List<StockFeatureInfo> stockFeatures) {
+        StringBuilder sb = new StringBuilder();
+        
         for (StockFeatureInfo info : stockFeatures) {
             StockCodeEnum stock = info.getStock();
             StockFuture future = info.getFuture();
 
-            prompt.append("\n=== ").append(stock.getStockName()).append(" (").append(stock.getStockCode()).append(") ===\n");
-            prompt.append("- 收盘价: $").append(future.getClose()).append("\n");
-            prompt.append("- 20日移动平均线: ").append(future.getMa20d()).append("\n");
-            prompt.append("- 60日移动平均线: ").append(future.getMa60d()).append("\n");
-            prompt.append("- 趋势位置(收盘价/60日MA): ").append(future.getTrendPosition()).append("\n");
-            prompt.append("- 5日收益率: ").append(future.getReturn5d() != null ? future.getReturn5d() + "%" : "N/A").append("\n");
-            prompt.append("- 20日收益率: ").append(future.getReturn20d() != null ? future.getReturn20d() + "%" : "N/A").append("\n");
-            prompt.append("- 20日波动率: ").append(future.getVolatility20d()).append("\n");
-            prompt.append("- 250日价格分位数: ").append(future.getPricePercentile250d()).append("\n");
-            prompt.append("- 100日价格分位数: ").append(future.getPricePercentile100d()).append("\n");
-            prompt.append("- 20日内最高价: $").append(future.getHighest20d()).append("\n");
-            prompt.append("- 是否创20日新高: ").append(future.getIsNew20dHigh() != null && future.getIsNew20dHigh() ? "是" : "否").append("\n");
+            sb.append("\n=== ").append(stock.getStockName()).append(" (").append(stock.getStockCode()).append(") ===\n");
+            sb.append("- 收盘价: $").append(future.getClose()).append("\n");
+            sb.append("- 20日移动平均线: ").append(future.getMa20d()).append("\n");
+            sb.append("- 60日移动平均线: ").append(future.getMa60d()).append("\n");
+            sb.append("- 趋势位置(收盘价/60日MA): ").append(future.getTrendPosition()).append("\n");
+            sb.append("- 5日收益率: ").append(future.getReturn5d() != null ? future.getReturn5d() + "%" : "N/A").append("\n");
+            sb.append("- 20日收益率: ").append(future.getReturn20d() != null ? future.getReturn20d() + "%" : "N/A").append("\n");
+            sb.append("- 20日波动率: ").append(future.getVolatility20d()).append("\n");
+            sb.append("- 250日价格分位数: ").append(future.getPricePercentile250d()).append("\n");
+            sb.append("- 100日价格分位数: ").append(future.getPricePercentile100d()).append("\n");
+            sb.append("- 20日内最高价: $").append(future.getHighest20d()).append("\n");
+            sb.append("- 是否创20日新高: ").append(future.getIsNew20dHigh() != null && future.getIsNew20dHigh() ? "是" : "否").append("\n");
         }
+        
+        return sb.toString();
+    }
 
-        prompt.append("\n【可用工具】\n");
-        prompt.append("- buyStock(modelId, modelName, stockName, stockCode, amount): 买入股票\n");
-        prompt.append("- sellStock(modelId, modelName, stockName, stockCode, amount): 卖出股票\n\n");
+    /**
+     * 获取风险偏好指导
+     * @param riskPreference 风险偏好
+     * @return 投资指导字符串
+     */
+    private String getRiskGuidance(RiskPreferenceEnum riskPreference) {
+        StringBuilder sb = new StringBuilder();
+        
+        switch (riskPreference) {
+            case CONSERVATIVE:
+                sb.append("作为保守型投资者，你应该：\n");
+                sb.append("- 优先保护本金，避免大额亏损\n");
+                sb.append("- 选择波动性低、基本面稳健的股票\n");
+                sb.append("- 避免追高，等待回调后再买入\n");
+                sb.append("- 设置严格的止损点（如-5%）\n");
+                sb.append("- 保持较高的现金比例（30%-50%）\n");
+                sb.append("- 优先考虑分红稳定的蓝筹股\n");
+                break;
+            case MODERATE:
+                sb.append("作为稳健型投资者，你应该：\n");
+                sb.append("- 平衡风险与收益，适度承担风险\n");
+                sb.append("- 关注成长性和价值性的平衡\n");
+                sb.append("- 分散投资，不把所有资金投入单一股票\n");
+                sb.append("- 设置合理的止损点（如-10%）\n");
+                sb.append("- 保持适度的现金比例（20%-30%）\n");
+                sb.append("- 结合技术分析和基本面分析做决策\n");
+                break;
+            case AGGRESSIVE:
+                sb.append("作为激进型投资者，你应该：\n");
+                sb.append("- 追求高收益，愿意承担较高风险\n");
+                sb.append("- 关注高成长性股票，如科技股\n");
+                sb.append("- 敢于在趋势确立时追涨\n");
+                sb.append("- 设置较宽松的止损点（如-15%）\n");
+                sb.append("- 保持较低的现金比例（10%-20%）\n");
+                sb.append("- 积极参与市场热点，把握波段机会\n");
+                break;
+        }
+        
+        return sb.toString();
+    }
 
-        prompt.append("【输出格式要求】\n");
-        prompt.append("请严格按照以下JSON格式输出你的投资决策，不要添加任何其他说明文字：\n\n");
-        prompt.append("{\n");
-        prompt.append("  \"summary\": \"决策总结，简要说明整体策略\",\n");
-        prompt.append("  \"tradeDecisions\": [\n");
-        prompt.append("    {\n");
-        prompt.append("      \"action\": \"BUY/SELL/HOLD\",\n");
-        prompt.append("      \"stockCode\": \"股票代码\",\n");
-        prompt.append("      \"stockName\": \"股票名称\",\n");
-        prompt.append("      \"amount\": 交易数量,\n");
-        prompt.append("      \"reason\": \"交易原因\"\n");
-        prompt.append("    }\n");
-        prompt.append("  ],\n");
-        prompt.append("  \"marketAnalysis\": {\n");
-        prompt.append("    \"overallTrend\": \"整体市场趋势判断\",\n");
-        prompt.append("    \"stockAnalyses\": [\n");
-        prompt.append("      {\n");
-        prompt.append("        \"stockCode\": \"股票代码\",\n");
-        prompt.append("        \"stockName\": \"股票名称\",\n");
-        prompt.append("        \"technicalAnalysis\": \"技术分析\",\n");
-        prompt.append("        \"trend\": \"趋势判断\",\n");
-        prompt.append("        \"supportLevel\": \"支撑位\",\n");
-        prompt.append("        \"resistanceLevel\": \"阻力位\"\n");
-        prompt.append("      }\n");
-        prompt.append("    ]\n");
-        prompt.append("  },\n");
-        prompt.append("  \"riskAssessment\": {\n");
-        prompt.append("    \"riskLevel\": \"LOW/MEDIUM/HIGH\",\n");
-        prompt.append("    \"riskDescription\": \"风险说明\",\n");
-        prompt.append("    \"riskControlMeasures\": \"风控措施\",\n");
-        prompt.append("    \"expectedReturn\": \"预期收益\",\n");
-        prompt.append("    \"maxAcceptableLoss\": \"最大可承受损失\"\n");
-        prompt.append("  }\n");
-        prompt.append("}\n\n");
+    /**
+     * 加载Prompt模板
+     * @return Prompt模板字符串
+     */
+    private String loadPromptTemplate() {
+        if (promptTemplate != null) {
+            return promptTemplate;
+        }
+        
+        try {
+            ClassPathResource resource = new ClassPathResource("prompts/investment-decision.txt");
+            promptTemplate = StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
+            return promptTemplate;
+        } catch (IOException e) {
+            // 如果加载失败，使用默认模板
+            return getDefaultPromptTemplate();
+        }
+    }
 
-        prompt.append("【决策要求】\n");
-        prompt.append("1. 分析每支股票的技术指标和趋势\n");
-        prompt.append("2. 根据你的").append(riskPreference.getDisplayName()).append("风格，决定是否买入、卖出或持有\n");
-        prompt.append("3. action只能是BUY、SELL或HOLD之一\n");
-        prompt.append("4. 如果决定交易（BUY/SELL），请同时调用相应的工具执行交易\n");
-        prompt.append("5. 请详细填写每个字段，确保JSON格式正确\n");
+    /**
+     * 获取默认Prompt模板（当文件加载失败时使用）
+     * @return 默认Prompt模板
+     */
+    private String getDefaultPromptTemplate() {
+        return "你是一个专业的股票投资决策专家。请根据以下信息做出投资决策。\n\n" +
+               "【你的账户信息】\n" +
+               "- 模型名称: {modelName}\n" +
+               "- 当前余额: ${deposit}\n" +
+               "- 投资风格: {riskPreferenceName}\n" +
+               "- 风险偏好描述: {riskPreferenceDesc}\n\n" +
+               "【当前持仓情况】\n" +
+               "{positionData}\n" +
+               "【投资指导】\n" +
+               "{riskGuidance}\n" +
+               "【可选股票及其特征数据】\n" +
+               "{stockFeatures}\n" +
+               "请做出投资决策。";
+    }
 
-        return prompt.toString();
+    /**
+     * 构建结构化Prompt（根据风险偏好和持仓数据）
+     * @param aiModel AI模型信息
+     * @param stockFeatures 股票特征列表
+     * @param riskPreference 风险偏好
+     * @param positions 持仓列表
+     * @return Prompt字符串
+     */
+    private String buildStructuredPrompt(AiModelInfo aiModel, List<StockFeatureInfo> stockFeatures, 
+                                         RiskPreferenceEnum riskPreference, List<AiPosition> positions) {
+        String template = loadPromptTemplate();
+        
+        // 替换模板中的变量
+        String prompt = template
+            .replace("{modelName}", aiModel.getModelName())
+            .replace("{deposit}", aiModel.getDeposit().toString())
+            .replace("{riskPreferenceName}", riskPreference.getDisplayName())
+            .replace("{riskPreferenceDesc}", riskPreference.getDescription())
+            .replace("{positionData}", buildPositionData(positions))
+            .replace("{riskGuidance}", getRiskGuidance(riskPreference))
+            .replace("{stockFeatures}", buildStockFeaturesData(stockFeatures));
+        
+        return prompt;
     }
 
     /**

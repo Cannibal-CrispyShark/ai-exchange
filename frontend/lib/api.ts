@@ -3,7 +3,7 @@ import type { ApiResponse, StockInfoVO, AiIncome } from '@/types';
 
 const api = axios.create({
   baseURL: '/api',
-  timeout: 30000,
+  timeout: 120000, // 2分钟超时
   headers: {
     'Content-Type': 'application/json',
   },
@@ -42,15 +42,26 @@ export const getStockInfo = async (stockCode: string): Promise<StockInfoVO> => {
   throw new Error(response.message || '获取股票数据失败');
 };
 
-// 获取AI收益数据
-export const getAiIncome = async (aiCode: string): Promise<AiIncome> => {
+// 获取AI收益数据（使用modelId）
+export const getAiIncome = async (modelId: number): Promise<AiIncome> => {
   const response = await api.get<ApiResponse<AiIncome>>(
-    `/ai/${aiCode}/income`
+    `/ai/${modelId}/income`
   );
   if (response.body && response.message === 'success') {
     return response.body;
   }
   throw new Error(response.message || '获取AI收益数据失败');
+};
+
+// 获取AI持仓数据（使用modelId）
+export const getAiPosition = async (modelId: number): Promise<AiIncome> => {
+  const response = await api.get<ApiResponse<AiIncome>>(
+    `/ai/${modelId}/position`
+  );
+  if (response.body && response.message === 'success') {
+    return response.body;
+  }
+  throw new Error(response.message || '获取AI持仓数据失败');
 };
 
 // 发送对话消息（如果需要后端支持）

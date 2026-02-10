@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 
 /**
  * AI模型持仓实体类
+ * 使用平均成本法计算收益
  */
 @Data
 @TableName("ai_position")
@@ -39,14 +40,14 @@ public class AiPosition {
     private Integer position;
 
     /**
-     * 收益
+     * 平均成本（买入时更新）
      */
-    private BigDecimal profit;
+    private BigDecimal averageCost;
 
     /**
-     * 收益率
+     * 已实现收益（卖出时累加）
      */
-    private BigDecimal profitRate;
+    private BigDecimal profit;
 
     /**
      * 更新时间

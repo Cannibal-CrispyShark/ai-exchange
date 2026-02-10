@@ -4,12 +4,11 @@ import com.huge.aiexchange.constant.SystemConstants;
 import com.huge.aiexchange.entity.pojo.AiPosition;
 import com.huge.aiexchange.entity.vo.AiIncomeVO;
 import com.huge.aiexchange.mapper.AiPositionMapper;
-import com.huge.aiexchange.mapper.TransactionDetailMapper;
+import com.huge.aiexchange.mapper.StockBaseMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,150 +19,106 @@ public class AiStockService {
     private AiPositionMapper aiPositionMapper;
 
     @Resource
-    private TransactionDetailMapper transactionDetailMapper;
+    private StockBaseMapper stockBaseMapper;
 
     /**
      * 获取AI持仓信息
+     * 使用平均成本法计算收益
      * @param moduleId 模型ID
      * @return AI持仓信息
      */
-    public AiIncomeVO getPositionInfo(Integer moduleId){
-        // 创建AI持仓信息对象
+    public AiIncomeVO getPositionInfo(Integer moduleId) {
         AiIncomeVO aiIncomeVO = new AiIncomeVO();
 
-        // 查询ai_position表中的最新更新日期
-        LocalDate latestUpdateDate = getLatestUpdateDateFromAiPosition(moduleId);
-
-        // 如果最近5天内有更新，直接读取ai_position表
-        if (latestUpdateDate != null && !latestUpdateDate.isBefore(SystemConstants.TODAY_MINUS_5)) {
-            return getPositionInfoFromDb(moduleId);
-        }
-
-        // 需要重新计算：从上一次更新日期到today-5的交易收益
-        LocalDate startDate = latestUpdateDate != null ? latestUpdateDate.plusDays(1) : LocalDate.MIN;
-        LocalDate endDate = SystemConstants.TODAY_MINUS_5;
-
-        // 从transaction_detail表统计收益
-        recalculateAndUpdatePosition(moduleId, startDate, endDate);
-
-        // 重新从ai_position表读取
-        return getPositionInfoFromDb(moduleId);
-    }
-
-    /**
-     * 从ai_position表获取最新更新日期
-     * @param moduleId 模型ID
-     * @return 最新更新日期
-     */
-    private LocalDate getLatestUpdateDateFromAiPosition(Integer moduleId) {
-        // 查询该AI模型的所有持仓记录，获取最新的update_time
-        List<AiPosition> positions = aiPositionMapper.selectByModelId(moduleId);
-        if (positions == null || positions.isEmpty()) {
-            return null;
-        }
-        return positions.stream()
-                .map(AiPosition::getUpdateTime)
-                .map(java.time.LocalDateTime::toLocalDate)
-                .max(LocalDate::compareTo)
-                .orElse(null);
-    }
-
-    /**
-     * 从ai_position表直接获取持仓信息
-     * @param moduleId 模型ID
-     * @return AI持仓信息
-     */
-    private AiIncomeVO getPositionInfoFromDb(Integer moduleId) {
-        AiIncomeVO aiIncomeVO = new AiIncomeVO();
-
-        // 从数据库中获取数据
-        Integer positionCount = aiPositionMapper.selectPositionCountByModelId(moduleId);
-        Integer profitCount = aiPositionMapper.selectProfitCountByModelId(moduleId);
-        BigDecimal totalProfit = aiPositionMapper.selectTotalProfitByModelId(moduleId);
+        // 从数据库中获取持仓数据
         List<AiPosition> positions = aiPositionMapper.selectByModelId(moduleId);
 
-        // 设置数据
-        aiIncomeVO.setIncome(totalProfit != null ? totalProfit.intValue() : 0); // 总收益
-        aiIncomeVO.setPositionCount(positionCount != null ? positionCount : 0); // 持仓数量
-        aiIncomeVO.setProfitCount(profitCount != null ? profitCount : 0); // 盈利数量
-
-        // 计算收益率：总收益 / 初始资金
-        double yieldRate = totalProfit != null ? 
-                totalProfit.doubleValue() / SystemConstants.INITIAL_FUND.doubleValue() : 0.0;
-        aiIncomeVO.setYieldRate(yieldRate); // 收益率
+        // 计算汇总数据
+        int totalPositionCount = 0;  // 持仓股票种类数
+        int totalStockCount = 0;     // 总持仓股数
+        BigDecimal totalAverageCost = BigDecimal.ZERO;  // 总平均成本（用于计算）
+        BigDecimal totalRealizedProfit = BigDecimal.ZERO;  // 总已实现收益
+        BigDecimal totalUnrealizedProfit = BigDecimal.ZERO;  // 总未实现收益
 
         // 转换持仓明细
         List<AiIncomeVO.StockPositionVO> positionDetails = new ArrayList<>();
         if (positions != null) {
             for (AiPosition position : positions) {
+                totalPositionCount++;
+                totalStockCount += position.getPosition();
+
+                // 获取当前股票价格
+                BigDecimal currentPrice = stockBaseMapper.selectClosePriceByStockCodeAndDate(
+                        position.getStockCode(), SystemConstants.TODAY_MINUS_5);
+                if (currentPrice == null) {
+                    currentPrice = position.getAverageCost(); // 如果获取不到价格，使用平均成本
+                }
+
+                // 计算未实现收益：(当前价格 - 平均成本) * 持仓数量
+                BigDecimal unrealizedProfit = BigDecimal.ZERO;
+                if (position.getPosition() > 0) {
+                    unrealizedProfit = currentPrice.subtract(position.getAverageCost())
+                            .multiply(new BigDecimal(position.getPosition()));
+                }
+
+                // 累加已实现收益
+                BigDecimal realizedProfit = position.getProfit() != null ? position.getProfit() : BigDecimal.ZERO;
+                totalRealizedProfit = totalRealizedProfit.add(realizedProfit);
+
+                // 累加未实现收益
+                totalUnrealizedProfit = totalUnrealizedProfit.add(unrealizedProfit);
+
+                // 累加平均成本（用于计算整体收益率）
+                BigDecimal positionCost = position.getAverageCost()
+                        .multiply(new BigDecimal(position.getPosition()));
+                totalAverageCost = totalAverageCost.add(positionCost);
+
+                // 计算收益率：(当前价格 - 平均成本) / 平均成本
+                double returnRate = 0.0;
+                if (position.getAverageCost().compareTo(BigDecimal.ZERO) > 0) {
+                    returnRate = currentPrice.subtract(position.getAverageCost())
+                            .divide(position.getAverageCost(), 4, BigDecimal.ROUND_HALF_UP)
+                            .multiply(new BigDecimal("100"))
+                            .doubleValue();
+                }
+
+                // 构建持仓明细
                 AiIncomeVO.StockPositionVO stockPositionVO = new AiIncomeVO.StockPositionVO();
                 stockPositionVO.setStockCode(position.getStockCode());
                 stockPositionVO.setStockName(position.getStockName());
                 stockPositionVO.setPosition(position.getPosition());
-                stockPositionVO.setProfit(position.getProfit().doubleValue());
-                stockPositionVO.setProfitRate(position.getProfitRate().doubleValue());
+                stockPositionVO.setAverageCost(position.getAverageCost().doubleValue());
+                stockPositionVO.setCurrentPrice(currentPrice.doubleValue());
+                stockPositionVO.setReturnRate(returnRate); // 收益率
+                stockPositionVO.setRealizedProfit(realizedProfit.doubleValue());
+                stockPositionVO.setUnrealizedProfit(unrealizedProfit.doubleValue());
+                stockPositionVO.setTotalProfit(realizedProfit.add(unrealizedProfit).doubleValue());
                 positionDetails.add(stockPositionVO);
             }
         }
+
+        // 计算总收益 = 已实现收益 + 未实现收益
+        BigDecimal totalProfit = totalRealizedProfit.add(totalUnrealizedProfit);
+
+        // 设置汇总数据
+        aiIncomeVO.setPositionCount(totalPositionCount);  // 持仓股票种类数
+        aiIncomeVO.setStockCount(totalStockCount);        // 总持仓股数
+        aiIncomeVO.setTotalCost(totalAverageCost.doubleValue()); // 总成本（平均成本 * 持仓数量）
+        aiIncomeVO.setRealizedProfit(totalRealizedProfit.doubleValue()); // 总已实现收益
+        aiIncomeVO.setUnrealizedProfit(totalUnrealizedProfit.doubleValue()); // 总未实现收益
+        aiIncomeVO.setIncome(totalProfit.intValue());     // 总收益（取整）
+
+        // 计算整体收益率：总收益 / 总成本
+        double yieldRate = 0.0;
+        if (totalAverageCost.compareTo(BigDecimal.ZERO) > 0) {
+            yieldRate = totalProfit.divide(totalAverageCost,4, BigDecimal.ROUND_HALF_UP).doubleValue();
+        }
+        aiIncomeVO.setYieldRate(yieldRate); // 整体收益率
 
         // 设置持仓明细
         aiIncomeVO.setPositionDetails(positionDetails);
 
         return aiIncomeVO;
-    }
-
-    /**
-     * 重新计算并更新持仓信息
-     * @param moduleId 模型ID
-     * @param startDate 开始日期
-     * @param endDate 结束日期
-     */
-    private void recalculateAndUpdatePosition(Integer moduleId, LocalDate startDate, LocalDate endDate) {
-        // 从transaction_detail表统计每支股票的收益
-        List<TransactionDetailMapper.StockProfitVO> stockProfits = 
-                transactionDetailMapper.selectStockProfitByModuleIdAndDateRange(moduleId, startDate, endDate);
-
-        if (stockProfits == null || stockProfits.isEmpty()) {
-            return;
-        }
-
-        // 更新或插入ai_position表
-        for (TransactionDetailMapper.StockProfitVO stockProfit : stockProfits) {
-            String stockCode = String.valueOf(stockProfit.getStockId());
-            String stockName = stockProfit.getStockName();
-            BigDecimal profit = stockProfit.getTotalProfit();
-            Integer tradeCount = stockProfit.getTradeCount();
-
-            // 查询是否已有持仓记录
-            AiPosition existingPosition = aiPositionMapper.selectByModelIdAndStockCode(moduleId, stockCode);
-
-            if (existingPosition != null) {
-                // 更新已有持仓
-                BigDecimal newProfit = existingPosition.getProfit().add(profit);
-                // 计算收益率：总收益 / 初始资金 * 100%
-                BigDecimal newProfitRate = newProfit.divide(SystemConstants.INITIAL_FUND, 4, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
-
-                existingPosition.setProfit(newProfit);
-                existingPosition.setProfitRate(newProfitRate);
-                // 更新持仓数量（根据交易次数估算）
-                existingPosition.setPosition(existingPosition.getPosition() + tradeCount);
-
-                aiPositionMapper.updateById(existingPosition);
-            } else {
-                // 创建新持仓
-                AiPosition newPosition = new AiPosition();
-                newPosition.setModelId(moduleId);
-                newPosition.setStockCode(stockCode);
-                newPosition.setStockName(stockName);
-                newPosition.setPosition(tradeCount);
-                newPosition.setProfit(profit);
-                // 计算收益率：总收益 / 初始资金 * 100%
-                BigDecimal profitRate = profit.divide(SystemConstants.INITIAL_FUND, 4, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
-                newPosition.setProfitRate(profitRate);
-
-                aiPositionMapper.insert(newPosition);
-            }
-        }
     }
 
 }

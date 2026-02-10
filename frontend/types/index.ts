@@ -39,24 +39,32 @@ export interface StockInfoVO {
   metaData?: MetaData;
 }
 
-// AI收益数据
-export interface EarnInStock {
-  income: number;
+// 股票持仓明细
+export interface StockPositionDetail {
   stockCode: string;
+  stockName: string;
+  position: number; // 持仓数量
+  averageCost: number; // 平均成本
+  currentPrice: number; // 当前价格
+  returnRate: number; // 收益率（当前价格 / 平均成本）
+  realizedProfit: number; // 已实现收益
+  unrealizedProfit: number; // 未实现收益
+  totalProfit: number; // 总收益
 }
 
-export interface EarnInDay {
-  income: number;
-  day: string; // YYYY-MM-DD
-}
-
+// AI收益数据（新结构 - 使用平均成本法）
 export interface AiIncome {
-  incomeTotal: number;
-  earnInStocks: EarnInStock[];
-  earnInDays: EarnInDay[];
+  income: number; // 总收益（取整）
+  yieldRate: number; // 整体收益率
+  positionCount: number; // 持仓股票种类数
+  stockCount: number; // 总持仓股数
+  totalCost: number; // 总成本
+  realizedProfit: number; // 总已实现收益
+  unrealizedProfit: number; // 总未实现收益
+  positionDetails: StockPositionDetail[]; // 持仓明细
 }
 
-// 持仓信息
+// 持仓信息（旧结构，用于兼容）
 export interface Position {
   stockCode: string;
   stockName: string;

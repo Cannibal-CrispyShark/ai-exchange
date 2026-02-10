@@ -22,16 +22,16 @@ public class AiTradeTool {
      * @param stockName 股票名称
      * @param stockCode 股票代码
      * @param amount 买入数量
-     * @return 操作结果，成功返回true，失败返回false
+     * @return 操作结果描述，成功或失败的原因
      */
-    @Tool(name = "买入股票的工具", value = "返回boolean，是否操作成功")
-    public boolean buyStock(Integer modelId, String modelName, String stockName, String stockCode, int amount) {
+    @Tool(name = "买入股票的工具", value = "返回String，操作结果的描述信息")
+    public String buyStock(Integer modelId, String modelName, String stockName, String stockCode, int amount) {
         try {
             return aiTradeService.buyStock(modelId, modelName, stockName, stockCode, amount);
         } catch (Exception e) {
             // 记录异常日志
             e.printStackTrace();
-            return false;
+            return "买入操作异常：" + e.getMessage();
         }
     }
 
@@ -42,16 +42,17 @@ public class AiTradeTool {
      * @param stockName 股票名称
      * @param stockCode 股票代码
      * @param amount 卖出数量
-     * @return 操作结果，成功返回true，失败返回false
+     * @return 操作结果描述，成功或失败的原因
      */
-    @Tool(name = "卖出股票的工具", value = "返回boolean，是否操作成功")
-    public boolean sellStock(Integer modelId, String modelName, String stockName, String stockCode, int amount) {
+    @Tool(name = "卖出股票的工具", value = "返回String，操作结果的描述信息")
+    public String sellStock(Integer modelId, String modelName, String stockName, String stockCode, int amount) {
         try {
             return aiTradeService.sellStock(modelId, modelName, stockName, stockCode, amount);
+
         } catch (Exception e) {
             // 记录异常日志
             e.printStackTrace();
-            return false;
+            return "卖出操作异常：" + e.getMessage();
         }
     }
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import StockChart from '@/components/StockChart';
 import AIPositionPanel from '@/components/AIPositionPanel';
 import ChatInterface from '@/components/ChatInterface';
@@ -23,26 +23,36 @@ export default function Home() {
   const [inputStockCode, setInputStockCode] = useState('AAPL');
   const [aiModels, setAiModels] = useState<AiModel[]>([]); // AI模型列表
   const [modelsLoading, setModelsLoading] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // 下拉框是否打开
 
-  const { stockInfo, aiIncome, positions, loading, error, refetch } = useStockData(
+  const { stockInfo, aiIncome, loading, error, refetch } = useStockData(
     stockCode,
-    aiCode
+    selectedModelId
   );
 
   // 获取AI模型列表
-  useEffect(() => {
-    fetchAiModels();
-  }, []);
-
   const fetchAiModels = async () => {
+    if (aiModels.length > 0) {
+      // 如果已经加载过，不再重复加载
+      return;
+    }
+
     setModelsLoading(true);
     try {
-      const response = await fetch('/api/ai-model/list');
+      // 设置2分钟超时
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 120000);
+
+      const response = await fetch('/api/ai-model/list', {
+        signal: controller.signal,
+      });
+      clearTimeout(timeoutId);
+
       const result = await response.json();
       if (result.body) {
         setAiModels(result.body);
-        // 如果有模型，默认选中第一个
-        if (result.body.length > 0 && !selectedModelId) {
+        // 如果有模型且当前未选中，默认选中第一个
+        if (result.body.length > 0 && selectedModelId === 1) {
           setSelectedModelId(result.body[0].id);
           setAiCode(result.body[0].modelName);
         }
@@ -54,19 +64,24 @@ export default function Home() {
     }
   };
 
+  // 处理下拉框点击
+  const handleDropdownClick = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+    if (!isDropdownOpen) {
+      fetchAiModels();
+    }
+  };
+
   const handleSearch = () => {
     if (inputStockCode.trim()) {
       setStockCode(inputStockCode.trim().toUpperCase());
     }
   };
 
-  const handleModelChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const modelId = parseInt(e.target.value);
-    setSelectedModelId(modelId);
-    const selectedModel = aiModels.find(m => m.id === modelId);
-    if (selectedModel) {
-      setAiCode(selectedModel.modelName);
-    }
+  const handleModelSelect = (model: AiModel) => {
+    setSelectedModelId(model.id);
+    setAiCode(model.modelName);
+    setIsDropdownOpen(false);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -106,19 +121,50 @@ export default function Home() {
               <div className="flex items-center gap-2">
                 <label className="text-sm text-gray-600 dark:text-gray-400">AI模型:</label>
                 <div className="relative">
-                  <select
-                    value={selectedModelId}
-                    onChange={handleModelChange}
+                  {/* 自定义下拉框触发器 */}
+                  <button
+                    onClick={handleDropdownClick}
                     disabled={modelsLoading}
-                    className="px-3 py-1.5 pr-8 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white text-sm appearance-none cursor-pointer min-w-[120px]"
+                    className="px-3 py-1.5 pr-8 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white text-sm cursor-pointer min-w-[180px] text-left flex items-center justify-between"
                   >
-                    {aiModels.map((model) => (
-                      <option key={model.id} value={model.id}>
-                        {model.modelName} (${model.deposit.toFixed(2)})
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
+                    <span>
+                      {aiModels.find(m => m.id === selectedModelId)?.modelName || aiCode} 
+                      {aiModels.find(m => m.id === selectedModelId) && 
+                        ` ($${aiModels.find(m => m.id === selectedModelId)?.deposit.toFixed(2)})`
+                      }
+                    </span>
+                    {modelsLoading ? (
+                      <Loader2 className="w-4 h-4 animate-spin text-gray-500" />
+                    ) : (
+                      <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                    )}
+                  </button>
+                  
+                  {/* 下拉选项列表 */}
+                  {isDropdownOpen && (
+                    <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg z-50 max-h-60 overflow-auto">
+                      {aiModels.length === 0 && !modelsLoading ? (
+                        <div className="px-3 py-2 text-sm text-gray-500 dark:text-gray-400">
+                          暂无模型数据
+                        </div>
+                      ) : (
+                        aiModels.map((model) => (
+                          <button
+                            key={model.id}
+                            onClick={() => handleModelSelect(model)}
+                            className={`w-full px-3 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${
+                              selectedModelId === model.id ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' : 'text-gray-700 dark:text-gray-300'
+                            }`}
+                          >
+                            <div className="font-medium">{model.modelName}</div>
+                            <div className="text-xs text-gray-500 dark:text-gray-400">
+                              余额: ${model.deposit.toFixed(2)}
+                            </div>
+                          </button>
+                        ))
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
               <button
@@ -182,7 +228,6 @@ export default function Home() {
           <div className="lg:col-span-1">
             <AIPositionPanel
               aiIncome={aiIncome || undefined}
-              positions={positions}
               aiCode={aiCode}
               isLoading={loading}
             />
