@@ -24,6 +24,7 @@ public class AiStockService {
     /**
      * 获取AI持仓信息
      * 使用平均成本法计算收益
+     *
      * @param moduleId 模型ID
      * @return AI持仓信息
      */
@@ -69,15 +70,23 @@ public class AiStockService {
                 totalUnrealizedProfit = totalUnrealizedProfit.add(unrealizedProfit);
 
                 // 累加平均成本（用于计算整体收益率）
-                BigDecimal positionCost = position.getAverageCost()
-                        .multiply(new BigDecimal(position.getPosition()));
+                // 使用 totallyCost 字段作为总成本
+                BigDecimal positionCost = position.getTotallyCost() != null ?
+                        position.getTotallyCost() :
+                        position.getAverageCost().multiply(new BigDecimal(position.getPosition()));
                 totalAverageCost = totalAverageCost.add(positionCost);
 
-                // 计算收益率：(当前价格 - 平均成本) / 平均成本
+                // 计算收益率：总收益 / 总成本
+                // 总收益 = 已实现收益 + 未实现收益
+                // 总成本 = totallyCost（数据库中存储的总成本）
                 double returnRate = 0.0;
-                if (position.getAverageCost().compareTo(BigDecimal.ZERO) > 0) {
-                    returnRate = currentPrice.subtract(position.getAverageCost())
-                            .divide(position.getAverageCost(), 4, BigDecimal.ROUND_HALF_UP)
+                BigDecimal totalProfit = realizedProfit.add(unrealizedProfit);
+
+                if (totalProfit == null || totalProfit.compareTo(BigDecimal.ZERO) == 0) {
+                    returnRate = 0.0;
+                } else if (positionCost != null && positionCost.compareTo(BigDecimal.ZERO) > 0) {
+                    returnRate = totalProfit
+                            .divide(positionCost, 4, BigDecimal.ROUND_HALF_UP)
                             .multiply(new BigDecimal("100"))
                             .doubleValue();
                 }
@@ -111,7 +120,7 @@ public class AiStockService {
         // 计算整体收益率：总收益 / 总成本
         double yieldRate = 0.0;
         if (totalAverageCost.compareTo(BigDecimal.ZERO) > 0) {
-            yieldRate = totalProfit.divide(totalAverageCost,4, BigDecimal.ROUND_HALF_UP).doubleValue();
+            yieldRate = totalProfit.divide(totalAverageCost, 4, BigDecimal.ROUND_HALF_UP).doubleValue();
         }
         aiIncomeVO.setYieldRate(yieldRate); // 整体收益率
 

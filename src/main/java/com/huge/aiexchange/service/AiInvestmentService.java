@@ -135,7 +135,7 @@ public class AiInvestmentService {
      * 选择模型
      */
     private AiTradeAssistant getAssistant(String modelName){
-        if (modelName.contains("qianfan")) {
+        if (modelName.contains("ERNIE-5.0-Thinking-Preview")) {
             return qianfanAssistant;
         } else {
             // 默认使用qwenMaxAssistant
@@ -386,6 +386,7 @@ public class AiInvestmentService {
         
         // 替换模板中的变量
         String prompt = template
+            .replace("{modelId}", aiModel.getId().toString())
             .replace("{modelName}", aiModel.getModelName())
             .replace("{deposit}", aiModel.getDeposit().toString())
             .replace("{riskPreferenceName}", riskPreference.getDisplayName())

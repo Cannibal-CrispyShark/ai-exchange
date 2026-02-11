@@ -18,8 +18,8 @@ interface AiModel {
 
 export default function Home() {
   const [stockCode, setStockCode] = useState('AAPL'); // 默认股票代码
-  const [aiCode, setAiCode] = useState('AI001'); // 默认AI模型代码
-  const [selectedModelId, setSelectedModelId] = useState<number>(1); // 选中的模型ID
+  const [aiCode, setAiCode] = useState('qwen-max'); // 默认AI模型代码
+  const [selectedModelId, setSelectedModelId] = useState<number | null>(null); // 选中的模型ID，初始为null
   const [inputStockCode, setInputStockCode] = useState('AAPL');
   const [aiModels, setAiModels] = useState<AiModel[]>([]); // AI模型列表
   const [modelsLoading, setModelsLoading] = useState(false);
@@ -51,8 +51,13 @@ export default function Home() {
       const result = await response.json();
       if (result.body) {
         setAiModels(result.body);
-        // 如果有模型且当前未选中，默认选中第一个
-        if (result.body.length > 0 && selectedModelId === 1) {
+        // 查找 qwen-max 模型并默认选中
+        const qwenMaxModel = result.body.find((m: AiModel) => m.modelName === 'qwen-max');
+        if (qwenMaxModel && selectedModelId === null) {
+          setSelectedModelId(qwenMaxModel.id);
+          setAiCode(qwenMaxModel.modelName);
+        } else if (result.body.length > 0 && selectedModelId === null) {
+          // 如果没有找到 qwen-max，默认选中第一个
           setSelectedModelId(result.body[0].id);
           setAiCode(result.body[0].modelName);
         }
@@ -125,13 +130,10 @@ export default function Home() {
                   <button
                     onClick={handleDropdownClick}
                     disabled={modelsLoading}
-                    className="px-3 py-1.5 pr-8 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white text-sm cursor-pointer min-w-[180px] text-left flex items-center justify-between"
+                    className="px-3 py-1.5 pr-8 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white text-sm cursor-pointer min-w-[120px] text-left flex items-center justify-between"
                   >
                     <span>
-                      {aiModels.find(m => m.id === selectedModelId)?.modelName || aiCode} 
-                      {aiModels.find(m => m.id === selectedModelId) && 
-                        ` ($${aiModels.find(m => m.id === selectedModelId)?.deposit.toFixed(2)})`
-                      }
+                      {aiModels.find(m => m.id === selectedModelId)?.modelName || aiCode}
                     </span>
                     {modelsLoading ? (
                       <Loader2 className="w-4 h-4 animate-spin text-gray-500" />
@@ -157,9 +159,6 @@ export default function Home() {
                             }`}
                           >
                             <div className="font-medium">{model.modelName}</div>
-                            <div className="text-xs text-gray-500 dark:text-gray-400">
-                              余额: ${model.deposit.toFixed(2)}
-                            </div>
                           </button>
                         ))
                       )}

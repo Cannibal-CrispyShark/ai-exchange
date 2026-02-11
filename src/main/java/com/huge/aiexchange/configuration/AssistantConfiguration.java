@@ -8,6 +8,7 @@ import dev.langchain4j.community.model.dashscope.QwenChatModel;
 import dev.langchain4j.community.model.qianfan.QianfanChatModel;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatModel;
+import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.service.AiServices;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,9 +33,6 @@ public class AssistantConfiguration {
     @Value("${langchain4j.community.qianfan.chat-model.api-key}")
     private String qianfanApiKey;
 
-    @Value("${langchain4j.community.qianfan.chat-model.secret-key}")
-    private String qianfanSecretKey;
-
     @Bean(name = "qwenMaxAssistant")
     @Primary
     public AiTradeAssistant getQwenAiTradeAssistant() {
@@ -52,11 +50,10 @@ public class AssistantConfiguration {
     @Bean(name = "qianfanAssistant")
     public AiTradeAssistant getQianfanAiTradeAssistant() {
         return AiServices.builder(AiTradeAssistant.class)
-                .chatModel(QianfanChatModel.builder()
+                .chatModel(OpenAiChatModel.builder()
+                        .baseUrl("https://qianfan.baidubce.com/v2")
                         .apiKey(qianfanApiKey)
-                        .secretKey(qianfanSecretKey)
-                        .endpoint("ep_yir5kvx9s_123")
-                        .modelName("ERNIE-5.0-Thinking-Preview")
+                        .modelName("ernie-4.5-turbo-vl-preview")
                         .temperature(0.7d)
                         .build())
                 .tools(aiTradeTool)

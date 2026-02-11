@@ -45,6 +45,11 @@ public class AiPosition {
     private BigDecimal averageCost;
 
     /**
+     * 总成本（持仓数量 * 平均成本）
+     */
+    private BigDecimal totallyCost;
+
+    /**
      * 已实现收益（卖出时累加）
      */
     private BigDecimal profit;

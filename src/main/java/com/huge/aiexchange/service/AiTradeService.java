@@ -136,6 +136,7 @@ public class AiTradeService {
     /**
      * 更新AI持仓表（买入操作）
      * 买入时更新平均成本：averageCost = (原持仓成本 + 新买入成本) / 总持仓数量
+     * 总成本 = 持仓数量 * 平均成本
      * @param modelId 模型ID
      * @param stockCode 股票代码
      * @param stockName 股票名称
@@ -154,6 +155,8 @@ public class AiTradeService {
             newPosition.setStockName(stockName);
             newPosition.setPosition(amount);
             newPosition.setAverageCost(price);
+            // 计算总成本 = 持仓数量 * 平均成本
+            newPosition.setTotallyCost(price.multiply(new BigDecimal(amount)));
             newPosition.setProfit(BigDecimal.ZERO);
             newPosition.setUpdateTime(LocalDateTime.now());
             aiPositionMapper.insert(newPosition);
@@ -168,10 +171,13 @@ public class AiTradeService {
             int newPosition = existingPosition.getPosition() + amount;
             // 新平均成本 = (原持仓成本 + 新买入成本) / 新总持仓数量
             BigDecimal newAverageCost = originalCost.add(newCost)
-                    .divide(new BigDecimal(newPosition));
+                    .divide(new BigDecimal(newPosition), 4, BigDecimal.ROUND_HALF_UP);
+            // 新总成本 = 新持仓数量 * 新平均成本
+            BigDecimal newTotallyCost = newAverageCost.multiply(new BigDecimal(newPosition));
             
             existingPosition.setPosition(newPosition);
             existingPosition.setAverageCost(newAverageCost);
+            existingPosition.setTotallyCost(newTotallyCost);
             existingPosition.setUpdateTime(LocalDateTime.now());
             aiPositionMapper.updateById(existingPosition);
         }
@@ -181,6 +187,7 @@ public class AiTradeService {
      * 更新AI持仓表（卖出操作）
      * 卖出时：减少position，累加已实现收益
      * 已实现收益 = (卖出价格 - 平均成本) * 卖出数量
+     * 总成本 = 新持仓数量 * 平均成本（平均成本不变）
      * @param modelId 模型ID
      * @param stockCode 股票代码
      * @param amount 卖出数量
@@ -208,10 +215,14 @@ public class AiTradeService {
         
         int newPosition = currentPosition - amount;
         
-        // 更新持仓：减少position，累加已实现收益
-        // 注意：平均成本保持不变，即使持仓为0也保留记录
+        // 更新持仓：减少position，累加已实现收益，更新总成本
+        // 注意：平均成本保持不变，总成本 = 新持仓数量 * 平均成本
         existingPosition.setPosition(newPosition);
         existingPosition.setProfit(newProfit);
+        // 更新总成本 = 新持仓数量 * 平均成本
+        BigDecimal newTotallyCost = existingPosition.getAverageCost()
+                .multiply(new BigDecimal(newPosition));
+        existingPosition.setTotallyCost(newTotallyCost);
         existingPosition.setUpdateTime(LocalDateTime.now());
         aiPositionMapper.updateById(existingPosition);
     }

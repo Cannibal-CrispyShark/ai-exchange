@@ -2,6 +2,7 @@ package com.huge.aiexchange.controller;
 
 import com.huge.aiexchange.service.AiInvestmentStreamService;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class InvestmentDecisionStreamController {
 
     // 存储活跃的SSE连接
     private final Map<String, SseEmitter> emitters = new ConcurrentHashMap<>();
-    
+
     // 心跳任务调度器
     private final ScheduledExecutorService heartbeatExecutor = Executors.newScheduledThreadPool(3);
 
@@ -40,18 +41,26 @@ public class InvestmentDecisionStreamController {
      *
      * @param modelId        AI模型ID
      * @param riskPreference 风险偏好 (conservative/moderate/aggressive)
+     * @param response       HTTP响应对象
      * @return SseEmitter 流式响应
      */
     @GetMapping(value = "/{modelId}/decide-stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter makeInvestmentDecisionStream(
             @PathVariable Integer modelId,
-            @RequestParam(defaultValue = "moderate") String riskPreference) {
+            @RequestParam(defaultValue = "moderate") String riskPreference,
+            HttpServletResponse response) {
+
+        // 设置响应头，禁用缓冲，确保流式传输
+        response.setHeader("X-Accel-Buffering", "no");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setHeader("Pragma", "no-cache");
+        response.setHeader("Connection", "keep-alive");
 
         String emitterKey = modelId + "_" + System.currentTimeMillis();
         // 设置超时时间为30分钟（防止长时间分析被中断）
         SseEmitter emitter = new SseEmitter(1800000L);
         emitters.put(emitterKey, emitter);
-        
+
         // 心跳计数器
         AtomicInteger heartbeatCount = new AtomicInteger(0);
 
@@ -74,6 +83,7 @@ public class InvestmentDecisionStreamController {
             emitter.send(SseEmitter.event()
                     .name("connected")
                     .data("{\"message\": \"连接成功\", \"modelId\": " + modelId + ", \"timeout\": 1800000}"));
+
         } catch (IOException e) {
             log.error("发送连接成功事件失败", e);
             emitter.completeWithError(e);
@@ -83,7 +93,7 @@ public class InvestmentDecisionStreamController {
         // 启动心跳机制：每15秒发送一次心跳，防止连接被代理服务器断开
         heartbeatExecutor.scheduleAtFixedRate(() -> {
             try {
-                if (emitters.containsKey(emitterKey)) {
+                if  (emitters.containsKey(emitterKey)) {
                     emitter.send(SseEmitter.event()
                             .name("heartbeat")
                             .data("{\"count\": " + heartbeatCount.incrementAndGet() + ", \"timestamp\": " + System.currentTimeMillis() + "}"));

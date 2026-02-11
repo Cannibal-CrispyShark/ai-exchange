@@ -203,7 +203,8 @@ export default function AIPositionPanel({
             >
               {positions.map((position: StockPositionDetail, index: number) => {
                 const isPositive = position.totalProfit >= 0;
-                const returnRatePercent = (position.returnRate - 1) * 100;
+                // 后端返回的 returnRate 已经是百分比数值（如 0.8 表示 0.8%）
+                const returnRatePercent = position.returnRate;
 
                 return (
                   <div
