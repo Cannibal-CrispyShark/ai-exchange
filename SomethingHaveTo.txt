@@ -1,0 +1,557 @@
+抽象
+大语言模型在金融交易中的占比越来越高，但处于安全与合规的考虑，具有完备执行能力的Agent难以在真实市场中验证其能力。本课题设计并实现了一个集成模拟交易所、多Agent决策引擎与测试区块链的复合型系统，旨在为测试不同风险偏好的Agent交易行为提供可控的安全的观测平台，并同时运用AI能力为使用者提供股票交易建议。
+系统由三个核心模块构成。模拟交易所接入Alpha Vantage数据接口，获取真实股票行情，SpringBoot与Vue 3构建前后端分离的交易所界面，买卖操作仅在本地数据库中执行，完全与真实市场隔离。多Agent决策层基于LangChain4j框架驱动三位AI交易员，他们分别挂载不同厂商的大语言模型，具有保守、适中、激进三种风险偏好的提示词模板。Agent读取股票指标后自主调用买卖工具，生成决策理由，并将交易表现展示到前端。区块链层，我在Ganache测试网中部署了三种同样的ERC-20代币，Agent间的Token兑换由系统账户提供流动性，并由线性冲击公式动态定价，链上仅执行不可篡改的转账操作。
+本系统主要实现了股票辅助决策与斗兽场博弈两块功能。测试结果表明，不同风险偏好和不同基础模型让Agent的收益曲线呈现出了显著的差异，提示词引导与模型能力是影响交易行为的主要因素。本系统为语言模型Agent在金融场景中的行为研究提供了一个可编程、可复现的工程基础。
+
+
+
+第1章 绪论
+1.1 研究背景与意义
+2024年下半年，彭博社报道了一则消息，一些对冲基金在三个月内将GPT-4的API调用量提升了四倍。这些激增的token并非消耗在撰写报告，而是直接用于生成交易策略。可见，大语言模型正从金融分析的边缘工具，在向着交易决策的核心环节迁移。
+
+摩根大通2023年启动的IndexGPT内部测试项目直接印证了这一趋势。虽然其技术细节未公开，但是从招聘要求可以推断，项目的目标在于构建一个系统，该系统能理解市场数据并自主执行操作。这条路有两个绕不开的障碍。第一个是安全，2023年某去中心化金融协议遭遇模型Prompt注入攻击，直接损失了数万美元流动性。这个案例让语言模型直连交易接口的风险暴露在大众之下。第二个是合规，金融机构显然不会允许未经充分验证的AI代理接触真实资金。
+
+这两重约束牵引出一个明确需求。一个模拟实验环境，既能向模型开放完整交易能力，又能将风险边界限制在系统内部。本课题的落脚点即在此。
+
+本系统由三层构成。第一层为模拟交易所，它提供行情查询与买卖下单功能。所有交易仅在本地数据库中记账，不触及真实市场。第二层是多代理决策层，基于LangChain4j框架驱动的三个模型，它们可以持有不同风险偏好。这些模型读取相同市场数据，自主决定买卖或观望，将指令发回第一层执行。
+
+第三层是本地测试区块链，我在测试链上部署了完备的ERC-20代币合约。为了让AI能够在风险可控的环境下博弈，笔者专门设计了一个名为“斗兽场”的端到端试验环境。在这个环境里，三位AI交易员持有相同初始资金，在去中心化的代币池中不断循环、相互交易。所有代币的价值由链下公式根据供需动态决定，既避免了真实Gasfee对策略执行的干扰，又能观察AI在零和博弈下的决策思路。技术栈选用SpringBoot，Vue 3，Langchain4j和用于区块链交互的Web3j。
+
+本系统关注一个核心问题：在相同的市场数据面前，不同风险偏好的Agent会表现出怎样的决策模式差异。收益高低是一个观察维度，更有研究和参考价值的是每次决策所附的判断理由。
+
+1.2 国内外研究现状
+
+相关研究大致划分三条线。
+
+大语言模型在金融交易中的应用。2023年的FinGPT工作验证了用小模型进行金融微调的技术可行性。同年TradingGPT引入了分层记忆模块，使Agent在外汇任务中的表现明显优于单问答BaseLine。这两项工作的共同局限是“交易”停留在模拟阶段，未实现端到端的工具调用链路。2024年有研究者尝试让模型操作券商系统，这个尝试因反爬机制而搁浅。教训很明确，Agent需要体系化的API。
+
+模拟区块链的交易平台，Hardhat、Foundry等工具让本地测试链部署变得极为便捷。2022年IEEE刊登了一篇关于去中心化交易所滑点的论文，其实验环境完全搭建在Ganache上，数据来自Binance的历史回放。但该工作的合约设计精细，交易发起方为确定性的脚本，缺乏Agent的情境推理能力。
+
+模拟交易所的工程积累，QuantConnect、Backtrader等回测平台面向的是代码策略。从2024年开始，国内高校出现了几篇涉及“AI模拟交易”的毕业设计，他们技术栈各异，但普遍欠缺在Agent上的工程实现，它们或依赖固定LSTM模型，或将语言模型降级为页面聊天组件。LangChain4j在毕业设计中极少出现，多Agent并发调用Tools的场景甚至没有完整报道。
+
+这三条路线的交叉地带存在不小的空白，将LLMAgent的推理和工具调用能力、模拟交易平台系统性的API和测试区块链的去中心化技术合三为一的系统框架，目前并无完整实现案例。
+
+1.3 主要研究内容
+
+本课题的工作主要划分为三部分。
+
+模拟交易所平台的构建，前后端分离设计。前端Vue 3承担行情展示与Agent表现展示等功能。后端SpringBoot提供RESTful接口，买卖功能不接入真实交易系统，只操作MySQL资产表。买卖接口以工具形态封装。区块链和股票市场交易共用同一个买卖API。
+
+基于LangChain4j的多Agent工作流。该流触发后，系统从数据库读取行情数据，计算各支股票的技术指标，并在线程池中创建符合用户配置的AI交易员。本系统共接入了三种AI模型，其区别为底层模型不同（ERNIE 5.0、通义千问Max、GPT-4o-mini），并且我预设了三种不同的提示词，分别为保守、适中、激进三种风险取向。在单次模拟中将指标与持仓数据投喂给模型，模型在经过逻辑推理后决定观望或者调用买卖工具API，最后将执行结果和决策理由落库，推送前端。
+
+测试区块链与代币合约——“斗兽场”博弈环境。 笔者在本地Ganache测试链上部署三种ERC-20代币合约，构建了一个封闭的多Agent博弈环境。用户配置角色组合与博弈轮数后，系统为每位Agent分配等额初始代币。每轮交易中，三位Agent依次进行代币兑换。代币价格由链下线性冲击公式根据供需动态更新，SET作为一般等价货币用于折算Agent的资产总值。该测试链的Gas费为零，可以在简化系统的同时消除交易成本对决策的干扰。
+
+第2章 相关理论与关键技术
+
+本章介绍系统开发过程中涉及的主要技术，包括前后端框架、行情数据API、LLM调用框架以及区块链相关组件。对于各项技术，笔者在此重点说明其基本概念和核心功能，本系统的具体实现方式将留在后续章节展开。
+
+2.1 前后端框架
+2.1.1 SpringBoot框架
+SpringBoot是基于Java语言的后端开发框架，其设计目标是简化Spring应用的搭建和开发。与传统Spring框架相比，SpringBoot通过自动配置和起步依赖两个核心环节，大幅减少了笔者在配置文件和依赖管理上的工作量，能够更专注于业务逻辑的编写。
+
+SpringBoot的核心特性有：内嵌Tomcat服务器，应用可直接以Java程序的方式运行；提供大量起步依赖，保障了初始服务的可用性，同时工程师也可以在几行代码内引入所需的组件；支持通过注解管理和注入Bean类。在本系统中，SpringBoot主要用于构建RESTful API、运行数据库事务以及调度定时任务。
+
+2.1.2 Vue 3框架
+Vue是一套用于构建前端界面的渐进式JavaScript框架。Vue 3在Vue 2的基础上引入了组合式API、更好的TypeScript支持和基于Proxy的响应式系统。
+
+开发者通过组合式API能够将组件按照功能的逻辑组织，而可以不用仅依赖程序的生命周期，提高了代码的可复用性和可维护性。在性能上，Vue3基于Proxy的响应式架构明显优于Vue 2使用Object.defineProperty实现的方案，尤其在大批数据的场景下，Vue3的响应速度更具备优势。所以，本系统的前端界面基于Vue 3构建，配合Element Plus组件库和ECharts图表库完成交易所布局与股票数据可视化。
+
+2.2 Alpha Vantage金融数据API
+Alpha Vantage是一个提供免费金融数据服务的API平台，由Y Combinator孵化。该API提供股票、外汇和加密货币等金融资产的价格信息，支持实时报价、历史K线以及近百种技术指标。
+
+笔者调用Alpha Vantage的API为RESTful风格，调用方式为HTTP GET请求，基础URL为https://www.alphavantage.co/query。请求参数主要包括function（指定数据类型，如TIME_SERIES_DAILY表示日线数据）、symbol（股票代码）和apikey（用户身份凭证），笔者阅读接入文档后，处理返回的JSON格式数据。
+
+考虑到本系统并未商用，所以笔者选择了接入免费的API，因其存在调用频率和日调用总量的限制，笔者还设计了一套数据缓存策略，来降低使用数据API的频率，这将在后文详细介绍。
+
+2.3 LangChain4j大模型调用框架
+LangChain4j是新兴的、结合Java生态的Agent开发框架，它填补了Java-Spring生态与LLM生态之间的适配缺口，它的核心目的是让开发者能够用符合Java习惯的方式在程序中集成LLM的推理能力。在该框架下，笔者就避免了冗杂的HTTP调用、JSON解析和手动管理对话上下文等繁琐易错的细节。
+
+LangChain4j提供了一系列功能，其中与本系统最相关的两个概念是@Tool注解和AiServices代理。
+
+2.3.1 @Tool注解
+Tool注解可以将普通的Java方法标注为可供大模型调用的工具。框架在启动时会通过反射获取Java方法的元信息，包括方法名、参数列表和参数名称，并将方法信息转换为大模型可以理解的自然语言。调用大模型时，这些工具描述会随提示词一同发送，这时候，模型在进行推理后，判断是否调用某个工具，并在响应中返回调用指令。框架拦截调用信息（方法名、参数信息等）后，反射执行对应的Java方法，并将返回值反馈给模型以生成最终回复。
+
+笔者在Tool注解中填入了交易所买卖的功能描述，大模型会依据该描述判断应该传入哪些参数，这将直接影响工具调用的结果。
+@Tool("这个工具可以买入{volume}股，{stockName}股票，买入成功返回true，买入失败返回异常信息")
+
+2.3.2 AiServices代理机制
+AiServices是LangChain4j提供的另一个核心组件，其作用是将大模型封装为动态代理对象。开发者只需定义一个包含所需方法的接口，通过AiServices.Builder注入配置后的大模型、RAG存储、和上文介绍的工具方法等，即可获得该接口的代理对象。
+
+开发者调用AiServices代理方法时，框架会自动进行提示词构建、请求发送、响应解析以及工具的调用，最终返回自然语言结果。整个流程对开发者而言，只是一次普通的方法调用，这显著提升了可读性，降低了代码复杂度。
+
+2.4 区块链与智能合约相关技术
+
+2.4.1 以太坊与ERC-20代币标准
+
+以太坊是最常用的支持智能合约的公链，开发者可以在其链上部署去中心化的DAPP。智能合约就是运行在以太坊虚拟机中的代码，Pos共识机制保证其执行结果不被篡改。
+
+而ERC-20是以太坊上最广泛使用的代币接口标准，遵循该标准的智能合约必须实现六个方法：totalSupply（返回总供应量）、balanceOf（查询地址余额）、transfer（直接转账）、transferFrom（授权转账）、approve（授权额度）和allowance（查询授权额度）。这六个接口实现了一个交易单位最基本的交易功能。
+
+统一的接口让各种钱包、交易所和工具能够无缝兼容任何符合ERC-20规范的代币合约。本系统的测试代币也实现了OpenZeppelin提供的ERC-20标准，暴露给AI的买卖工具中，就涉及到测试链上ERC-20合约的调用。
+
+2.4.2 Web3j交互库
+Web3j是一个用于Java程序与以太坊节点进行交互的库。它封装了以太坊的JSON-RPC接口，提供了符合java逻辑的合约调用方式。
+
+Web3j的主要功能有：连接以太坊节点（支持HTTP和IPC）、管理账户与私钥、部署智能合约以及调用合约的读写函数等。它还提供了client工具和Maven插件，因此笔者提供Solidity合约的ABI和字节码就可生成对应的Java封装类，能够面向对象地调用合约函数，无需手动连接以太坊节点、构造JSON-RPC请求和执行字节码文件，极大地提升了笔者的开发效率。
+
+2.4.3 Ganache测试网络
+Ganache是以太坊开发工具套件Truffle Suite的一部分，可以在本地快速搭建以太坊测试网络。Ganache启动后会在本机运行一个完整的以太坊节点，其图形界面允许开发者逐块查看链上发生的交易、查看账户余额变化以及调试合约执行。由于是本地私有链，Gas费用可设为零，简化了系统的复杂度，更专注于AI间的推理博弈，非常适合开发和测试阶段的快速迭代。
+
+
+第3章 系统需求分析
+
+这一章的主题是，系统到底要做什么，不做什么。在动手写代码之前，先把功能和非功能的要求理清楚，后续设计和实现才有明确的参照。笔者将先阐述系统的使用场景和角色，然后分三个模块列出功能性需求，最后给出非功能性需求。
+
+3.1 系统使用场景与角色
+本系统的使用者主要是对AI交易行为感兴趣的研究员或学习者，所以使用者不需要登录注册，打开页面就能直接操作。系统分为两个独立的场景，
+
+第一个场景是股票辅助交易：使用者选择AI模型和风险偏好（配置有三种语言模型，和三种风险偏好类型），触发任务后AI分析行情并执行买卖，观察AI的决策逻辑和收益。
+
+第二个场景是区块链斗兽场：使用者配置AI战士的数量、偏好类型和博弈轮数，进行多轮博弈，前端展示AI战士的收益曲线和决策逻辑。
+
+3.2 功能性需求
+功能性需求按模块分三块：模拟交易所基础、AI辅助交易、区块链斗兽场。
+
+3.2.1 模拟交易所基础功能
+这部分提供一套供AI执行买卖的基础设施。它不涉及真实资金，也不对普通用户开放账户注册功能。
+
+股票行情查看。系统需要展示若干只股票的基本信息和实时价格，数据来源于Alpha Vantage。前端以k线图形式显示股票代码、当前价格和涨跌幅。
+
+模拟买入功能。AI能够调用买入工具，输入股票代码和买入数量，返回执行结果。系统需要检查该股票是否存在、AI账户中的现金是否足够支付，检查通过后流水落库，并更新持仓记录和现金余额。
+
+模拟卖出功能。AI能够调用卖出操作，传入股票代码和卖出数量，返回执行结果。系统需要检查AI持仓数量是否足够，确认后流水落库，并扣减持仓并增加现金余额。
+
+持仓与现金读写。前端需要展示每位AI当前的持仓明细和现金余额，AI自身在决策时也需要读写这些数据。
+
+3.2.2 AI辅助交易功能
+这部分功能让使用者可以手动触发AI对真实股票行情的分析和操作，并感知到AI的决策理由。
+
+模型与风险偏好选择。前端需要提供下拉菜单，让使用者从三个AI模型（类型TODO）中选择一个，再选择风险偏好（稳妥、适中、激进）。点击“AI操作”按钮后，系统启动该AI的一次决策流程。
+
+行情分析与决策。AI被触发后，需要读取当前所有可交易股票的最新价格和近期技术指标，结合自身持仓情况，判断是否买入、卖出或者保持观望。如果决定操作，系统需要自动执行对应的买卖动作。
+
+决策理由展示。无论AI最终是否交易，都需要输出一段文字说明它的判断依据。这段文字需要存下来，并在前端的日志区域显示。例如“IBM股价站上20日均线且RSI处于低位，因此买入100股”。
+
+收益展示。前端需要展示当前选中AI的累计收益率和资产净值曲线，资产净值根据现金加上持仓股票按市价折算的总和来计算。
+
+3.2.3 区块链斗兽场功能
+这部分是一个独立模块，和之前股票辅助交易不同，这里的交易对象是系统内部发行的三种测试代币，交易形式是代币之间的兑换，不涉及现金。
+
+角色配置与启动。使用者需要能够在页面上选择AI数量，为AI分别选择模型代号和风险偏好，输入想要运行的总轮数，并设置三种代币的初始数量。点击启动按钮后，系统开始运行。
+
+竞争与依次执行。每一轮开始后，AI们需要先并发地读取当前市场数据，为贴合真实的博弈场景，AI需按照一定竞争规则确定本轮的决策顺序。顺序确定后，三位AI依次执行各自的决策。第一位AI操作后市场价格可能发生变化，第二位AI将在新价格下做决策，第n位同理。单轮结束后，如果还没到设定的总轮数，就自动进入下一轮。
+
+代币价格动态更新。三种代币T1、T2、T3的相对价格需要在每次AI执行兑换操作后自动更新，价格变化应反映供需关系，买入操作会推高该代币价格，卖出会操作拉低价格。
+
+收益曲线展示。前端需要以折线图实时显示三位AI的资产总值变化。资产总值按照各AI持有的T1、T2、T3数量乘以当前价格再求和得到。曲线需要随着轮次推进自动更新。
+
+决策日志与链上记录。前端需要列出每一轮每位AI的操作内容和决策理由。同时需要提供类似区块浏览器的功能，展示测试链上发生的转账记录，包括交易哈希、收发地址、代币种类和数量。
+
+使用者权限限制。斗兽场启动后，使用者只能观看，不能手动干预AI的持仓，也不能暂停或修改运行参数。系统需要完整跑完预设轮数。
+
+3.3 非功能性需求
+非功能性需求关注的是本系统在性能、可靠性、安全性等方面的要求。
+
+3.3.1 数据一致性
+股票买卖和代币兑换都会并发修改多张数据表。比如买入股票时，现金余额要减少、持仓要增加、交易流水要新增。系统必须保证这些更新操作要么全部成功，要么全部失败，不能出现一半成功一半失败导致数据对不上的情况，即事务的原子性。
+
+3.3.2 多线程并发
+斗兽场每轮需要多位AI并发读取数据和竞争锁，AI辅助交易模块也可能同时收到多次手动触发。大模型API的调用是耗时的阻塞操作，如果放在主线程里执行会影响整个系统的性能，因此AI决策过程需要在独立的线程池中执行，线程池参数需要合理配置。
+
+3.3.3 外部API调用容错
+系统依赖Alpha Vantage和LLM两类外部API。网络波动、API配额耗尽、服务端故障等情况都可能导致调用失败，系统不能因为外部API出错就直接崩溃，所以需要有超时控制和重试机制，并在出错时向使用者给出明确提示。
+
+3.3.4 前端响应与展示性能
+斗兽场中的AI资产曲线会随着轮次增加积累大量的数据点，决策日志条目也会越来越多。前端渲染时需要注意性能，图表更新应采用增量方式只追加新数据，而不是每次都重新绘制整个图表。日志列表如果太长，也需要考虑分页或虚拟滚动。
+
+3.3.5 系统可观测性
+为了方便调试和事后分析，系统需要记录关键操作的日志，包括每次AI决策的输入数据、返回的原始内容、工具调用的参数和结果、链上交易哈希等。日志级别需要能够灵活调整，日常运行时用较粗略的级别，需要排查问题时再切换到详细级别。
+
+
+第4章 系统总体设计
+系统总体设计在需求分析的基础上进行，主要解决三个问题：系统采用什么样的架构、包含哪些功能模块、数据库需要哪些表来存数据。本章依次给出架构设计、模块划分和数据库表结构。
+
+4.1 系统架构设计
+本系统采用前后端分离的架构。前端使用Vue 3框架，运行在浏览器中，负责界面展示和用户交互。后端使用SpringBoot框架，运行在Tomcat服务器上，负责处理业务逻辑、操作数据库以及与外部系统通信。前后端之间通过HTTP协议传输JSON格式的数据。
+
+系统整体可以分为四层，如图4-1所示。
+
+（图4-1 系统架构图）
+
+前端展示层。该项目的网页包含两个主要标签页，一个是股票交易页面，另一个是斗兽场页面。页面上有表格、图表、按钮和日志列表，用户通过它们查看数据、触发操作。
+
+后端业务层。这一层是SpringBoot应用，接收前端发来的请求，执行对应的业务逻辑，然后返回结果。业务层内部又分为控制层和服务层。控制层负责接收请求和返回响应，服务层负责具体的业务处理，比如计算技术指标、调用大模型、执行买卖操作等。
+
+数据持久层。该层由MySQL+MyBatis实现，用来存储股票信息、价格历史、AI持仓、交易记录、斗兽场配置等所有需要持久保存的数据。
+
+区块链网络层。这一层是本地运行的Ganache测试链，链上部署了三种ERC-20代币合约。后端通过Web3j库连接Ganache节点，执行查询余额和转账等操作。
+
+此外，系统还依赖两个外部API：Alpha Vantage提供股票行情数据，大语言模型API提供AI推理能力，后端通过HTTP和RPC调用这两个外部服务。
+
+4.2 功能模块划分
+按照功能职责的不同，系统划分为以下六个模块。
+
+行情数据模块，负责与Alpha Vantage对接，获取股票的基本信息和价格数据，并将数据存入本地数据库。同时提供查询接口，供其他模块获取行情。
+
+模拟交易模块，负责处理买卖操作。它维护AI的现金余额和持仓记录，在AI决定买入或卖出时更新相应的数据库表。这个模块的买卖方法会以工具的形式暴露给AI决策模块调用。
+
+AI决策模块，负责与大语言模型交互。它根据配置加载不同的模型和提示词，从行情数据模块获取市场数据和持仓信息打包成提示词发给大模型，然后解析模型的返回结果，决定是否调用模拟交易模块的买卖工具。
+
+斗兽场控制模块，负责管理Agent在测试链上的多轮博弈。它按照设定的轮数和角色配置，控制每轮的交易顺序，协调AI决策模块和区块链交互模块完成代币交易。
+
+区块链交互模块，负责与Ganache测试链通信。包括部署代币合约、向指定地址转账初始代币、查询地址的代币余额、执行代币转账等操作，在最后将交易日志和结果落入行情数据模块。
+
+前端模块，负责页面的展示和交互。股票交易页包含行情表格、AI选择控件、操作按钮、收益曲线和日志列表；斗兽场页包含资产曲线、轮次信息、日志列表和交易记录表格。
+
+各模块之间的关系是：前端模块通过HTTP调用后端业务层的控制层；控制层根据请求调用行情数据模块、模拟交易模块、AI决策模块或斗兽场控制模块；AI决策模块在需要时调用模拟交易模块的工具；斗兽场控制模块在需要时调用AI决策模块和区块链交互模块；行情数据模块和区块链交互模块分别与外部API和Ganache节点通信。
+
+4.3 数据库表设计
+本系统使用MySQL数据库存储数据，以下列出主要的数据表及其字段，主键用下划线标出。
+
+4.3.1 股票行情相关表
+stock_info（stock_id, symbol, name, exchange, currency）
+存储可交易股票的基本信息。
+
+stock_price（price_id, stock_id, trade_date, open, high, low, close, volume）
+存储股票的历史日线数据，每个交易日一条记录。
+
+4.3.2 AI辅助交易相关表
+ai_trader（trader_id, model_code, risk_preference, cash_balance, created_at）
+记录每位AI交易员的信息，model_code标识使用哪个大模型（A/B/C），risk_preference标识风险偏好（保守/适中/激进），cash_balance为当前现金余额。
+
+ai_position（position_id, trader_id, stock_id, quantity, avg_cost）
+记录AI持有的股票仓位，quantity为持仓数量，avg_cost为平均成本价。
+
+ai_trade_record（trade_id, trader_id, stock_id, trade_type, quantity, price, trade_time）
+交易流水表，记录每次买入或卖出操作。trade_type为buy或sell。
+
+ai_decision_log（log_id, trader_id, round_type, decision_reason, executed_action, asset_value, created_at）
+记录AI每次决策的日志。round_type区分是单次辅助交易还是斗兽场轮次，decision_reason为AI返回的自然语言理由，executed_action记录实际执行的操作。
+
+4.3.3 斗兽场相关表
+arena_config（config_id, trader1_model, trader1_risk, trader2_model, trader2_risk, trader3_model, trader3_risk, total_rounds, init_t1, init_t2, init_t3, status, created_at）
+存储每次斗兽场运行的配置信息。包括三位AI的角色设定、总轮数、三种代币的初始分配数量以及运行状态。
+
+arena_round（round_id, config_id, round_number, trading_order, start_time, end_time）
+记录每一轮的元信息，trading_order记录三位AI本轮的交易顺序。
+
+arena_ai_state（state_id, config_id, trader_id, round_number, t1_balance, t2_balance, t3_balance, set_value）
+资产快照表，记录每轮结束后每位AI的代币持仓量和折算后的SET总值，用于绘制资产曲线。
+
+token_price（price_id, config_id, round_number, t1_price, t2_price, t3_price）
+记录每轮三种代币相对于SET的价格，价格由系统根据交易情况动态计算。
+
+4.3.4 区块链流水表
+blockchain_tx（tx_id, tx_hash, from_address, to_address, token_type, amount, round_id, created_at）
+记录测试链上发生的每一笔代币转账，便于前端展示交易记录。
+
+4.4 本章小结
+本章简单地阐述了本系统的总体设计，笔者在架构上采用前后端分离、离线在线数据分离的四层结构。前端Vue 3展示页面，后端SpringBoot负责处理业务的逻辑，MySQL存储数据，Ganache测试链保存代币资产记录。在功能上，本系统划分为行情数据、模拟交易、AI决策、斗兽场控制、区块链交互和前端界面六个模块。数据库中，笔者设计了四类表，分别支持了股票行情、AI交易、斗兽场博弈和链上交易记录的存储。
+
+
+
+
+
+第5章 系统详细设计与实现
+本章将在总体设计的基础上，对各功能模块实现上的细节进行具体的阐述，包括行情数据的查询与缓存策略、AI决策模块的提示词拼接加载与模型调用、模拟交易的工具方法实现、斗兽场的竞争排序与代币兑换流程，以及前端与后端的交互方式。对于关键的逻辑，笔者将给出代码片段或伪代码。
+
+5.1 行情数据模块
+5.1.1 股票数据查询与缓存
+本系统固定配置了几只美股作为交易对象，包括IBM、AAPL、TSLA、MSFT等。股票代码清单硬编码于SpringBoot配置文件application.yml中，文件表现形式如下：
+yaml
+stock:
+  symbols: IBM,AAPL,TSLA,MSFT
+后端在启动时读取该配置，然后初始化stock_info表，若表中无记录则插入。之所以采用配置的方式导入交易对象，是为了后续将本地配置升级到远程配置服务，如：Nacos、Apollo等，以实现在项目上线后动态调整收录股票的功能，在该阶段则暂时配置在本地。
+
+行情数据采用懒加载策略，本项目启动时，并不会主动拉取所有的行情数据。具体流程是，前端请求某只股票的K线数据时，后端首先查询本地数据库stock_price表，若存在对应日期的记录则直接返回，若缺失则通过RestTemplate向Alpha Vantage的TIME_SERIES_DAILY端点发起HTTP请求，请求URL格式如下：
+text
+https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={apiKey}
+用Jackson解析返回的JSON数据，第二步再提取每日的收盘价、最高价、最低价等字段，批量插入stock_price表。后续相同的请求则直接命中db，这样就有效地规避了API配额的超限问题。
+
+5.1.2 股票技术指标的计算
+笔者并没有调用Alpha Vantage的指标API，而是在后端进行了技术指标的计算，主要用到了org.apache.commons.math3库中的统计工具类。
+
+移动平均线：获取最近N个交易日的收盘价序列，调用StatUtils.mean(double[])方法计算算术平均数，公式如下。
+
+
+相对强弱指标：按标准公式$RSI = 100 - \frac{100}{1 + RS}$计算，其中RS为N日内上涨幅度均值与下跌幅度均值的比值。
+
+布林带：中轨为N日收盘价的移动平均，上轨与下轨分别为中轨加减两倍标准差。标准差通过DescriptiveStatistics类求得。
+
+指标计算类设计为无状态工具类，方法签名示例：
+
+java
+public class IndicatorCalculator {
+    public static double sma(List<Double> prices, int period) { ... }
+    public static double rsi(List<Double> prices, int period) { ... }
+    public static BollingerBand bollinger(List<Double> prices, int period) { ... }
+}
+以上各种方法都在AI决策时调用，调用结果用于辅助AI进行推理；本系统并不将指标结果持久化，以维护数据结构的简洁和实效性
+
+5.2 AI决策模块
+5.2.1 模型配置与加载
+本系统共集成了三个不同厂商的大语言模型，代号A、B、C分别对应百度ERNIE 5.0、阿里通义千问Max、OpenAI GPT-4 mini。各模型的baseUrl、apiKey及模型名称参数配置于application.yml中：
+
+yaml
+langchain4j:
+  models:
+    ernie:
+      base-url: https://qianfan.baidubce.com/v2
+      api-key: ${ERNIE_API_KEY}
+      model-name: ernie-5.0
+    qwen:
+      base-url: https://dashscope.aliyuncs.com/compatible-mode/v1
+      api-key: ${QWEN_API_KEY}
+      model-name: qwen-max
+    gpt4:
+      base-url: https://api.openai.com/v1
+      api-key: ${OPENAI_API_KEY}
+      model-name: gpt-4o-mini
+api-key通过本地的环境变量注入，这样配置文件提交至Git仓库后就不会暴露敏感信息。SpringBoot在启动时读取上述配置连接模型厂商api，为每个模型接口构建TradeModel实例，再通过@bean注解注入Spring容器。AgentFactory创建AIServices代理，该工厂类根据前端传入的模型代号返回相应的代理对象，代理再通过反射调用TradeMode中的交易接口，这样就实现了用一个对象（代理对象）管理多个模型实例的收束逻辑。
+
+
+
+5.2.2 提示词模板管理
+系统提示词存储于main/resources/prompts/目录下的三个文本文件中：conservative_system.txt、moderate_system.txt、aggressive_system.txt。文件内容为纯文本，对模型起到总领性提示的作用，并不针对每次独立的交易，例如稳妥型prompt片段如下：
+
+text
+你是一位风格保守的交易员。你的首要目标是保证本金安全。
+在决定买入前，你需要确认标的处于明确的上升趋势中，且近期没有出现过大的涨幅。
+当市场方向不明或出现不利信号时，优先选择持有现金观望。
+
+
+每次构建AiServices代理时，AgentFactory会读取对应的文件内容并将其设置为SystemMessage。外置的提示词具备可热修改的特性，便于笔者在实验过程中快速调整AI的引导方向，而无需重新编译代码。
+
+5.2.3 单次决策的无状态设计
+在AI辅助交易模块中，每次决策都为独立的无状态的Session。前端点击“AI决策”按钮后，后端将构造全新的TradingContext对象，其中包含当前的市场快照和AI持仓数据，拼接到prompt中提交给模型进行推理。推理结束，展示到前端后推理过程则被抛弃。此设计避免了复杂的上下文管理，也很大程度降低了对话带来的高昂词元费用。在这个过程中，模型需要的辅助数据通过String.format()插入prompt，单次交易的prompt如下：
+
+
+斗兽场模块的设计则不一样。每个AI在博弈过程中维护一个短期的记忆队列，该队列执行先进先出的淘汰策略，仅记录离自己最近的三轮操作摘要（如“上轮用100 T1换得52 T2，原因是RSI显示超卖”）。笔者在提示词的附加段落中注入AI的记忆。这样，AI就能够在决策时参考自身的历史行为，增加推理的连贯性。短期记忆也不会跨轮次进行无限累计，以免提示词的膨胀。
+
+
+5.2.4 线程池配置
+在本系统的多线程场景中，调用大模型API响应时间从数秒到数十秒不等，属于典型的I/O密集型任务。该类型任务可以通过增加并发度或调用异步非阻塞rpc进行优化，而本系统的大模型接口并不支持异步调用，只能同步等待其返回数据。所以为了充分利用系统资源，笔者结合了机器性能（4核）和任务特性（极高的PRC耗时），为AI决策模块配置了独立的线程池，并设计了定制化的参数：
+
+java
+@Bean("aiExecutor")
+public ExecutorService aiExecutor() {
+    return new ThreadPoolExecutor(
+        4,                              // 核心线程数，机器cpu数量为4
+        40,                              // 最大线程数
+        60L, TimeUnit.SECONDS,           // 空闲线程存活时间
+        new LinkedBlockingQueue<>(), // 任务队列容量
+        new ThreadPoolExecutor.CallerRunsPolicy()
+    );
+}
+部署本系统的机器cpu内核数为4，考虑到大模型API的耗时极长，且并发限制较为宽松，笔者配置了核心线程数为4，最大线程数为40和链表型的任务队列。其中核心线程对应cpu内核，一个内核执行一个任务，40的最大线程数提升系统的并发能力，如果出现40个线程都被占用的情况，多余的任务会暂存到无限长的任务队列中，有效缓冲瞬时的流量高峰；拒绝策略为CallerRunsPolicy，防止任务丢失。经压力测试，该配置足以支撑10qps的并发量，足以满足系统对AI决策的并发需求。
+
+5.3 模拟交易模块
+5.3.1 买卖工具方法
+工具方法本质上就是由Java实现的代码逻辑，本系统的buy/sell方法都加上了@Tool注解，由AiService调用反射执行。下面给出买入方法，完整实现如下：
+
+java
+@Tool("买入指定股票。symbol为股票代码，amount为买入股数。")
+@Transactional(value = "Exception")
+public String buy(String symbol, double amount) {
+    // 1. 校验股票是否在可交易列表中
+    StockInfo stock = stockInfoRepository.findBySymbol(symbol)
+        .orElseThrow(() -> new IllegalArgumentException("无效股票代码"));
+    
+    // 2. 获取当前市价（从stock_price表取最新记录）
+    double currentPrice = stockPriceRepository.findTopByStockIdOrderByTradeDateDesc(stock.getId())
+        .orElseThrow(() -> new IllegalStateException("无行情数据")).getClose();
+    
+    // 3. 计算所需金额，校验现金是否充足
+    double requiredCash = currentPrice * amount;
+    AiTrader trader = getCurrentTrader();
+    if (trader.getCashBalance() < requiredCash) {
+        return "买入失败：现金余额不足";
+    }
+    
+    // 4. 开启事务，更新现金与持仓
+    trader.setCashBalance(trader.getCashBalance() - requiredCash);
+    aiTraderRepository.save(trader);
+    
+    AiPosition position = aiPositionRepository.findByTraderIdAndStockId(trader.getId(), stock.getId())
+        .orElse(new AiPosition(trader, stock, 0, 0.0));
+    double newQuantity = position.getQuantity() + amount;
+    double newAvgCost = (position.getAvgCost() * position.getQuantity() + requiredCash) / newQuantity;
+    position.setQuantity(newQuantity);
+    position.setAvgCost(newAvgCost);
+    aiPositionRepository.save(position);
+    
+    // 5. 记录交易流水
+    AiTradeRecord record = new AiTradeRecord(trader, stock, TradeType.BUY, amount, currentPrice);
+    aiTradeRecordRepository.save(record);
+    
+    return String.format("已买入 %.0f 股 %s，成交价 %.2f，消耗现金 %.2f", 
+                         amount, symbol, currentPrice, requiredCash);
+}
+
+本方法第一步先校验股票，如果不存在则抛出异常；第二是获取当前价格并校验交易者资金大于购买所需，扣除现金持仓；第三是保存交易记录并返回结果。为了避免方法执行到一半中断，导致数据污染，买卖等涉及到多次数据读写的场景，笔者都添加了对应的事务管理机制，以保证事务的原子性。
+
+
+5.3.2 AI交易员初始化
+在本项目初始化时，笔者为每位AI交易员分配了10,000美元的初始现金。初始化逻辑位于AiTraderService.createTrader，该方法被@PostConstruct修饰，在依赖注入完成后，Bean正式投入使用前执行。另一部分，前端在启动斗兽场模块时，将引导用户对AI的模型和风险偏好进行自由组合，并且设置AI的初始现代币数量（默认为1,000单位），这在数据层对应着ai_trader表中的记录。
+
+
+5.4 区块链斗兽场模块
+5.4.1 角色配置与启动
+本系统中，每轮斗兽场模拟的配置都在前端完成。用户通过下拉菜单分别为A/B/C三位AI选择模型代号与风险偏好（稳妥/适中/激进），输入总运行轮数n，并可指定三位AI的初始代币数量（T1、T2、T3各分配1,000单位，托管地址预留10,000单位）。用户点击“启动斗兽场”按钮后，前端通过VUE3框架，将配置数据POST至后端的/api/arena/start接口。
+
+在收到请求后，笔者设计了以下步骤对斗兽场进行初始化：
+
+将用户的配置记录插入arena_config表，设置初始状态为RUNNING；
+
+调用Web3j的Credentials.create私钥生成方法，为三位AI分配独立的以太坊地址与私钥，并将地址保存到ai_trader表的区块链地址字段。
+
+操作系统托管地址向三位AI地址分别转入指定数量的T1、T2、T3代币，在区块链中转账通过Web3j调用ERC20合约transfer方法实现。
+
+在token_price_history表中插入初始价格记录。为了体现AI的交易表现，本系统中约定“SET”为“基准货币”，T1、T2、T3相对SET的初始价格均为1.0（可配置）。
+
+所有程序全部启动之后返回response，前端转跳斗兽场监控页面展示AI实时收益
+
+5.4.2 竞争排序与轮转执行
+本系统中，笔者构造了ArenaRoundExecutor类控制每轮博弈的流程，分为两个决策阶段。核心逻辑如下：
+
+
+public void executeRound(Long configId, int roundNumber) {
+    ArenaConfig config = configRepository.findById(configId).get();
+    List<AiTrader> traders = getTradersByConfig(config);
+    
+    // 阶段 1：并行竞速（排位）
+    List<AiTrader> racingOrder = new CopyOnWriteArrayList<>();
+    CountDownLatch racingLatch = new CountDownLatch(traders.size());
+
+    for (AiTrader trader : traders) {
+        arenaExecutor.submit(() -> {
+            try {
+                // 此时 AI 进行初步分析并快速抢占位置
+                // 可以包含简单的逻辑计算，谁先完成谁先入队
+                buildInitialIntent(trader, config); 
+                racingOrder.add(trader);
+            } finally {
+                racingLatch.countDown();
+            }
+        });
+    }
+
+    try {
+        racingLatch.await(10, TimeUnit.SECONDS);
+
+        // 阶段 2：串行二次校验与执行
+        for (AiTrader trader : racingOrder) {
+            // A：获取最新瞬时上下文（包含前一个人操作后的最新价格）
+            TradingContext flashCtx = buildContextForArena(trader, config);
+            
+            // B：AI 二次校验（询问 AI：当前价格变了，你还做吗？）
+            // 这里的 confirmDecision 是一个轻量级的 AI 调用
+            TradeAction action = trader.confirmDecision(flashCtx);
+            
+            if (action.isProceed()) {
+                // C：AI 确认执行，立即改变价格
+                executeTraderTurn(trader, config, roundNumber, flashCtx);
+            } else {
+                log.info("第 {} 轮：交易员 {} 观察到价格变动，决定放弃交易", roundNumber, trader.getId());
+            }
+        }
+        
+        saveRoundSnapshot(config, roundNumber, racingOrder);
+    } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+    }
+}
+任务：请根据当前市场快照分析趋势。
+输出：你的买入/卖出倾向。此时不要求绝对精确，主要是为了产生交易意愿。
+
+Role: 你正在执行刚才的交易意图，但市场在你准备的瞬间发生了变动。
+Context:
+你之前的决策价格是: {{initial_price}}
+当前的瞬时价格是: {{current_price}}
+价格变动方向: {{price_change_direction}}
+Task: 请根据当前瞬时价格，判断该价格是否仍然符合你的盈利预期？
+Output (JSON):
+{
+"proceed": true | false,
+"reasoning": "解释为什么在当前新价格下选择继续或放弃"
+}
+
+
+在任务的一开始，程序会根据用户的配置构建对应的AITrader；第二步是创建队列，其表示trader执行交易的顺序；第三步，所有AI会同时启动第一轮预决策，这轮决策的速度决定了他们在本轮交易的顺序，这也符合真实场景下，反应更敏捷的交易员能够更快做出判断、执行交易；第四则是AI参考预决策与现实情况（同轮次前面的交易会影响Token的价格），执行二次决策，在差异不大时调用buy/sell接口执行交易任务；最后，保存交易日志，重启循环，直到达到用户配置的轮数结束。
+
+
+5.4.3 代币兑换与价格更新
+
+AI执行最终决策的方法是executeTraderTurn，步骤如下：
+
+调用AI决策模块，传入预决策结果和当前市场数据（各代币最新价格、AI持仓），模型自动调用buy/sell工具接口。
+
+在本场景buy/sell方法中，若模型选择用T1兑换T2，则传入fromToken、toToken、amountIn等参数。
+
+根据当前价格计算
+
+amountOut：amountOut = amountIn * priceOf(fromToken) / priceOf(toToken)。
+
+执行链上转账：调用fromToken合约的transfer方法，从AI地址划走amountIn至系统托管地址；再调用toToken合约的transfer，从托管地址划转amountOut至AI地址；在链下，系统将记录交易日志和余额快照，并把所有db读写操作包裹在同一数据库事务中，以保证转账操作的原子性
+
+转账成功后，fromToken和toToken的相对数量会发生改变，同时这对Token的价格也会发生改变，本系统选择使用线性价格冲击公式计算两种Token的价格波动：
+
+其中$S$为该代币总供应量，$\alpha$取配置文件中的arena.price.alpha值（默认0.5）。amountIn为本次兑换付出的代币数量。卖出操作则可以视作净买入量为负值，公式自然同样适用。
+
+更新token_price_history表，记录fromtoToken的新价格；保存AI的决策日志至ai_decision_log表，包括操作内容与决策理由；并记录链上交易哈希至blockchain_tx表。
+
+每轮交易后价格都会变动，这将影响之后同轮AI的判断，所以笔者在上文设计的二次决策就是为了解决该问题
+
+5.4.4 链上交互与私钥管理
+本系统的链上交互主要由Web3j负责，手动调用或者在编译时启动web3j-maven-plugin插件，该插件会自动根据Solidity源码生成Web3j的合约封装类。下面展示部分转账操作的代码片段：
+
+java
+TradingToken tokenContract = TradingToken.load(contractAddress, web3j, credentials, new DefaultGasProvider());
+TransactionReceipt receipt = tokenContract.transfer(toAddress, amount).send();
+
+DefaultGasProvider是Web3j提供的默认策略类，主要起到计算gasFee的作用，其在Ganache测试环境下默认将gasFee设为零，且gasLimit设为合约执行所需的最小值。为了简化系统复杂性，本系统暂不研究gasFee对AI决策的影响，所以直接使用该默认类，并没有额外配置。
+
+笔者在系统初始化时，创建了一个汇款“操作员”——系统托管方，该地址的私钥存放于本地环境变量中，该私钥对应的地址是部署代币合约时的初始持有者，拥有全部数量代币，负责中转AI交易员的Token交易。
+
+5.5 前端与后端的交互
+5.5.1 实时数据推送
+本系统设计许多实时数据推送的场景，比如AI决策日志和资产曲线的更新，他们都采用Server-Sent Events（SSE）技术实现。笔者在技术选型时，调研了工程上常用的Server推送协议：WebSocket和SSE，考虑到WebSocket维持全双工通道会消耗更多的服务器资源，而且单向推送也完全满足本系统需求，所以笔者选用了更加轻量成本更加低廉的SSE。前端使用EventSource对象连接后端的/api/stream接口组。后端在每一轮决策完成时，都会向SSE通道写入最新快照数据，前端通过监听到的message事件，增量更新ECharts图表和对话框，展示AI的资产曲线和决策思路。
+
+例如，在斗兽场运行期间，前后端会维护一条SSE长连接接收AI资产的更新；股票交易页的AI单次决策结果同样通过SSE的HTTP连接返回，避免前端轮询造成不必要的资源浪费。
+
+5.5.2 页面组件结构
+前端两个标签页是独立的Vue单文件组件，分别为StockTrading.vue和Arena.vue。笔者考虑到本地计算资源的有限，所以切换标签页时，Vue Router会自动销毁离开页面的组件实例，也就是自动停止该页面的SSE连接和未完成的HTTP请求。这两个页面各自维护数据状态，具备隔离性。
+
+5.5.3 配置页面的实现
+斗兽场的配置页面也是一个独立的Vue组件，包含三个AI角色的下拉选择器、轮数输入框、初始代币分配输入框。提交时将配置数据通过POST接口推送至后端，后端创建arena_config记录并返回配置ID。随后页面自动跳转到斗兽场监控页Arena.vue，通过配置ID订阅后端返回的SSE流，在该步骤之后，后端就通过该流传输数据，前端使用Echart进行展示。
+
+5.6 异常处理与日志
+本系统使用SpringBoot提供的@ControllerAdvice等一系列注解，该类注解就像是一张拦截网，捕获Controller中的数据进行统一的处理。笔者使用@ExceptionHandler(Exception.class)注解，捕获并处理IllegalArgumentException、API调用超时等异常，以统一的JSON返回错误信息给前端。
+
+关键业务操作均通过SLF4J记录日志，默认为info级别；AI决策时，提示词内容与模型调用工具返回以DEBUG级输出，便于调试。同样是考虑到了资源的有限，日志文件每日滚动，保留周期为3天。
+
+
+7.1 工作总结
+本课题构建了一个面向大模型交易行为研究的复合系统：本系统搭建了真实股票行情与链上代币博弈两种场景，实现了多Agent的并发决策、工具调用与资产结算的完整闭环。其核心工作可概括为以下三点：
+
+其一，深度集成LangChain4j框架与SpringBoot脚手架，以@Tool注解将Java方法提供给Agent使用，并用AiServices代理封装各种模型，使不同厂家的大模型能够在Java生态下调用统一的工具接口并行运作。
+
+其二，笔者设计了一套链下定价、链上交易的代币博弈机制。三种ERC-20代币的兑换价格由线性冲击公式驱动，该设计将GasFee、流动性深度等复杂变量从系统中剥离，使得笔者不用实现一整个uniswap交易所就能实现链上交易功能，也能够让用户更专注于Agent的推理过程。
+
+其三，在斗兽场模块中引入了基于思考速率竞争机制。三位代理并发读取数据后，按思考速率排序依次执行交易，并且在二次决策中，后序者可观察到前序操作引发的价格变动。这一设计模拟了真实的交易情况，让程序一次仅执行一笔交易，这既解决了最复杂的线程安全问题，同时也让AI之间产生了博弈。
+
+
+7.2 不足与改进方向
+现在的系统仍然存在着几项实质性的局限，这些点都会影响模拟表现的深度与可推广性。
+
+行情数据的局限。Alpha Vantage的免费API存在限额的情况，无法支撑真实场景下的高频调用，且股票列表配置在本地，不支持动态扩展。后续笔者会调研更多数据源厂商或按需购买API资源，并且将本地配置迭代至线上的配置中心，实现在线扩展股票列表和其他配置。
+
+简单的定价模型。真实的去中心化交易所使用恒定乘积公式进行定价，该计算方式会产生非线性的滑点，而本系统使用的线性冲击公式则忽略了真实交易中的非线性滑点，也未引入Gas竞拍、区块确认延迟等链上细节。改进方向是将定价逻辑迁移至链上，实现类似uniswap的交易所功能，使用自动做市商对Token定价，或者使用链上真实的历史价格数据，使定价机制更贴近实际市场的微观情况。
+
+工具集较为单一。当前Agent仅能够通过观测k线图，调用最简单的buy/sell功能，而在真实市场中，往往有很多数据之外的信息能够成为交易决策的重要参考，这些信息同样也是Agent重要的博弈因素。所以笔者后续计划引入更多种类的工具，比如：新闻查询工具、情绪分析工具等等，并且对Agent在信息权限和工具集上进行差异化配置，以呈现出工具和信息差对决策的关键作用
+
+试验功能不足。 评价指标单一，仅以资产作为评价参考，没有考虑到夏普比率、最大回撤等风险调整后指标；试验操作繁琐，不支持同一配置下的重复试验和统计，回归测试需要手动记录结果。后续计划调研更多绩效指标，集成多维度评价体系，并在实际使用后，对操作交互进行迭代，适配更多场景下的试验需求。
+
+上述不足指明了本系统从“可用”向“可靠”演进的努力方向。后续若能继续迭代，本系统有望为大语言模型运用在金融场景的最佳实践。
+
+

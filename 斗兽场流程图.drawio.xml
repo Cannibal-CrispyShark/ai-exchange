@@ -1,0 +1,1409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="localhost" pages="12">
+  <diagram name="模块划分图" id="0_f8GtKqeKzbwWbs-56i">
+    <mxGraphModel dx="1414" dy="863" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-40" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=16;fontStyle=1;" value="用户配置并启动斗兽场流程" vertex="1">
+          <mxGeometry height="30" width="350" x="845.2857142857144" y="771.7142857142858" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-41" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="800" width="853" x="477" y="811.71" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-42" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f0f0f0;strokeColor=#666666;" value="" vertex="1">
+          <mxGeometry height="40" width="850" x="478" y="811.71" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-43" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" value="用户" vertex="1">
+          <mxGeometry height="40" width="211.29" x="481" y="811.71" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-44" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" value="前端" vertex="1">
+          <mxGeometry height="40" width="180" x="690.2857142857144" y="811.7142857142858" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-45" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" value="后端系统" vertex="1">
+          <mxGeometry height="40" width="229.71" x="870.29" y="811.71" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-46" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" value="区块链（Ganache）" vertex="1">
+          <mxGeometry height="40" width="230" x="1100" y="811.71" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-47" edge="1" parent="1" style="endArrow=none;html=1;strokeColor=#666666;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="690.2857142857144" y="811.7142857142858" as="sourcePoint" />
+            <mxPoint x="690.2857142857144" y="1611.7142857142858" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-48" edge="1" parent="1" style="endArrow=none;html=1;strokeColor=#666666;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="870.2857142857144" y="811.7142857142858" as="sourcePoint" />
+            <mxPoint x="870.2857142857144" y="1611.7142857142858" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-49" edge="1" parent="1" source="GOeQPnZNKINhfGT-_tLq-45" style="endArrow=none;html=1;strokeColor=#666666;exitX=1;exitY=0;exitDx=0;exitDy=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="1099.9957142857145" y="822.5042857142857" as="sourcePoint" />
+            <mxPoint x="1099.9957142857145" y="1622.5042857142857" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-50" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" value="进入斗兽场配置页面" vertex="1">
+          <mxGeometry height="35" width="160" x="500.28571428571445" y="881.7142857142858" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-51" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" value="配置AI、总轮数等" vertex="1">
+          <mxGeometry height="35" width="160" x="500.28571428571445" y="961.7142857142858" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-53" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" value="点击“启动斗兽场”" vertex="1">
+          <mxGeometry height="35" width="160" x="500.28571428571445" y="1050.0042857142857" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-54" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="发送配置至后端" vertex="1">
+          <mxGeometry height="35" width="140" x="710.2857142857144" y="1050.0042857142857" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-55" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" value="保存配置至数据库" vertex="1">
+          <mxGeometry height="35" width="150" x="900.2857142857144" y="1050.0042857142857" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-56" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" value="为三位AI生成链上地址" vertex="1">
+          <mxGeometry height="35" width="160" x="895.2857142857144" y="1134.0042857142857" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-57" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" value="调用区块链分配初始代币" vertex="1">
+          <mxGeometry height="45" width="170" x="890.2857142857144" y="1210.0042857142857" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-58" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" value="执行代币转账" vertex="1">
+          <mxGeometry height="35" width="140" x="1144.9957142857145" y="1215.0042857142857" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-82" edge="1" parent="1" source="GOeQPnZNKINhfGT-_tLq-59" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="GOeQPnZNKINhfGT-_tLq-60">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-59" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" value="设置代币初始价格" vertex="1">
+          <mxGeometry height="35" width="140" x="905.2857142857144" y="1300.0042857142857" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-84" edge="1" parent="1" source="GOeQPnZNKINhfGT-_tLq-61" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="GOeQPnZNKINhfGT-_tLq-83">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-61" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" value="返回启动成功响应" vertex="1">
+          <mxGeometry height="35" width="140" x="905.2857142857144" y="1490.0042857142857" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-62" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" value="跳转至监控页面观察博弈" vertex="1">
+          <mxGeometry height="35" width="170" x="501.64571428571446" y="1490.0042857142857" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-63" edge="1" parent="1" source="GOeQPnZNKINhfGT-_tLq-50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="GOeQPnZNKINhfGT-_tLq-51">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-64" edge="1" parent="1" source="GOeQPnZNKINhfGT-_tLq-51" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="580.2857142857144" y="1041.7142857142858" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-66" edge="1" parent="1" source="GOeQPnZNKINhfGT-_tLq-53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="GOeQPnZNKINhfGT-_tLq-54">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-67" edge="1" parent="1" source="GOeQPnZNKINhfGT-_tLq-54" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="GOeQPnZNKINhfGT-_tLq-55">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-68" edge="1" parent="1" source="GOeQPnZNKINhfGT-_tLq-55" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="GOeQPnZNKINhfGT-_tLq-56">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-69" edge="1" parent="1" source="GOeQPnZNKINhfGT-_tLq-56" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="GOeQPnZNKINhfGT-_tLq-57">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-70" edge="1" parent="1" source="GOeQPnZNKINhfGT-_tLq-57" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="GOeQPnZNKINhfGT-_tLq-58">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-72" edge="1" parent="1" source="GOeQPnZNKINhfGT-_tLq-57" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="GOeQPnZNKINhfGT-_tLq-59">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-79" edge="1" parent="1" source="GOeQPnZNKINhfGT-_tLq-60" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="GOeQPnZNKINhfGT-_tLq-61">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-60" parent="1" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" value="启动轮次循环（见时序图）" vertex="1">
+          <mxGeometry height="40" width="160" x="895.2857142857144" y="1380.0042857142857" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-85" edge="1" parent="1" source="GOeQPnZNKINhfGT-_tLq-83" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="GOeQPnZNKINhfGT-_tLq-62">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GOeQPnZNKINhfGT-_tLq-83" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="运行结果落库" vertex="1">
+          <mxGeometry height="35" width="140" x="720" y="1490" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="数据库ER图" id="aUT-f5A38U8ge9l1kJky">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1200" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title2" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" value="数据库实体关系图 (ER Diagram)" vertex="1">
+          <mxGeometry height="30" width="300" x="400" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="t1" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="stock_info" vertex="1">
+          <mxGeometry height="120" width="180" x="40" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="t1f1" parent="t1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 stock_id" vertex="1">
+          <mxGeometry height="20" width="170" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t1f2" parent="t1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="symbol" vertex="1">
+          <mxGeometry height="20" width="170" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t1f3" parent="t1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="name" vertex="1">
+          <mxGeometry height="20" width="170" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t1f4" parent="t1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="exchange, currency" vertex="1">
+          <mxGeometry height="20" width="170" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t2" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="stock_price" vertex="1">
+          <mxGeometry height="140" width="200" x="280" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="t2f1" parent="t2" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 price_id" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t2f2" parent="t2" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="stock_id (FK)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t2f3" parent="t2" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="trade_date" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t2f4" parent="t2" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="open, high, low, close" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t2f5" parent="t2" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="volume" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="t3" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#d5e8d4;strokeColor=#82b366;" value="ai_trader" vertex="1">
+          <mxGeometry height="140" width="200" x="40" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="t3f1" parent="t3" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 trader_id" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t3f2" parent="t3" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="model_code (A/B/C)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t3f3" parent="t3" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="risk_preference" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t3f4" parent="t3" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="cash_balance" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t3f5" parent="t3" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="chain_address" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="t4" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#d5e8d4;strokeColor=#82b366;" value="ai_position" vertex="1">
+          <mxGeometry height="120" width="200" x="320" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="t4f1" parent="t4" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 position_id" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t4f2" parent="t4" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="trader_id (FK)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t4f3" parent="t4" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="stock_id (FK)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t4f4" parent="t4" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="quantity, avg_cost" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t5" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#d5e8d4;strokeColor=#82b366;" value="ai_trade_record" vertex="1">
+          <mxGeometry height="140" width="200" x="600" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="t5f1" parent="t5" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 trade_id" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t5f2" parent="t5" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="trader_id (FK)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t5f3" parent="t5" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="stock_id (FK)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t5f4" parent="t5" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="trade_type (buy/sell)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t5f5" parent="t5" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="quantity, price, time" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="t6" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#fff2cc;strokeColor=#d6b656;" value="ai_decision_log" vertex="1">
+          <mxGeometry height="140" width="220" x="40" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="t6f1" parent="t6" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 log_id" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t6f2" parent="t6" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="trader_id (FK)" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t6f3" parent="t6" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="round_type" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t6f4" parent="t6" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="decision_reason" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t6f5" parent="t6" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="executed_action" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="t7" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#f8cecc;strokeColor=#b85450;" value="arena_config" vertex="1">
+          <mxGeometry height="160" width="220" x="320" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="t7f1" parent="t7" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 config_id" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t7f2" parent="t7" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="trader1/2/3 model &amp; risk" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t7f3" parent="t7" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="total_rounds" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t7f4" parent="t7" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="init_t1, init_t2, init_t3" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t7f5" parent="t7" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="alpha (价格敏感系数)" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="t7f6" parent="t7" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="status" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="t8" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#f8cecc;strokeColor=#b85450;" value="arena_round" vertex="1">
+          <mxGeometry height="120" width="200" x="600" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="t8f1" parent="t8" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 round_id" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t8f2" parent="t8" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="config_id (FK)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t8f3" parent="t8" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="round_number" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t8f4" parent="t8" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="trading_order" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t9" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#f8cecc;strokeColor=#b85450;" value="arena_ai_state" vertex="1">
+          <mxGeometry height="140" width="220" x="40" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="t9f1" parent="t9" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 state_id" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t9f2" parent="t9" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="config_id (FK)" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t9f3" parent="t9" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="trader_id (FK)" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t9f4" parent="t9" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="round_number" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t9f5" parent="t9" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="t1_bal, t2_bal, t3_bal" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="t10" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#f8cecc;strokeColor=#b85450;" value="token_price" vertex="1">
+          <mxGeometry height="120" width="200" x="320" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="t10f1" parent="t10" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 price_id" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t10f2" parent="t10" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="config_id (FK)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t10f3" parent="t10" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="round_number" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t10f4" parent="t10" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="t1_price, t2_price, t3_price" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t11" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#e1d5e7;strokeColor=#9673a6;" value="blockchain_tx" vertex="1">
+          <mxGeometry height="140" width="200" x="600" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="t11f1" parent="t11" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 tx_id" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t11f2" parent="t11" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="tx_hash" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t11f3" parent="t11" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="from_address, to_address" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t11f4" parent="t11" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="token_type (T1/T2/T3)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t11f5" parent="t11" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="amount, round_id" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="r1" edge="1" parent="1" source="t1" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="t2" value="" />
+        <mxCell id="r2" edge="1" parent="1" source="t3" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0;entryY=0.5;" target="t4" value="" />
+        <mxCell id="r3" edge="1" parent="1" source="t4" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="t5" value="" />
+        <mxCell id="r4" edge="1" parent="1" source="t3" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="t6" value="" />
+        <mxCell id="r5" edge="1" parent="1" source="t7" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="t8" value="" />
+        <mxCell id="r6" edge="1" parent="1" source="t8" style="endArrow=none;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" target="t9" value="" />
+        <mxCell id="r7" edge="1" parent="1" source="t8" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="t10" value="" />
+        <mxCell id="r8" edge="1" parent="1" source="t10" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="t11" value="" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="斗兽场轮次执行时序图" id="dVUzV2bMMhr1ARK_ox9F">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1000" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title3" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" value="斗兽场单轮执行时序图" vertex="1">
+          <mxGeometry height="30" width="250" x="350" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="ll1" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fontSize=12;fillColor=#fff2cc;strokeColor=#d6b656;" value="斗兽场控制模块" vertex="1">
+          <mxGeometry height="700" width="120" x="80" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ll2" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fontSize=12;fillColor=#d5e8d4;strokeColor=#82b366;" value="AI 1 (线程)" vertex="1">
+          <mxGeometry height="700" width="100" x="250" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ll3" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fontSize=12;fillColor=#d5e8d4;strokeColor=#82b366;" value="AI 2 (线程)" vertex="1">
+          <mxGeometry height="700" width="100" x="400" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ll4" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fontSize=12;fillColor=#d5e8d4;strokeColor=#82b366;" value="AI 3 (线程)" vertex="1">
+          <mxGeometry height="700" width="100" x="550" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ll5" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fontSize=12;fillColor=#f8cecc;strokeColor=#b85450;" value="区块链交互模块" vertex="1">
+          <mxGeometry height="700" width="120" x="730" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ll6" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fontSize=12;fillColor=#e1d5e7;strokeColor=#9673a6;" value="大语言模型" vertex="1">
+          <mxGeometry height="700" width="100" x="880" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="msg1" edge="1" parent="1" source="ll1" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll2" value="启动轮次，三个线程并发读取市场数据">
+          <mxGeometry relative="1" width="80" x="-0.2" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="200" y="140" as="sourcePoint" />
+            <mxPoint x="250" y="140" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg2" edge="1" parent="1" source="ll1" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll3" value="并发读取">
+          <mxGeometry relative="1" width="80" x="-0.2" as="geometry">
+            <mxPoint x="200" y="160" as="sourcePoint" />
+            <mxPoint x="400" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg3" edge="1" parent="1" source="ll1" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll4" value="并发读取">
+          <mxGeometry relative="1" width="80" x="-0.2" as="geometry">
+            <mxPoint x="200" y="180" as="sourcePoint" />
+            <mxPoint x="550" y="180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg4" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll1" value="竞争锁，假设顺序为 AI1→AI2→AI3">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="300" y="230" as="sourcePoint" />
+            <mxPoint x="200" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg5" edge="1" parent="1" source="ll3" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll1" value="竞争锁">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="450" y="250" as="sourcePoint" />
+            <mxPoint x="200" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg6" edge="1" parent="1" source="ll4" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll1" value="竞争锁">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="600" y="270" as="sourcePoint" />
+            <mxPoint x="200" y="270" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg7" edge="1" parent="1" source="ll1" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll2" value="按顺序调用AI1">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="200" y="330" as="sourcePoint" />
+            <mxPoint x="300" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg8" edge="1" parent="1" source="ll2" style="html=1;verticalAlign=bottom;endArrow=block;dashed=1;fontSize=11;" target="ll6" value="调用大模型推理">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="300" y="360" as="sourcePoint" />
+            <mxPoint x="880" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg9" edge="1" parent="1" source="ll6" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;fontSize=11;" target="ll2" value="返回操作意图">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="880" y="390" as="sourcePoint" />
+            <mxPoint x="300" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg10" edge="1" parent="1" source="ll2" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll5" value="执行代币兑换">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="300" y="430" as="sourcePoint" />
+            <mxPoint x="730" y="430" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg11" edge="1" parent="1" source="ll5" style="html=1;verticalAlign=bottom;endArrow=open;fontSize=11;" target="ll2" value="转账成功，更新价格">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="730" y="470" as="sourcePoint" />
+            <mxPoint x="300" y="470" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg12" edge="1" parent="1" source="ll2" style="html=1;verticalAlign=bottom;endArrow=open;fontSize=11;" target="ll1" value="AI1操作完成">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="300" y="510" as="sourcePoint" />
+            <mxPoint x="200" y="510" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg13" edge="1" parent="1" source="ll1" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll3" value="调用AI2（在AI1操作后的新价格下）">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="200" y="560" as="sourcePoint" />
+            <mxPoint x="450" y="560" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg14" edge="1" parent="1" source="ll3" style="html=1;verticalAlign=bottom;endArrow=block;dashed=1;fontSize=11;" target="ll6" value="调用大模型推理">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="450" y="590" as="sourcePoint" />
+            <mxPoint x="880" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg15" edge="1" parent="1" source="ll6" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;fontSize=11;" target="ll3" value="返回操作意图">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="880" y="620" as="sourcePoint" />
+            <mxPoint x="450" y="620" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg16" edge="1" parent="1" source="ll3" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll5" value="执行代币兑换">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="450" y="660" as="sourcePoint" />
+            <mxPoint x="730" y="660" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg17" edge="1" parent="1" source="ll5" style="html=1;verticalAlign=bottom;endArrow=open;fontSize=11;" target="ll3" value="转账成功，更新价格">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="730" y="700" as="sourcePoint" />
+            <mxPoint x="450" y="700" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg18" edge="1" parent="1" source="ll3" style="html=1;verticalAlign=bottom;endArrow=open;fontSize=11;" target="ll1" value="AI2操作完成">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="450" y="740" as="sourcePoint" />
+            <mxPoint x="200" y="740" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg19" edge="1" parent="1" source="ll1" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll4" value="AI3同理，完成后本轮结束">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="200" y="780" as="sourcePoint" />
+            <mxPoint x="600" y="780" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="系统用例图" id="kmXHlY-a_nYd75Sxwr4n">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title4" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" value="系统用例图" vertex="1">
+          <mxGeometry height="30" width="150" x="320" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="sys" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;fontStyle=1;" value="模拟交易所系统" vertex="1">
+          <mxGeometry height="500" width="560" x="120" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="uc1" parent="sys" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="查看股票行情" vertex="1">
+          <mxGeometry height="50" width="120" x="200" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="uc2" parent="sys" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="手动买卖股票" vertex="1">
+          <mxGeometry height="50" width="120" x="200" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="uc3" parent="sys" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="触发AI单次决策" vertex="1">
+          <mxGeometry height="50" width="120" x="200" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="uc4" parent="sys" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="查看AI日志与收益" vertex="1">
+          <mxGeometry height="50" width="120" x="200" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="uc5" parent="sys" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" value="配置并启动斗兽场" vertex="1">
+          <mxGeometry height="50" width="130" x="420" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="uc6" parent="sys" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" value="观察斗兽场博弈" vertex="1">
+          <mxGeometry height="50" width="130" x="420" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="uc7" parent="sys" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" value="查看链上交易记录" vertex="1">
+          <mxGeometry height="50" width="130" x="420" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="uc8" parent="sys" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" value="执行代币兑换" vertex="1">
+          <mxGeometry height="40" width="130" x="420" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="uc9" parent="sys" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" value="读取市场数据" vertex="1">
+          <mxGeometry height="40" width="120" x="200" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="actor1" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" value="人类使用者" vertex="1">
+          <mxGeometry height="80" width="40" x="40" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="actor2" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" value="AI交易员" vertex="1">
+          <mxGeometry height="80" width="40" x="720" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="a1" edge="1" parent="1" source="actor1" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="uc1" value="" />
+        <mxCell id="a2" edge="1" parent="1" source="actor1" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="uc2" value="" />
+        <mxCell id="a3" edge="1" parent="1" source="actor1" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="uc3" value="" />
+        <mxCell id="a4" edge="1" parent="1" source="actor1" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="uc4" value="" />
+        <mxCell id="a5" edge="1" parent="1" source="actor1" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="uc5" value="" />
+        <mxCell id="a6" edge="1" parent="1" source="actor1" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="uc6" value="" />
+        <mxCell id="a7" edge="1" parent="1" source="actor1" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="uc7" value="" />
+        <mxCell id="a8" edge="1" parent="1" source="actor2" style="endArrow=none;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" target="uc8" value="" />
+        <mxCell id="a9" edge="1" parent="1" source="actor2" style="endArrow=none;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" target="uc9" value="" />
+        <mxCell id="inc1" edge="1" parent="1" source="uc3" style="endArrow=open;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;" target="uc9" value="«include»">
+          <mxGeometry relative="1" width="80" as="geometry" />
+        </mxCell>
+        <mxCell id="inc2" edge="1" parent="1" source="uc6" style="endArrow=open;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;" target="uc8" value="«include»">
+          <mxGeometry relative="1" width="80" as="geometry" />
+        </mxCell>
+        <mxCell id="inc3" edge="1" parent="1" source="uc6" style="endArrow=open;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;" target="uc9" value="«include»">
+          <mxGeometry relative="1" width="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="模块划分图" id="xdeUfZKxJLmElXW_IJmP">
+    <mxGraphModel dx="812" dy="823" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="数据库ER图" id="AFnuc17mju2W5SCJrXnh">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1200" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title2" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" value="数据库实体关系图 (ER Diagram)" vertex="1">
+          <mxGeometry height="30" width="300" x="400" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="t1" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="stock_info" vertex="1">
+          <mxGeometry height="120" width="180" x="40" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="t1f1" parent="t1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 stock_id" vertex="1">
+          <mxGeometry height="20" width="170" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t1f2" parent="t1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="symbol" vertex="1">
+          <mxGeometry height="20" width="170" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t1f3" parent="t1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="name" vertex="1">
+          <mxGeometry height="20" width="170" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t1f4" parent="t1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="exchange, currency" vertex="1">
+          <mxGeometry height="20" width="170" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t2" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="stock_price" vertex="1">
+          <mxGeometry height="140" width="200" x="280" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="t2f1" parent="t2" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 price_id" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t2f2" parent="t2" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="stock_id (FK)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t2f3" parent="t2" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="trade_date" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t2f4" parent="t2" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="open, high, low, close" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t2f5" parent="t2" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="volume" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="t3" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#d5e8d4;strokeColor=#82b366;" value="ai_trader" vertex="1">
+          <mxGeometry height="140" width="200" x="40" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="t3f1" parent="t3" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 trader_id" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t3f2" parent="t3" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="model_code (A/B/C)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t3f3" parent="t3" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="risk_preference" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t3f4" parent="t3" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="cash_balance" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t3f5" parent="t3" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="chain_address" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="t4" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#d5e8d4;strokeColor=#82b366;" value="ai_position" vertex="1">
+          <mxGeometry height="120" width="200" x="320" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="t4f1" parent="t4" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 position_id" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t4f2" parent="t4" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="trader_id (FK)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t4f3" parent="t4" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="stock_id (FK)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t4f4" parent="t4" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="quantity, avg_cost" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t5" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#d5e8d4;strokeColor=#82b366;" value="ai_trade_record" vertex="1">
+          <mxGeometry height="140" width="200" x="600" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="t5f1" parent="t5" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 trade_id" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t5f2" parent="t5" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="trader_id (FK)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t5f3" parent="t5" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="stock_id (FK)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t5f4" parent="t5" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="trade_type (buy/sell)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t5f5" parent="t5" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="quantity, price, time" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="t6" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#fff2cc;strokeColor=#d6b656;" value="ai_decision_log" vertex="1">
+          <mxGeometry height="140" width="220" x="40" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="t6f1" parent="t6" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 log_id" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t6f2" parent="t6" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="trader_id (FK)" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t6f3" parent="t6" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="round_type" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t6f4" parent="t6" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="decision_reason" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t6f5" parent="t6" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="executed_action" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="t7" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#f8cecc;strokeColor=#b85450;" value="arena_config" vertex="1">
+          <mxGeometry height="160" width="220" x="320" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="t7f1" parent="t7" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 config_id" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t7f2" parent="t7" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="trader1/2/3 model &amp; risk" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t7f3" parent="t7" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="total_rounds" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t7f4" parent="t7" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="init_t1, init_t2, init_t3" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t7f5" parent="t7" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="alpha (价格敏感系数)" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="t7f6" parent="t7" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="status" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="t8" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#f8cecc;strokeColor=#b85450;" value="arena_round" vertex="1">
+          <mxGeometry height="120" width="200" x="600" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="t8f1" parent="t8" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 round_id" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t8f2" parent="t8" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="config_id (FK)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t8f3" parent="t8" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="round_number" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t8f4" parent="t8" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="trading_order" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t9" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#f8cecc;strokeColor=#b85450;" value="arena_ai_state" vertex="1">
+          <mxGeometry height="140" width="220" x="40" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="t9f1" parent="t9" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 state_id" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t9f2" parent="t9" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="config_id (FK)" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t9f3" parent="t9" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="trader_id (FK)" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t9f4" parent="t9" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="round_number" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t9f5" parent="t9" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="t1_bal, t2_bal, t3_bal" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="t10" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#f8cecc;strokeColor=#b85450;" value="token_price" vertex="1">
+          <mxGeometry height="120" width="200" x="320" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="t10f1" parent="t10" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 price_id" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t10f2" parent="t10" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="config_id (FK)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t10f3" parent="t10" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="round_number" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t10f4" parent="t10" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="t1_price, t2_price, t3_price" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t11" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#e1d5e7;strokeColor=#9673a6;" value="blockchain_tx" vertex="1">
+          <mxGeometry height="140" width="200" x="600" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="t11f1" parent="t11" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 tx_id" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t11f2" parent="t11" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="tx_hash" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t11f3" parent="t11" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="from_address, to_address" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t11f4" parent="t11" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="token_type (T1/T2/T3)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t11f5" parent="t11" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="amount, round_id" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="r1" edge="1" parent="1" source="t1" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="t2" value="" />
+        <mxCell id="r2" edge="1" parent="1" source="t3" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0;entryY=0.5;" target="t4" value="" />
+        <mxCell id="r3" edge="1" parent="1" source="t4" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="t5" value="" />
+        <mxCell id="r4" edge="1" parent="1" source="t3" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="t6" value="" />
+        <mxCell id="r5" edge="1" parent="1" source="t7" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="t8" value="" />
+        <mxCell id="r6" edge="1" parent="1" source="t8" style="endArrow=none;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" target="t9" value="" />
+        <mxCell id="r7" edge="1" parent="1" source="t8" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="t10" value="" />
+        <mxCell id="r8" edge="1" parent="1" source="t10" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="t11" value="" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="斗兽场轮次执行时序图" id="ZpJNeBzv1ENejmpanwMZ">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1000" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title3" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" value="斗兽场单轮执行时序图" vertex="1">
+          <mxGeometry height="30" width="250" x="350" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="ll1" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fontSize=12;fillColor=#fff2cc;strokeColor=#d6b656;" value="斗兽场控制模块" vertex="1">
+          <mxGeometry height="700" width="120" x="80" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ll2" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fontSize=12;fillColor=#d5e8d4;strokeColor=#82b366;" value="AI 1 (线程)" vertex="1">
+          <mxGeometry height="700" width="100" x="250" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ll3" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fontSize=12;fillColor=#d5e8d4;strokeColor=#82b366;" value="AI 2 (线程)" vertex="1">
+          <mxGeometry height="700" width="100" x="400" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ll4" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fontSize=12;fillColor=#d5e8d4;strokeColor=#82b366;" value="AI 3 (线程)" vertex="1">
+          <mxGeometry height="700" width="100" x="550" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ll5" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fontSize=12;fillColor=#f8cecc;strokeColor=#b85450;" value="区块链交互模块" vertex="1">
+          <mxGeometry height="700" width="120" x="730" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ll6" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fontSize=12;fillColor=#e1d5e7;strokeColor=#9673a6;" value="大语言模型" vertex="1">
+          <mxGeometry height="700" width="100" x="880" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="msg1" edge="1" parent="1" source="ll1" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll2" value="启动轮次，三个线程并发读取市场数据">
+          <mxGeometry relative="1" width="80" x="-0.2" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="200" y="140" as="sourcePoint" />
+            <mxPoint x="250" y="140" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg2" edge="1" parent="1" source="ll1" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll3" value="并发读取">
+          <mxGeometry relative="1" width="80" x="-0.2" as="geometry">
+            <mxPoint x="200" y="160" as="sourcePoint" />
+            <mxPoint x="400" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg3" edge="1" parent="1" source="ll1" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll4" value="并发读取">
+          <mxGeometry relative="1" width="80" x="-0.2" as="geometry">
+            <mxPoint x="200" y="180" as="sourcePoint" />
+            <mxPoint x="550" y="180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg4" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll1" value="竞争锁，假设顺序为 AI1→AI2→AI3">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="300" y="230" as="sourcePoint" />
+            <mxPoint x="200" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg5" edge="1" parent="1" source="ll3" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll1" value="竞争锁">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="450" y="250" as="sourcePoint" />
+            <mxPoint x="200" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg6" edge="1" parent="1" source="ll4" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll1" value="竞争锁">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="600" y="270" as="sourcePoint" />
+            <mxPoint x="200" y="270" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg7" edge="1" parent="1" source="ll1" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll2" value="按顺序调用AI1">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="200" y="330" as="sourcePoint" />
+            <mxPoint x="300" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg8" edge="1" parent="1" source="ll2" style="html=1;verticalAlign=bottom;endArrow=block;dashed=1;fontSize=11;" target="ll6" value="调用大模型推理">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="300" y="360" as="sourcePoint" />
+            <mxPoint x="880" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg9" edge="1" parent="1" source="ll6" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;fontSize=11;" target="ll2" value="返回操作意图">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="880" y="390" as="sourcePoint" />
+            <mxPoint x="300" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg10" edge="1" parent="1" source="ll2" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll5" value="执行代币兑换">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="300" y="430" as="sourcePoint" />
+            <mxPoint x="730" y="430" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg11" edge="1" parent="1" source="ll5" style="html=1;verticalAlign=bottom;endArrow=open;fontSize=11;" target="ll2" value="转账成功，更新价格">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="730" y="470" as="sourcePoint" />
+            <mxPoint x="300" y="470" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg12" edge="1" parent="1" source="ll2" style="html=1;verticalAlign=bottom;endArrow=open;fontSize=11;" target="ll1" value="AI1操作完成">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="300" y="510" as="sourcePoint" />
+            <mxPoint x="200" y="510" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg13" edge="1" parent="1" source="ll1" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll3" value="调用AI2（在AI1操作后的新价格下）">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="200" y="560" as="sourcePoint" />
+            <mxPoint x="450" y="560" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg14" edge="1" parent="1" source="ll3" style="html=1;verticalAlign=bottom;endArrow=block;dashed=1;fontSize=11;" target="ll6" value="调用大模型推理">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="450" y="590" as="sourcePoint" />
+            <mxPoint x="880" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg15" edge="1" parent="1" source="ll6" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;fontSize=11;" target="ll3" value="返回操作意图">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="880" y="620" as="sourcePoint" />
+            <mxPoint x="450" y="620" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg16" edge="1" parent="1" source="ll3" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll5" value="执行代币兑换">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="450" y="660" as="sourcePoint" />
+            <mxPoint x="730" y="660" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg17" edge="1" parent="1" source="ll5" style="html=1;verticalAlign=bottom;endArrow=open;fontSize=11;" target="ll3" value="转账成功，更新价格">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="730" y="700" as="sourcePoint" />
+            <mxPoint x="450" y="700" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg18" edge="1" parent="1" source="ll3" style="html=1;verticalAlign=bottom;endArrow=open;fontSize=11;" target="ll1" value="AI2操作完成">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="450" y="740" as="sourcePoint" />
+            <mxPoint x="200" y="740" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg19" edge="1" parent="1" source="ll1" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll4" value="AI3同理，完成后本轮结束">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="200" y="780" as="sourcePoint" />
+            <mxPoint x="600" y="780" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="系统用例图" id="B4NPqHkw1yG5rL1PK3lk">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title4" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" value="系统用例图" vertex="1">
+          <mxGeometry height="30" width="150" x="320" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="sys" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;fontStyle=1;" value="模拟交易所系统" vertex="1">
+          <mxGeometry height="500" width="560" x="120" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="uc1" parent="sys" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="查看股票行情" vertex="1">
+          <mxGeometry height="50" width="120" x="200" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="uc2" parent="sys" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="手动买卖股票" vertex="1">
+          <mxGeometry height="50" width="120" x="200" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="uc3" parent="sys" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="触发AI单次决策" vertex="1">
+          <mxGeometry height="50" width="120" x="200" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="uc4" parent="sys" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="查看AI日志与收益" vertex="1">
+          <mxGeometry height="50" width="120" x="200" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="uc5" parent="sys" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" value="配置并启动斗兽场" vertex="1">
+          <mxGeometry height="50" width="130" x="420" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="uc6" parent="sys" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" value="观察斗兽场博弈" vertex="1">
+          <mxGeometry height="50" width="130" x="420" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="uc7" parent="sys" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" value="查看链上交易记录" vertex="1">
+          <mxGeometry height="50" width="130" x="420" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="uc8" parent="sys" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" value="执行代币兑换" vertex="1">
+          <mxGeometry height="40" width="130" x="420" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="uc9" parent="sys" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" value="读取市场数据" vertex="1">
+          <mxGeometry height="40" width="120" x="200" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="actor1" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" value="人类使用者" vertex="1">
+          <mxGeometry height="80" width="40" x="40" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="actor2" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" value="AI交易员" vertex="1">
+          <mxGeometry height="80" width="40" x="720" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="a1" edge="1" parent="1" source="actor1" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="uc1" value="" />
+        <mxCell id="a2" edge="1" parent="1" source="actor1" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="uc2" value="" />
+        <mxCell id="a3" edge="1" parent="1" source="actor1" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="uc3" value="" />
+        <mxCell id="a4" edge="1" parent="1" source="actor1" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="uc4" value="" />
+        <mxCell id="a5" edge="1" parent="1" source="actor1" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="uc5" value="" />
+        <mxCell id="a6" edge="1" parent="1" source="actor1" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="uc6" value="" />
+        <mxCell id="a7" edge="1" parent="1" source="actor1" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="uc7" value="" />
+        <mxCell id="a8" edge="1" parent="1" source="actor2" style="endArrow=none;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" target="uc8" value="" />
+        <mxCell id="a9" edge="1" parent="1" source="actor2" style="endArrow=none;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" target="uc9" value="" />
+        <mxCell id="inc1" edge="1" parent="1" source="uc3" style="endArrow=open;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;" target="uc9" value="«include»">
+          <mxGeometry relative="1" width="80" as="geometry" />
+        </mxCell>
+        <mxCell id="inc2" edge="1" parent="1" source="uc6" style="endArrow=open;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;" target="uc8" value="«include»">
+          <mxGeometry relative="1" width="80" as="geometry" />
+        </mxCell>
+        <mxCell id="inc3" edge="1" parent="1" source="uc6" style="endArrow=open;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;" target="uc9" value="«include»">
+          <mxGeometry relative="1" width="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="模块划分图" id="nAGdztThPSeoGHjzUx9f">
+    <mxGraphModel dx="489460" dy="341617" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="vD8-eMXsraB9uyRKMl3t-560" edge="1" parent="1" source="vD8-eMXsraB9uyRKMl3t-545" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;endArrow=classic;" target="vD8-eMXsraB9uyRKMl3t-546" />
+        <mxCell id="vD8-eMXsraB9uyRKMl3t-561" edge="1" parent="1" source="vD8-eMXsraB9uyRKMl3t-546" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;endArrow=classic;" target="vD8-eMXsraB9uyRKMl3t-547" />
+        <mxCell id="vD8-eMXsraB9uyRKMl3t-562" edge="1" parent="1" source="vD8-eMXsraB9uyRKMl3t-547" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;endArrow=classic;" target="vD8-eMXsraB9uyRKMl3t-548" />
+        <mxCell id="vD8-eMXsraB9uyRKMl3t-563" edge="1" parent="1" source="vD8-eMXsraB9uyRKMl3t-548" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;endArrow=classic;" target="vD8-eMXsraB9uyRKMl3t-549" />
+        <mxCell id="vD8-eMXsraB9uyRKMl3t-564" edge="1" parent="1" source="vD8-eMXsraB9uyRKMl3t-549" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;endArrow=classic;" target="vD8-eMXsraB9uyRKMl3t-550" />
+        <mxCell id="vD8-eMXsraB9uyRKMl3t-565" edge="1" parent="1" source="vD8-eMXsraB9uyRKMl3t-550" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;endArrow=classic;" target="vD8-eMXsraB9uyRKMl3t-551" />
+        <mxCell id="vD8-eMXsraB9uyRKMl3t-566" edge="1" parent="1" source="vD8-eMXsraB9uyRKMl3t-551" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;endArrow=classic;" target="vD8-eMXsraB9uyRKMl3t-552" />
+        <mxCell id="vD8-eMXsraB9uyRKMl3t-567" edge="1" parent="1" source="vD8-eMXsraB9uyRKMl3t-552" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;endArrow=classic;fontSize=10;" target="vD8-eMXsraB9uyRKMl3t-553" value="是" />
+        <mxCell id="vD8-eMXsraB9uyRKMl3t-568" edge="1" parent="1" source="vD8-eMXsraB9uyRKMl3t-552" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0.5;entryY=0;endArrow=classic;fontSize=10;" target="vD8-eMXsraB9uyRKMl3t-554" value="否" />
+        <mxCell id="vD8-eMXsraB9uyRKMl3t-569" edge="1" parent="1" source="vD8-eMXsraB9uyRKMl3t-553" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;endArrow=classic;" target="vD8-eMXsraB9uyRKMl3t-555" />
+        <mxCell id="vD8-eMXsraB9uyRKMl3t-570" edge="1" parent="1" source="vD8-eMXsraB9uyRKMl3t-554" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=1;entryY=0.5;endArrow=classic;" target="vD8-eMXsraB9uyRKMl3t-556" />
+        <mxCell id="vD8-eMXsraB9uyRKMl3t-571" edge="1" parent="1" source="vD8-eMXsraB9uyRKMl3t-555" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0;entryY=0.5;endArrow=classic;" target="vD8-eMXsraB9uyRKMl3t-556" />
+        <mxCell id="vD8-eMXsraB9uyRKMl3t-572" edge="1" parent="1" source="vD8-eMXsraB9uyRKMl3t-556" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;endArrow=classic;" target="vD8-eMXsraB9uyRKMl3t-557" />
+        <mxCell id="vD8-eMXsraB9uyRKMl3t-573" edge="1" parent="1" source="vD8-eMXsraB9uyRKMl3t-557" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;endArrow=classic;" target="vD8-eMXsraB9uyRKMl3t-558" />
+        <mxCell id="vD8-eMXsraB9uyRKMl3t-574" edge="1" parent="1" source="vD8-eMXsraB9uyRKMl3t-558" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;endArrow=classic;" target="vD8-eMXsraB9uyRKMl3t-559" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="数据库ER图" id="hnPm3o5D22VX46xv8QfC">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1200" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title2" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" value="数据库实体关系图 (ER Diagram)" vertex="1">
+          <mxGeometry height="30" width="300" x="400" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="t1" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="stock_info" vertex="1">
+          <mxGeometry height="120" width="180" x="40" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="t1f1" parent="t1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 stock_id" vertex="1">
+          <mxGeometry height="20" width="170" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t1f2" parent="t1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="symbol" vertex="1">
+          <mxGeometry height="20" width="170" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t1f3" parent="t1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="name" vertex="1">
+          <mxGeometry height="20" width="170" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t1f4" parent="t1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="exchange, currency" vertex="1">
+          <mxGeometry height="20" width="170" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t2" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="stock_price" vertex="1">
+          <mxGeometry height="140" width="200" x="280" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="t2f1" parent="t2" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 price_id" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t2f2" parent="t2" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="stock_id (FK)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t2f3" parent="t2" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="trade_date" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t2f4" parent="t2" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="open, high, low, close" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t2f5" parent="t2" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="volume" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="t3" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#d5e8d4;strokeColor=#82b366;" value="ai_trader" vertex="1">
+          <mxGeometry height="140" width="200" x="40" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="t3f1" parent="t3" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 trader_id" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t3f2" parent="t3" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="model_code (A/B/C)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t3f3" parent="t3" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="risk_preference" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t3f4" parent="t3" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="cash_balance" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t3f5" parent="t3" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="chain_address" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="t4" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#d5e8d4;strokeColor=#82b366;" value="ai_position" vertex="1">
+          <mxGeometry height="120" width="200" x="320" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="t4f1" parent="t4" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 position_id" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t4f2" parent="t4" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="trader_id (FK)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t4f3" parent="t4" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="stock_id (FK)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t4f4" parent="t4" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="quantity, avg_cost" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t5" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#d5e8d4;strokeColor=#82b366;" value="ai_trade_record" vertex="1">
+          <mxGeometry height="140" width="200" x="600" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="t5f1" parent="t5" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 trade_id" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t5f2" parent="t5" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="trader_id (FK)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t5f3" parent="t5" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="stock_id (FK)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t5f4" parent="t5" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="trade_type (buy/sell)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t5f5" parent="t5" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="quantity, price, time" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="t6" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#fff2cc;strokeColor=#d6b656;" value="ai_decision_log" vertex="1">
+          <mxGeometry height="140" width="220" x="40" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="t6f1" parent="t6" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 log_id" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t6f2" parent="t6" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="trader_id (FK)" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t6f3" parent="t6" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="round_type" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t6f4" parent="t6" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="decision_reason" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t6f5" parent="t6" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="executed_action" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="t7" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#f8cecc;strokeColor=#b85450;" value="arena_config" vertex="1">
+          <mxGeometry height="160" width="220" x="320" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="t7f1" parent="t7" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 config_id" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t7f2" parent="t7" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="trader1/2/3 model &amp; risk" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t7f3" parent="t7" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="total_rounds" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t7f4" parent="t7" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="init_t1, init_t2, init_t3" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t7f5" parent="t7" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="alpha (价格敏感系数)" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="t7f6" parent="t7" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="status" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="t8" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#f8cecc;strokeColor=#b85450;" value="arena_round" vertex="1">
+          <mxGeometry height="120" width="200" x="600" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="t8f1" parent="t8" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 round_id" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t8f2" parent="t8" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="config_id (FK)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t8f3" parent="t8" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="round_number" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t8f4" parent="t8" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="trading_order" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t9" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#f8cecc;strokeColor=#b85450;" value="arena_ai_state" vertex="1">
+          <mxGeometry height="140" width="220" x="40" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="t9f1" parent="t9" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 state_id" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t9f2" parent="t9" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="config_id (FK)" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t9f3" parent="t9" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="trader_id (FK)" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t9f4" parent="t9" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="round_number" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t9f5" parent="t9" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="t1_bal, t2_bal, t3_bal" vertex="1">
+          <mxGeometry height="20" width="210" x="5" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="t10" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#f8cecc;strokeColor=#b85450;" value="token_price" vertex="1">
+          <mxGeometry height="120" width="200" x="320" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="t10f1" parent="t10" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 price_id" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t10f2" parent="t10" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="config_id (FK)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t10f3" parent="t10" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="round_number" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t10f4" parent="t10" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="t1_price, t2_price, t3_price" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t11" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=25;fillColor=#e1d5e7;strokeColor=#9673a6;" value="blockchain_tx" vertex="1">
+          <mxGeometry height="140" width="200" x="600" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="t11f1" parent="t11" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="🔑 tx_id" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t11f2" parent="t11" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="tx_hash" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t11f3" parent="t11" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="from_address, to_address" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t11f4" parent="t11" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="token_type (T1/T2/T3)" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="t11f5" parent="t11" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" value="amount, round_id" vertex="1">
+          <mxGeometry height="20" width="190" x="5" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="r1" edge="1" parent="1" source="t1" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="t2" value="" />
+        <mxCell id="r2" edge="1" parent="1" source="t3" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0;entryY=0.5;" target="t4" value="" />
+        <mxCell id="r3" edge="1" parent="1" source="t4" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="t5" value="" />
+        <mxCell id="r4" edge="1" parent="1" source="t3" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="t6" value="" />
+        <mxCell id="r5" edge="1" parent="1" source="t7" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="t8" value="" />
+        <mxCell id="r6" edge="1" parent="1" source="t8" style="endArrow=none;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" target="t9" value="" />
+        <mxCell id="r7" edge="1" parent="1" source="t8" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="t10" value="" />
+        <mxCell id="r8" edge="1" parent="1" source="t10" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="t11" value="" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="斗兽场轮次执行时序图" id="KCkNfeZvB9GpHTeQuefQ">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1000" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title3" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" value="斗兽场单轮执行时序图" vertex="1">
+          <mxGeometry height="30" width="250" x="350" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="ll1" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fontSize=12;fillColor=#fff2cc;strokeColor=#d6b656;" value="斗兽场控制模块" vertex="1">
+          <mxGeometry height="700" width="120" x="80" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ll2" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fontSize=12;fillColor=#d5e8d4;strokeColor=#82b366;" value="AI 1 (线程)" vertex="1">
+          <mxGeometry height="700" width="100" x="250" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ll3" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fontSize=12;fillColor=#d5e8d4;strokeColor=#82b366;" value="AI 2 (线程)" vertex="1">
+          <mxGeometry height="700" width="100" x="400" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ll4" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fontSize=12;fillColor=#d5e8d4;strokeColor=#82b366;" value="AI 3 (线程)" vertex="1">
+          <mxGeometry height="700" width="100" x="550" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ll5" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fontSize=12;fillColor=#f8cecc;strokeColor=#b85450;" value="区块链交互模块" vertex="1">
+          <mxGeometry height="700" width="120" x="730" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ll6" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fontSize=12;fillColor=#e1d5e7;strokeColor=#9673a6;" value="大语言模型" vertex="1">
+          <mxGeometry height="700" width="100" x="880" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="msg1" edge="1" parent="1" source="ll1" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll2" value="启动轮次，三个线程并发读取市场数据">
+          <mxGeometry relative="1" width="80" x="-0.2" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="200" y="140" as="sourcePoint" />
+            <mxPoint x="250" y="140" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg2" edge="1" parent="1" source="ll1" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll3" value="并发读取">
+          <mxGeometry relative="1" width="80" x="-0.2" as="geometry">
+            <mxPoint x="200" y="160" as="sourcePoint" />
+            <mxPoint x="400" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg3" edge="1" parent="1" source="ll1" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll4" value="并发读取">
+          <mxGeometry relative="1" width="80" x="-0.2" as="geometry">
+            <mxPoint x="200" y="180" as="sourcePoint" />
+            <mxPoint x="550" y="180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg4" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll1" value="竞争锁，假设顺序为 AI1→AI2→AI3">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="300" y="230" as="sourcePoint" />
+            <mxPoint x="200" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg5" edge="1" parent="1" source="ll3" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll1" value="竞争锁">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="450" y="250" as="sourcePoint" />
+            <mxPoint x="200" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg6" edge="1" parent="1" source="ll4" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll1" value="竞争锁">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="600" y="270" as="sourcePoint" />
+            <mxPoint x="200" y="270" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg7" edge="1" parent="1" source="ll1" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll2" value="按顺序调用AI1">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="200" y="330" as="sourcePoint" />
+            <mxPoint x="300" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg8" edge="1" parent="1" source="ll2" style="html=1;verticalAlign=bottom;endArrow=block;dashed=1;fontSize=11;" target="ll6" value="调用大模型推理">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="300" y="360" as="sourcePoint" />
+            <mxPoint x="880" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg9" edge="1" parent="1" source="ll6" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;fontSize=11;" target="ll2" value="返回操作意图">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="880" y="390" as="sourcePoint" />
+            <mxPoint x="300" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg10" edge="1" parent="1" source="ll2" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll5" value="执行代币兑换">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="300" y="430" as="sourcePoint" />
+            <mxPoint x="730" y="430" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg11" edge="1" parent="1" source="ll5" style="html=1;verticalAlign=bottom;endArrow=open;fontSize=11;" target="ll2" value="转账成功，更新价格">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="730" y="470" as="sourcePoint" />
+            <mxPoint x="300" y="470" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg12" edge="1" parent="1" source="ll2" style="html=1;verticalAlign=bottom;endArrow=open;fontSize=11;" target="ll1" value="AI1操作完成">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="300" y="510" as="sourcePoint" />
+            <mxPoint x="200" y="510" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg13" edge="1" parent="1" source="ll1" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll3" value="调用AI2（在AI1操作后的新价格下）">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="200" y="560" as="sourcePoint" />
+            <mxPoint x="450" y="560" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg14" edge="1" parent="1" source="ll3" style="html=1;verticalAlign=bottom;endArrow=block;dashed=1;fontSize=11;" target="ll6" value="调用大模型推理">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="450" y="590" as="sourcePoint" />
+            <mxPoint x="880" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg15" edge="1" parent="1" source="ll6" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;fontSize=11;" target="ll3" value="返回操作意图">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="880" y="620" as="sourcePoint" />
+            <mxPoint x="450" y="620" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg16" edge="1" parent="1" source="ll3" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll5" value="执行代币兑换">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="450" y="660" as="sourcePoint" />
+            <mxPoint x="730" y="660" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg17" edge="1" parent="1" source="ll5" style="html=1;verticalAlign=bottom;endArrow=open;fontSize=11;" target="ll3" value="转账成功，更新价格">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="730" y="700" as="sourcePoint" />
+            <mxPoint x="450" y="700" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg18" edge="1" parent="1" source="ll3" style="html=1;verticalAlign=bottom;endArrow=open;fontSize=11;" target="ll1" value="AI2操作完成">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="450" y="740" as="sourcePoint" />
+            <mxPoint x="200" y="740" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg19" edge="1" parent="1" source="ll1" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=11;" target="ll4" value="AI3同理，完成后本轮结束">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="200" y="780" as="sourcePoint" />
+            <mxPoint x="600" y="780" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="系统用例图" id="lKJNtxAuYorfxrGhx9vH">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title4" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" value="系统用例图" vertex="1">
+          <mxGeometry height="30" width="150" x="320" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="sys" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=30;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;fontStyle=1;" value="模拟交易所系统" vertex="1">
+          <mxGeometry height="500" width="560" x="120" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="uc1" parent="sys" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="查看股票行情" vertex="1">
+          <mxGeometry height="50" width="120" x="200" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="uc2" parent="sys" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="手动买卖股票" vertex="1">
+          <mxGeometry height="50" width="120" x="200" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="uc3" parent="sys" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="触发AI单次决策" vertex="1">
+          <mxGeometry height="50" width="120" x="200" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="uc4" parent="sys" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="查看AI日志与收益" vertex="1">
+          <mxGeometry height="50" width="120" x="200" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="uc5" parent="sys" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" value="配置并启动斗兽场" vertex="1">
+          <mxGeometry height="50" width="130" x="420" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="uc6" parent="sys" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" value="观察斗兽场博弈" vertex="1">
+          <mxGeometry height="50" width="130" x="420" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="uc7" parent="sys" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" value="查看链上交易记录" vertex="1">
+          <mxGeometry height="50" width="130" x="420" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="uc8" parent="sys" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" value="执行代币兑换" vertex="1">
+          <mxGeometry height="40" width="130" x="420" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="uc9" parent="sys" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" value="读取市场数据" vertex="1">
+          <mxGeometry height="40" width="120" x="200" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="actor1" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" value="人类使用者" vertex="1">
+          <mxGeometry height="80" width="40" x="40" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="actor2" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" value="AI交易员" vertex="1">
+          <mxGeometry height="80" width="40" x="720" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="a1" edge="1" parent="1" source="actor1" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="uc1" value="" />
+        <mxCell id="a2" edge="1" parent="1" source="actor1" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="uc2" value="" />
+        <mxCell id="a3" edge="1" parent="1" source="actor1" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="uc3" value="" />
+        <mxCell id="a4" edge="1" parent="1" source="actor1" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="uc4" value="" />
+        <mxCell id="a5" edge="1" parent="1" source="actor1" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="uc5" value="" />
+        <mxCell id="a6" edge="1" parent="1" source="actor1" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="uc6" value="" />
+        <mxCell id="a7" edge="1" parent="1" source="actor1" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="uc7" value="" />
+        <mxCell id="a8" edge="1" parent="1" source="actor2" style="endArrow=none;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" target="uc8" value="" />
+        <mxCell id="a9" edge="1" parent="1" source="actor2" style="endArrow=none;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" target="uc9" value="" />
+        <mxCell id="inc1" edge="1" parent="1" source="uc3" style="endArrow=open;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;" target="uc9" value="«include»">
+          <mxGeometry relative="1" width="80" as="geometry" />
+        </mxCell>
+        <mxCell id="inc2" edge="1" parent="1" source="uc6" style="endArrow=open;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;" target="uc8" value="«include»">
+          <mxGeometry relative="1" width="80" as="geometry" />
+        </mxCell>
+        <mxCell id="inc3" edge="1" parent="1" source="uc6" style="endArrow=open;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=10;" target="uc9" value="«include»">
+          <mxGeometry relative="1" width="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

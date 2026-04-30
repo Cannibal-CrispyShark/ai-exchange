@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="localhost">
+  <diagram name="斗兽场轮次执行时序图" id="KgS6DHO2xX9bsWrEQbk7">
+    <mxGraphModel dx="2020" dy="1233" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="JP63KGK7wktlfUo6LHnz-1" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=16;fontStyle=1;" value="用户触发AI单次交易流程" vertex="1">
+          <mxGeometry height="30" width="300" x="550" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="720" width="1000" x="240.94000000000005" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f0f0f0;strokeColor=#666666;" value="" vertex="1">
+          <mxGeometry height="40" width="1000" x="240" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-4" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" value="用户" vertex="1">
+          <mxGeometry height="40" width="200" x="240" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-5" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" value="前端" vertex="1">
+          <mxGeometry height="40" width="180" x="440" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-6" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" value="后端系统" vertex="1">
+          <mxGeometry height="40" width="300" x="620" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-7" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" value="AI大模型" vertex="1">
+          <mxGeometry height="40" width="320" x="920" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-8" edge="1" parent="1" style="endArrow=none;html=1;strokeColor=#666666;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="440" y="610" as="sourcePoint" />
+            <mxPoint x="440" y="1330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-9" edge="1" parent="1" style="endArrow=none;html=1;strokeColor=#666666;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="620" y="610" as="sourcePoint" />
+            <mxPoint x="620" y="1330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-10" edge="1" parent="1" style="endArrow=none;html=1;strokeColor=#666666;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="920" y="610" as="sourcePoint" />
+            <mxPoint x="920" y="1330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-11" edge="1" parent="1" source="JP63KGK7wktlfUo6LHnz-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="JP63KGK7wktlfUo6LHnz-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" value="点击“AI操作”按钮" vertex="1">
+          <mxGeometry height="35" width="160" x="260" y="797.8199999999999" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-13" edge="1" parent="1" source="JP63KGK7wktlfUo6LHnz-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="JP63KGK7wktlfUo6LHnz-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-14" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="发送请求至后端" vertex="1">
+          <mxGeometry height="35" width="140" x="455" y="797.8199999999999" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-15" edge="1" parent="1" source="JP63KGK7wktlfUo6LHnz-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="JP63KGK7wktlfUo6LHnz-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-16" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" value="构造提示词调用大模型API" vertex="1">
+          <mxGeometry height="35" width="170" x="678.94" y="797.8199999999999" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-17" edge="1" parent="1" source="JP63KGK7wktlfUo6LHnz-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="JP63KGK7wktlfUo6LHnz-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-18" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" value="分析市场数据与持仓" vertex="1">
+          <mxGeometry height="35" width="160" x="1000" y="797.8199999999999" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-19" edge="1" parent="1" source="JP63KGK7wktlfUo6LHnz-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="JP63KGK7wktlfUo6LHnz-24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-20" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" value="返回决策结果（买入/卖出/观望）" vertex="1">
+          <mxGeometry height="35" width="180" x="990" y="877.8199999999999" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-21" edge="1" parent="1" source="JP63KGK7wktlfUo6LHnz-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="JP63KGK7wktlfUo6LHnz-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-22" connectable="0" parent="JP63KGK7wktlfUo6LHnz-21" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="是" vertex="1">
+          <mxGeometry relative="1" x="-0.745" y="3" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-23" edge="1" parent="1" source="JP63KGK7wktlfUo6LHnz-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="JP63KGK7wktlfUo6LHnz-30">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1079.9411764705883" y="1154.8235294117646" />
+              <mxPoint x="926.9411764705883" y="1154.8235294117646" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-24" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" value="模型是否决定交易？" vertex="1">
+          <mxGeometry height="55" width="110" x="1025" y="967.8199999999999" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-25" edge="1" parent="1" source="JP63KGK7wktlfUo6LHnz-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="JP63KGK7wktlfUo6LHnz-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-26" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" value="调用买卖工具更新数据库" vertex="1">
+          <mxGeometry height="35" width="150" x="688.94" y="977.8199999999999" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-27" edge="1" parent="1" source="JP63KGK7wktlfUo6LHnz-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="JP63KGK7wktlfUo6LHnz-30">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-28" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" value="记录交易流水和日志" vertex="1">
+          <mxGeometry height="35" width="150" x="688.94" y="1057.82" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-29" edge="1" parent="1" source="JP63KGK7wktlfUo6LHnz-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="JP63KGK7wktlfUo6LHnz-32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-30" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" value="通过SSE推送结果" vertex="1">
+          <mxGeometry height="35" width="130" x="698.94" y="1137.82" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-31" edge="1" parent="1" source="JP63KGK7wktlfUo6LHnz-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="JP63KGK7wktlfUo6LHnz-34">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-32" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="通过SSE接收决策结果" vertex="1">
+          <mxGeometry height="35" width="150" x="455" y="1137.82" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-33" edge="1" parent="1" source="JP63KGK7wktlfUo6LHnz-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="JP63KGK7wktlfUo6LHnz-35">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-34" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="更新日志列表和图表" vertex="1">
+          <mxGeometry height="35" width="150" x="455" y="1227.82" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-35" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" value="查看决策理由和收益曲线" vertex="1">
+          <mxGeometry height="35" width="160" x="253.94000000000005" y="1227.82" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-36" edge="1" parent="1" source="JP63KGK7wktlfUo6LHnz-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="JP63KGK7wktlfUo6LHnz-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-37" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" value="获取市场数据并计算指标" vertex="1">
+          <mxGeometry height="35" width="160" x="683.94" y="687.8199999999999" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-38" edge="1" parent="1" source="JP63KGK7wktlfUo6LHnz-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="JP63KGK7wktlfUo6LHnz-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JP63KGK7wktlfUo6LHnz-39" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" value="选择模型和风险偏好" vertex="1">
+          <mxGeometry height="35" width="160" x="260" y="687.8199999999999" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
